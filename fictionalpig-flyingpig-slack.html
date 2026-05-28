@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FlyingPig — Slack Simulation · TinPigProd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --slack-aubergine: #3F0E40;
+  --slack-aubergine-dark: #350D36;
+  --slack-sidebar-text: rgba(255,255,255,0.72);
+  --slack-sidebar-active: #FFFFFF;
+  --slack-sidebar-hover: rgba(255,255,255,0.10);
+  --slack-sidebar-selected: rgba(255,255,255,0.16);
+  --slack-green: #007a5a;
+  --slack-content-bg: #FFFFFF;
+  --slack-border: #e8e8e8;
+  --slack-message-hover: #f8f8f8;
+  --slack-text-primary: #1d1c1d;
+  --slack-text-secondary: #616061;
+  --slack-text-tertiary: #9e9e9e;
+  --slack-link: #1264a3;
+  --fp-teal: #2DB8B8;
+  --fp-teal-light: #5DD4D4;
+  --fp-teal-bg: rgba(45,184,184,0.08);
+  --fp-teal-border: rgba(45,184,184,0.25);
+  --fp-amber: #E8A838;
+  --fp-amber-bg: rgba(232,168,56,0.08);
+  --fp-amber-border: rgba(232,168,56,0.25);
+  --fp-green: #3AB87A;
+  --fp-green-bg: rgba(58,184,122,0.08);
+  --fp-green-border: rgba(58,184,122,0.25);
+  --fp-pink: #FF6B8A;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: #111;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 4rem;
+}
+
+/* BACK NAV */
+.back-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(14,14,14,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  height: 44px; padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.back-link {
+  font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.15s;
+}
+.back-link:hover { color: rgba(255,255,255,0.85); }
+
+.back-nav-brand {
+  font-size: 12px; color: rgba(255,255,255,0.25);
+  font-family: 'DM Mono', monospace;
+}
+
+/* PORTFOLIO WRAP */
+.portfolio-wrap {
+  max-width: 1060px; width: 100%;
+  margin-top: 44px;
+  padding-top: 2rem;
+}
+
+.portfolio-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.portfolio-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 22px; font-weight: 600; color: #F5F5F0;
+  margin-bottom: 4px;
+}
+
+.portfolio-title span { color: var(--fp-teal); }
+
+.portfolio-desc {
+  font-size: 13px; color: rgba(255,255,255,0.45);
+  font-family: 'DM Sans', sans-serif; line-height: 1.6; max-width: 520px;
+}
+
+.portfolio-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 0.85rem; }
+
+.portfolio-badge {
+  font-size: 10px; font-weight: 600; padding: 3px 10px;
+  border-radius: 100px; letter-spacing: 0.04em;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.badge-teal { background: var(--fp-teal-bg); color: var(--fp-teal); border: 0.5px solid var(--fp-teal-border); }
+.badge-ghost { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); border: 0.5px solid rgba(255,255,255,0.1); }
+
+/* SLACK SHELL */
+.slack-shell {
+  display: flex;
+  height: 680px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  background: var(--slack-aubergine-dark);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-workspace {
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.workspace-name {
+  font-weight: 900; font-size: 15px;
+  color: var(--slack-sidebar-active); letter-spacing: -0.01em;
+}
+
+.workspace-status {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--slack-green); flex-shrink: 0;
+}
+
+.sidebar-section-label {
+  padding: 12px 16px 4px;
+  font-size: 12px; font-weight: 700;
+  color: rgba(255,255,255,0.5); letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sidebar-item {
+  padding: 4px 8px 4px 16px;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 14px; color: var(--slack-sidebar-text);
+  border-radius: 4px; margin: 1px 8px;
+  cursor: pointer; transition: background 0.1s;
+}
+
+.sidebar-item:hover { background: var(--slack-sidebar-hover); }
+.sidebar-item.active { background: var(--slack-sidebar-selected); color: var(--slack-sidebar-active); font-weight: 700; }
+.sidebar-item.unread { color: var(--slack-sidebar-active); font-weight: 700; }
+
+.sidebar-item-hash { font-size: 16px; color: inherit; opacity: 0.7; }
+
+.sidebar-dm-avatar {
+  width: 18px; height: 18px; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; flex-shrink: 0;
+}
+
+.unread-badge {
+  margin-left: auto; background: var(--slack-sidebar-active);
+  color: var(--slack-aubergine); font-size: 10px; font-weight: 700;
+  padding: 1px 6px; border-radius: 10px;
+}
+
+/* CONTENT AREA */
+.content-area {
+  flex: 1; background: var(--slack-content-bg);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+.channel-header {
+  padding: 10px 16px; border-bottom: 1px solid var(--slack-border);
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+
+.channel-header-name {
+  font-weight: 900; font-size: 15px;
+  color: var(--slack-text-primary); letter-spacing: -0.01em;
+}
+
+.channel-header-desc {
+  font-size: 13px; color: var(--slack-text-secondary);
+  padding-left: 8px; border-left: 1px solid var(--slack-border);
+}
+
+.channel-header-members {
+  margin-left: auto; font-size: 13px;
+  color: var(--slack-text-secondary);
+  display: flex; align-items: center; gap: 4px;
+}
+
+/* MESSAGES */
+.messages-area {
+  flex: 1; overflow-y: auto; padding: 16px 0;
+}
+
+.message {
+  padding: 4px 16px 4px;
+  display: flex; gap: 10px; align-items: flex-start;
+  transition: background 0.1s;
+}
+
+.message:hover { background: var(--slack-message-hover); }
+
+.message-avatar {
+  width: 36px; height: 36px; border-radius: 4px;
+  flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; color: white;
+}
+
+.message-body { flex: 1; min-width: 0; }
+
+.message-header {
+  display: flex; align-items: baseline; gap: 6px; margin-bottom: 2px;
+}
+
+.message-sender {
+  font-weight: 700; font-size: 15px;
+  color: var(--slack-text-primary);
+}
+
+.message-sender.flyingpig { color: var(--fp-teal); }
+
+.message-time {
+  font-size: 11px; color: var(--slack-text-tertiary);
+}
+
+.message-text {
+  font-size: 14px; color: var(--slack-text-primary);
+  line-height: 1.5;
+}
+
+.message-text a { color: var(--slack-link); }
+
+.date-divider {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; margin: 4px 0;
+}
+
+.date-divider-line { flex: 1; height: 1px; background: var(--slack-border); }
+.date-divider-label { font-size: 12px; color: var(--slack-text-secondary); font-weight: 700; white-space: nowrap; }
+
+/* FLYINGPIG BOT MESSAGE */
+.fp-message-wrap {
+  padding: 0 16px 4px 62px;
+  margin-top: -4px;
+}
+
+.fp-bot-card {
+  border: 1px solid var(--slack-border);
+  border-left: 3px solid var(--fp-teal);
+  border-radius: 0 6px 6px 0;
+  overflow: hidden;
+  max-width: 600px;
+}
+
+.fp-bot-header {
+  padding: 10px 14px 8px;
+  background: var(--fp-teal-bg);
+  border-bottom: 1px solid var(--fp-teal-border);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.fp-bot-logo {
+  font-size: 16px; color: var(--fp-teal);
+  font-family: 'DM Mono', monospace;
+}
+
+.fp-bot-name {
+  font-weight: 700; font-size: 14px; color: var(--fp-teal);
+}
+
+.fp-bot-trigger {
+  font-size: 11px; color: var(--slack-text-secondary);
+  margin-left: auto;
+}
+
+.fp-bot-intro {
+  padding: 10px 14px;
+  font-size: 13px; color: var(--slack-text-secondary);
+  line-height: 1.5; border-bottom: 1px solid var(--slack-border);
+}
+
+.fp-privacy-note {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: var(--slack-text-tertiary);
+  background: #f8f8f8; border: 1px solid var(--slack-border);
+  border-radius: 4px; padding: 2px 8px; margin-top: 4px;
+}
+
+/* LEARNING CARDS */
+.fp-cards { padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; }
+
+.fp-card {
+  border: 1px solid var(--slack-border);
+  border-radius: 6px; overflow: hidden;
+  cursor: pointer; transition: box-shadow 0.15s;
+}
+
+.fp-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+.fp-card-header {
+  padding: 8px 12px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--slack-border);
+}
+
+.fp-card-type-badge {
+  font-size: 9px; font-weight: 700; padding: 2px 7px;
+  border-radius: 100px; letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.type-article { background: var(--fp-teal-bg); color: var(--fp-teal); border: 1px solid var(--fp-teal-border); }
+.type-framework { background: var(--fp-amber-bg); color: var(--fp-amber); border: 1px solid var(--fp-amber-border); }
+.type-micro { background: var(--fp-green-bg); color: var(--fp-green); border: 1px solid var(--fp-green-border); }
+
+.fp-card-comp {
+  font-size: 10px; color: var(--slack-text-secondary);
+  font-family: 'DM Mono', monospace; margin-left: auto;
+}
+
+.fp-card-body { padding: 8px 12px; }
+.fp-card-title { font-size: 13px; font-weight: 700; color: var(--slack-link); margin-bottom: 3px; }
+.fp-card-desc { font-size: 12px; color: var(--slack-text-secondary); line-height: 1.5; }
+
+.fp-card-footer {
+  padding: 6px 12px;
+  background: #fafafa; border-top: 1px solid var(--slack-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.fp-card-meta { font-size: 11px; color: var(--slack-text-tertiary); }
+.fp-card-status { font-size: 11px; font-weight: 700; }
+.fp-card-status.unread { color: var(--fp-teal); }
+.fp-card-status.started { color: var(--fp-amber); }
+.fp-card-status.done { color: var(--fp-green); }
+
+/* EXPAND — reveal name on click */
+.reveal-wrap {
+  padding: 6px 14px 10px;
+  border-top: 1px solid var(--slack-border);
+  background: #fafafa;
+}
+
+.reveal-btn {
+  font-size: 11px; color: var(--slack-link); cursor: pointer;
+  background: none; border: none; font-family: 'Lato', sans-serif;
+  padding: 0; text-decoration: underline;
+}
+
+.reveal-content {
+  display: none; margin-top: 6px;
+  font-size: 12px; color: var(--slack-text-secondary);
+  background: white; border: 1px solid var(--slack-border);
+  border-radius: 4px; padding: 8px 10px; line-height: 1.5;
+}
+
+.reveal-content.visible { display: block; }
+
+.reveal-comp-tag {
+  display: inline-block; font-size: 9px; font-weight: 700;
+  padding: 1px 6px; border-radius: 100px; margin-right: 4px;
+  font-family: 'DM Mono', monospace;
+}
+
+/* PROGRESS TRACKER */
+.fp-progress {
+  padding: 8px 14px 10px;
+  border-top: 1px solid var(--fp-teal-border);
+  background: var(--fp-teal-bg);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.fp-progress-label { font-size: 11px; color: var(--slack-text-secondary); font-weight: 700; }
+
+.fp-progress-pips { display: flex; gap: 4px; }
+
+.fp-progress-pip {
+  width: 24px; height: 6px; border-radius: 3px;
+  background: rgba(45,184,184,0.2); transition: background 0.3s;
+}
+
+.fp-progress-pip.done { background: var(--fp-teal); }
+.fp-progress-pip.started { background: var(--fp-amber); }
+
+/* REACTIONS */
+.message-reactions { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+
+.reaction {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: #f2f2f2; border: 1px solid #d8d8d8;
+  border-radius: 4px; padding: 2px 6px;
+  font-size: 12px; cursor: pointer; transition: background 0.1s;
+}
+.reaction:hover { background: #e8e8e8; }
+.reaction-count { font-size: 11px; color: var(--slack-text-secondary); font-weight: 700; }
+
+/* INPUT AREA */
+.input-area {
+  padding: 12px 16px; border-top: 1px solid var(--slack-border);
+  flex-shrink: 0;
+}
+
+.input-box {
+  border: 1px solid var(--slack-border); border-radius: 8px;
+  padding: 8px 12px; font-size: 14px;
+  color: var(--slack-text-tertiary); cursor: default;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.input-placeholder { font-size: 13px; color: var(--slack-text-tertiary); }
+
+.input-icons { display: flex; gap: 8px; }
+.input-icon { font-size: 16px; color: var(--slack-text-tertiary); cursor: pointer; }
+
+/* PORTFOLIO CONTEXT */
+.portfolio-context {
+  margin-top: 1.5rem;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;
+}
+
+.context-card {
+  background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 0.85rem 1rem;
+}
+
+.context-card-label {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 5px;
+  font-family: 'DM Mono', monospace;
+}
+
+.context-card-value { font-size: 13px; color: rgba(255,255,255,0.65); font-family: 'DM Sans', sans-serif; line-height: 1.45; }
+.context-card-value strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+@media (max-width: 700px) {
+  .slack-shell { flex-direction: column; height: auto; }
+  .sidebar { width: 100%; height: 120px; overflow-x: auto; flex-direction: row; }
+  .portfolio-context { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a class="back-link" href="tinpigprod-home.html">← TinPigProd</a>
+  <span class="back-nav-brand">FlyingPig · Slack Simulation</span>
+</div>
+
+<div class="portfolio-wrap">
+
+  <div class="portfolio-header">
+    <div>
+      <div class="portfolio-title"><span>Flying</span>Pig — In-platform learning delivery</div>
+      <div class="portfolio-desc">FlyingPig is TinPigProd's AI learning agent. It fires when a feedback synthesis completes, surfacing targeted learning resources directly in Slack — no redirect, no separate system. Privacy by design: the channel shows a timestamp, not a name.</div>
+      <div class="portfolio-badges">
+        <span class="portfolio-badge badge-teal">Context-triggered</span>
+        <span class="portfolio-badge badge-teal">3 card formats</span>
+        <span class="portfolio-badge badge-teal">Privacy by design</span>
+        <span class="portfolio-badge badge-ghost">FictionalPig Success Model</span>
+        <span class="portfolio-badge badge-ghost">Collaborates · Communicates · Interpersonal Savvy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLACK SHELL -->
+  <div class="slack-shell">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-workspace">
+        <div class="workspace-status"></div>
+        <div class="workspace-name">FictionalPig</div>
+      </div>
+
+      <div class="sidebar-section-label">Channels</div>
+      <div class="sidebar-item"><span class="sidebar-item-hash">#</span> general</div>
+      <div class="sidebar-item"><span class="sidebar-item-hash">#</span> engineering</div>
+      <div class="sidebar-item"><span class="sidebar-item-hash">#</span> product-updates</div>
+      <div class="sidebar-item active"><span class="sidebar-item-hash">#</span> people-insights</div>
+      <div class="sidebar-item"><span class="sidebar-item-hash">#</span> launches</div>
+
+      <div class="sidebar-section-label" style="margin-top:8px;">Direct messages</div>
+      <div class="sidebar-item">
+        <div class="sidebar-dm-avatar" style="background:rgba(45,184,184,0.3);color:#2DB8B8;">⬡</div>
+        FlyingPig
+        <span class="unread-badge">1</span>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-dm-avatar" style="background:#5865F2;color:white;">TC</div>
+        Taylor Chen
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-dm-avatar" style="background:#E8A838;color:white;">SR</div>
+        Sam Rivera
+      </div>
+    </div>
+
+    <!-- CONTENT AREA -->
+    <div class="content-area">
+
+      <div class="channel-header">
+        <span style="font-size:16px;color:#616061;">#</span>
+        <span class="channel-header-name">people-insights</span>
+        <span class="channel-header-desc">Manager development · Private to people leads</span>
+        <span class="channel-header-members">👤 4 members</span>
+      </div>
+
+      <div class="messages-area">
+
+        <div class="date-divider">
+          <div class="date-divider-line"></div>
+          <div class="date-divider-label">Today</div>
+          <div class="date-divider-line"></div>
+        </div>
+
+        <!-- Taylor's synthesis message -->
+        <div class="message">
+          <div class="message-avatar" style="background:#E8A838;">TC</div>
+          <div class="message-body">
+            <div class="message-header">
+              <span class="message-sender">Taylor Chen</span>
+              <span class="message-time">9:14 AM</span>
+            </div>
+            <div class="message-text">Just ran a feedback synthesis on one of my direct reports. Some things I've been noticing are starting to make more sense when I look at them through the Success Model lens. The collaboration piece is the one I want to address first.</div>
+            <div class="message-reactions">
+              <div class="reaction">👍 <span class="reaction-count">2</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sam reply -->
+        <div class="message">
+          <div class="message-avatar" style="background:#9B59B6;">SR</div>
+          <div class="message-body">
+            <div class="message-header">
+              <span class="message-sender">Sam Rivera</span>
+              <span class="message-time">9:22 AM</span>
+            </div>
+            <div class="message-text">That's a good one to start with. The Collaborates gap often shows up as something else on the surface — defensiveness, going heads-down. Let FlyingPig know what came out of the synthesis and see what it surfaces.</div>
+          </div>
+        </div>
+
+        <!-- FlyingPig trigger message -->
+        <div class="message">
+          <div class="message-avatar" style="background:rgba(45,184,184,0.15);color:#2DB8B8;font-size:16px;">⬡</div>
+          <div class="message-body">
+            <div class="message-header">
+              <span class="message-sender flyingpig">FlyingPig</span>
+              <span style="font-size:10px;background:rgba(45,184,184,0.1);color:#2DB8B8;border:1px solid rgba(45,184,184,0.25);border-radius:3px;padding:1px 6px;font-weight:700;letter-spacing:0.04em;">APP</span>
+              <span class="message-time">9:23 AM</span>
+            </div>
+            <div class="message-text">Feedback synthesis complete for <strong>Direct Report Convo 5.17.26</strong> 🔒</div>
+          </div>
+        </div>
+
+        <!-- FlyingPig card block -->
+        <div class="fp-message-wrap">
+          <div class="fp-bot-card">
+
+            <div class="fp-bot-header">
+              <div class="fp-bot-logo">⬡</div>
+              <div class="fp-bot-name">FlyingPig</div>
+              <div class="fp-bot-trigger">Triggered by: feedback synthesis · 9:23 AM</div>
+            </div>
+
+            <div class="fp-bot-intro">
+              I found 3 resources anchored to the gaps identified in this synthesis. Each one maps to a competency from the FictionalPig Success Model. Start with whichever format works for your schedule right now.
+              <div>
+                <span class="fp-privacy-note">🔒 Competency detail revealed on click only — channel shows timestamp, not employee name</span>
+              </div>
+            </div>
+
+            <div class="fp-cards">
+
+              <!-- CARD 1 — Article -->
+              <div class="fp-card" onclick="toggleCard(1)">
+                <div class="fp-card-header">
+                  <span class="fp-card-type-badge type-article">Article</span>
+                  <span style="font-size:12px;color:#616061;">8 min read</span>
+                  <span class="fp-card-comp">Collaborates · The What</span>
+                </div>
+                <div class="fp-card-body">
+                  <div class="fp-card-title">The Collaboration Paradox: Why High Performers Work Alone</div>
+                  <div class="fp-card-desc">Harvard Business Review. Why technically strong ICs default to isolation and what managers can do to make collaboration feel less like overhead.</div>
+                </div>
+                <div class="fp-card-footer">
+                  <span class="fp-card-meta">Harvard Business Review · hbr.org</span>
+                  <span class="fp-card-status unread" id="status-1">● Unread</span>
+                </div>
+              </div>
+
+              <!-- CARD 2 — Framework -->
+              <div class="fp-card" onclick="toggleCard(2)">
+                <div class="fp-card-header">
+                  <span class="fp-card-type-badge type-framework">Framework</span>
+                  <span style="font-size:12px;color:#616061;">5 min</span>
+                  <span class="fp-card-comp">Communicates Effectively · The How</span>
+                </div>
+                <div class="fp-card-body">
+                  <div class="fp-card-title">The PREP Model: Structuring technical perspective for non-technical audiences</div>
+                  <div class="fp-card-desc">FictionalPig People Development. A four-part structure for technical communicators who default to depth over clarity when speaking across functions.</div>
+                </div>
+                <div class="fp-card-footer">
+                  <span class="fp-card-meta">FictionalPig Internal · People Development</span>
+                  <span class="fp-card-status unread" id="status-2">● Unread</span>
+                </div>
+              </div>
+
+              <!-- CARD 3 — Micro-lesson -->
+              <div class="fp-card" onclick="toggleCard(3)">
+                <div class="fp-card-header">
+                  <span class="fp-card-type-badge type-micro">Micro-lesson</span>
+                  <span style="font-size:12px;color:#616061;">3 min</span>
+                  <span class="fp-card-comp">Instills Trust · The How</span>
+                </div>
+                <div class="fp-card-body">
+                  <div class="fp-card-title">Generating energy without authority: The exothermic model</div>
+                  <div class="fp-card-desc">FlyingPig generated. Three behavioral shifts that help senior ICs build influence through contribution rather than position — without needing a title change first.</div>
+                </div>
+                <div class="fp-card-footer">
+                  <span class="fp-card-meta">FlyingPig · Generated resource</span>
+                  <span class="fp-card-status unread" id="status-3">● Unread</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- REVEAL -->
+            <div class="reveal-wrap">
+              <button class="reveal-btn" onclick="toggleReveal(event)">🔒 View employee detail and competency rationale</button>
+              <div class="reveal-content" id="reveal-content">
+                <strong>Jordan Mills</strong> · Senior Software Engineer · Individual Contributor L4<br><br>
+                Synthesis identified gaps in three Success Model competencies below expected L4 proficiency:<br><br>
+                <span class="reveal-comp-tag" style="background:rgba(45,184,184,0.1);color:#2DB8B8;border:1px solid rgba(45,184,184,0.2);">Collaborates</span> Making technical decisions with cross-team impact without flagging upstream. Expected: Level 2 (Effective). Observed: Level 1 (Developing).<br><br>
+                <span class="reveal-comp-tag" style="background:rgba(93,212,212,0.1);color:#5DD4D4;border:1px solid rgba(93,212,212,0.2);">Communicates Effectively</span> Communication in cross-functional settings is clipped and reactive. Expected: Level 2. Observed: Level 1.<br><br>
+                <span class="reveal-comp-tag" style="background:rgba(93,212,212,0.1);color:#5DD4D4;border:1px solid rgba(93,212,212,0.2);">Instills Trust</span> Feedback in peer settings is being closed down rather than engaged. Expected: Level 2. Observed: Level 1.
+              </div>
+            </div>
+
+            <!-- PROGRESS -->
+            <div class="fp-progress">
+              <span class="fp-progress-label">Progress · 0 of 3 complete</span>
+              <div class="fp-progress-pips">
+                <div class="fp-progress-pip" id="pip-1"></div>
+                <div class="fp-progress-pip" id="pip-2"></div>
+                <div class="fp-progress-pip" id="pip-3"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Taylor follow-up -->
+        <div class="message" style="margin-top:8px;">
+          <div class="message-avatar" style="background:#E8A838;">TC</div>
+          <div class="message-body">
+            <div class="message-header">
+              <span class="message-sender">Taylor Chen</span>
+              <span class="message-time">9:31 AM</span>
+            </div>
+            <div class="message-text">The HBR article is exactly what I needed. Going to read it before our 1:1 this afternoon. The exothermic model is a new one — curious to try it as a reframe in the conversation.</div>
+            <div class="message-reactions">
+              <div class="reaction">⬡ <span class="reaction-count">1</span></div>
+              <div class="reaction">🙌 <span class="reaction-count">2</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="input-area">
+        <div class="input-box">
+          <span class="input-placeholder">Message #people-insights</span>
+          <div class="input-icons">
+            <span class="input-icon">➕</span>
+            <span class="input-icon">😊</span>
+            <span class="input-icon">📎</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTEXT CARDS -->
+  <div class="portfolio-context">
+    <div class="context-card">
+      <div class="context-card-label">Trigger</div>
+      <div class="context-card-value"><strong>Context-aware</strong> — FlyingPig fires when a feedback synthesis completes, not on a calendar cadence. The moment of motivation is the moment of delivery.</div>
+    </div>
+    <div class="context-card">
+      <div class="context-card-label">Privacy design</div>
+      <div class="context-card-value"><strong>Timestamp at channel level.</strong> Employee name and competency detail are behind a deliberate click. Coaches can share context without exposing the individual.</div>
+    </div>
+    <div class="context-card">
+      <div class="context-card-label">The infrastructure underneath</div>
+      <div class="context-card-value"><strong>FictionalPig LXP</strong> powers the pathway behind these three cards — competency-tagged, level-aware, and trackable across the development lifecycle.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const cardStates = { 1: 'unread', 2: 'unread', 3: 'unread' };
+
+function toggleCard(num) {
+  if (cardStates[num] === 'unread') {
+    cardStates[num] = 'started';
+  } else if (cardStates[num] === 'started') {
+    cardStates[num] = 'done';
+  } else {
+    cardStates[num] = 'unread';
+  }
+
+  const statusEl = document.getElementById(`status-${num}`);
+  const pipEl = document.getElementById(`pip-${num}`);
+
+  const state = cardStates[num];
+  statusEl.className = `fp-card-status ${state}`;
+  statusEl.textContent = state === 'unread' ? '● Unread' : state === 'started' ? '◐ Started' : '✓ Done';
+
+  pipEl.className = `fp-progress-pip ${state === 'done' ? 'done' : state === 'started' ? 'started' : ''}`;
+
+  // Update progress label
+  const done = Object.values(cardStates).filter(s => s === 'done').length;
+  document.querySelector('.fp-progress-label').textContent = `Progress · ${done} of 3 complete`;
+}
+
+function toggleReveal(e) {
+  e.stopPropagation();
+  const content = document.getElementById('reveal-content');
+  content.classList.toggle('visible');
+  e.target.textContent = content.classList.contains('visible')
+    ? '🔓 Hide employee detail'
+    : '🔒 View employee detail and competency rationale';
+}
+</script>
+</body>
+</html>

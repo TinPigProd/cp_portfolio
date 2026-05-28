@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Succession Planning Tool — FictionalPig · TinPigProd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0E0E0E;
+  --bg2: #1A1A1A;
+  --bg3: #222222;
+  --surface: #242424;
+  --rule: rgba(255,255,255,0.07);
+  --rule-mid: rgba(255,255,255,0.13);
+  --ink: #F5F5F0;
+  --ink-mid: #999999;
+  --ink-soft: #666666;
+  --ink-ghost: #333333;
+  --teal: #2DB8B8;
+  --teal-light: #5DD4D4;
+  --teal-dim: rgba(45,184,184,0.10);
+  --amber: #E8A838;
+  --amber-dim: rgba(232,168,56,0.10);
+  --green: #3AB87A;
+  --green-dim: rgba(58,184,122,0.10);
+  --red: #E85050;
+  --red-dim: rgba(232,80,80,0.08);
+  --pink: #FF6B8A;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: 0.4;
+}
+
+/* BACK NAV */
+.back-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(14,14,14,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--rule);
+  height: 44px; padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.back-link {
+  font-size: 12px; color: var(--ink-soft); text-decoration: none;
+  display: flex; align-items: center; gap: 6px; transition: color 0.15s;
+}
+.back-link:hover { color: var(--ink); }
+.back-nav-brand { font-size: 12px; color: var(--ink-ghost); font-family: 'DM Mono', monospace; }
+
+/* MAIN */
+.main {
+  position: relative; z-index: 1;
+  padding-top: 44px;
+  max-width: 1000px; margin: 0 auto;
+  padding-left: 1.5rem; padding-right: 1.5rem;
+  padding-bottom: 5rem;
+}
+
+/* HEADER */
+.tool-header {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 0.5px solid var(--rule);
+  margin-bottom: 2rem;
+}
+
+.tool-eyebrow {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 0.75rem;
+  font-family: 'DM Mono', monospace;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+
+.eyebrow-line { width: 20px; height: 0.5px; background: var(--teal); opacity: 0.5; }
+
+.tool-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(26px, 3.5vw, 42px);
+  line-height: 1.1; color: var(--ink); margin-bottom: 0.75rem;
+}
+
+.tool-title em { font-style: italic; color: var(--teal); }
+.tool-desc { font-size: 14px; color: var(--ink-mid); line-height: 1.7; max-width: 580px; }
+
+/* VIEW TOGGLE */
+.view-toggle-wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.view-toggle-label {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); font-family: 'DM Mono', monospace;
+}
+
+.view-toggle {
+  display: flex; background: var(--bg2);
+  border: 0.5px solid var(--rule-mid);
+  border-radius: 100px; padding: 3px; gap: 2px;
+}
+
+.view-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  padding: 5px 16px; border-radius: 100px;
+  cursor: pointer; border: none;
+  background: transparent; color: var(--ink-soft);
+  transition: all 0.2s;
+}
+
+.view-btn.active { background: var(--teal); color: #0E0E0E; font-weight: 600; }
+
+/* EMPLOYEE CARDS */
+.employee-strip {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.75rem; margin-bottom: 1.5rem;
+}
+
+.employee-card {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 10px; padding: 1rem;
+  cursor: pointer; transition: border-color 0.2s;
+  display: flex; align-items: center; gap: 0.85rem;
+}
+
+.employee-card:hover { border-color: var(--rule-mid); }
+.employee-card.selected { border-color: var(--teal); background: var(--teal-dim); }
+
+.employee-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+}
+
+.employee-info-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.employee-info-role { font-size: 11px; color: var(--ink-soft); }
+.employee-info-level {
+  font-size: 9px; font-weight: 600; padding: 1px 7px;
+  border-radius: 100px; margin-top: 3px; display: inline-block;
+  background: var(--teal-dim); color: var(--teal);
+  border: 0.5px solid rgba(45,184,184,0.2);
+  font-family: 'DM Mono', monospace;
+}
+
+/* 9-BOX */
+.ninebox-wrap {
+  display: grid; grid-template-columns: 28px 1fr;
+  gap: 0; margin-bottom: 1.5rem;
+}
+
+.ninebox-y-label {
+  display: flex; align-items: center; justify-content: center;
+  writing-mode: vertical-rl; text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); font-family: 'DM Mono', monospace;
+}
+
+.ninebox-right { display: flex; flex-direction: column; gap: 0; }
+
+.ninebox-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.ninebox-x-labels {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 3px; margin-top: 6px;
+}
+
+.ninebox-x-label {
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-soft); text-align: center;
+  font-family: 'DM Mono', monospace;
+}
+
+.ninebox-x-axis-label {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); text-align: center; margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+}
+
+/* CELLS */
+.cell {
+  aspect-ratio: 1; border-radius: 8px;
+  border: 0.5px solid var(--rule);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative; transition: border-color 0.2s;
+  min-height: 90px;
+  padding: 0.5rem;
+}
+
+.cell-label {
+  font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
+  text-align: center; line-height: 1.3; color: var(--ink-ghost);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 4px;
+}
+
+/* Cell colors by position (row 3=high, row 1=low; col 1=low, col 3=high) */
+/* r3c1 */ .cell-31 { background: rgba(232,168,56,0.06); }
+/* r3c2 */ .cell-32 { background: rgba(58,184,122,0.06); }
+/* r3c3 */ .cell-33 { background: rgba(58,184,122,0.10); border-color: rgba(58,184,122,0.2); }
+/* r2c1 */ .cell-21 { background: rgba(232,80,80,0.04); }
+/* r2c2 */ .cell-22 { background: rgba(232,168,56,0.06); }
+/* r2c3 */ .cell-23 { background: rgba(58,184,122,0.06); }
+/* r1c1 */ .cell-11 { background: rgba(232,80,80,0.08); border-color: rgba(232,80,80,0.15); }
+/* r1c2 */ .cell-12 { background: rgba(232,80,80,0.04); }
+/* r1c3 */ .cell-13 { background: rgba(232,168,56,0.06); }
+
+/* EMPLOYEE DOTS IN CELLS */
+.cell-dots { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+
+.cell-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+  cursor: pointer; transition: transform 0.15s;
+  border: 2px solid transparent;
+}
+
+.cell-dot:hover { transform: scale(1.15); }
+.cell-dot.selected { border-color: white; transform: scale(1.1); }
+
+/* DETAIL PANEL */
+.detail-panel {
+  background: var(--bg2); border: 0.5px solid var(--rule-mid);
+  border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-panel-header {
+  padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--rule);
+  display: flex; align-items: center; gap: 0.85rem;
+}
+
+.detail-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+}
+
+.detail-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+.detail-role { font-size: 12px; color: var(--ink-soft); }
+
+.detail-placement {
+  margin-left: auto; text-align: right;
+}
+
+.detail-placement-label {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); font-family: 'DM Mono', monospace; margin-bottom: 2px;
+}
+
+.detail-placement-value { font-size: 13px; font-weight: 500; color: var(--teal); }
+
+.detail-panel-body {
+  padding: 1.25rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.detail-col-label {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); font-family: 'DM Mono', monospace;
+  margin-bottom: 0.6rem;
+}
+
+.detail-comp-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.detail-comp-item { display: flex; align-items: flex-start; gap: 8px; }
+
+.detail-comp-tag {
+  font-size: 9px; font-weight: 600; padding: 2px 7px;
+  border-radius: 100px; flex-shrink: 0; margin-top: 1px;
+  letter-spacing: 0.04em;
+}
+
+.comp-what { background: var(--teal-dim); color: var(--teal); border: 0.5px solid rgba(45,184,184,0.2); }
+.comp-how { background: rgba(93,212,212,0.10); color: var(--teal-light); border: 0.5px solid rgba(93,212,212,0.2); }
+
+.detail-comp-text { font-size: 12px; color: var(--ink-mid); line-height: 1.55; }
+
+/* BIAS PANEL */
+.bias-panel {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem;
+}
+
+.bias-panel-header {
+  padding: 0.85rem 1.25rem; border-bottom: 0.5px solid var(--rule);
+  display: flex; align-items: center; gap: 0.75rem;
+}
+
+.bias-panel-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+.bias-panel-desc { font-size: 11px; color: var(--ink-soft); margin-left: auto; }
+
+.bias-panel-body { padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+.bias-row {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 0.75rem; align-items: center;
+}
+
+.bias-before {
+  background: var(--red-dim); border: 0.5px solid rgba(232,80,80,0.15);
+  border-radius: 6px; padding: 0.6rem 0.85rem;
+  font-size: 12px; color: var(--ink-mid); font-style: italic; line-height: 1.4;
+}
+
+.bias-arrow {
+  font-size: 14px; color: var(--teal); text-align: center; flex-shrink: 0;
+}
+
+.bias-after {
+  background: var(--teal-dim); border: 0.5px solid rgba(45,184,184,0.2);
+  border-radius: 6px; padding: 0.6rem 0.85rem;
+  font-size: 12px; color: var(--ink-mid); line-height: 1.4;
+}
+
+.bias-after-comp {
+  font-size: 9px; font-weight: 600; color: var(--teal);
+  font-family: 'DM Mono', monospace; letter-spacing: 0.06em;
+  display: block; margin-top: 3px;
+}
+
+/* FRAMEWORK NOTE */
+.framework-note {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 10px; padding: 1.1rem 1.25rem;
+  display: flex; align-items: flex-start; gap: 0.85rem;
+}
+
+.framework-note-icon { font-size: 16px; color: var(--teal); font-family: 'DM Mono', monospace; flex-shrink: 0; }
+.framework-note-title { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.framework-note-body { font-size: 11px; color: var(--ink-soft); line-height: 1.55; }
+.framework-note-link { font-size: 11px; color: var(--teal); text-decoration: none; font-weight: 500; display: inline-block; margin-top: 4px; }
+
+@media (max-width: 640px) {
+  .employee-strip { grid-template-columns: 1fr; }
+  .detail-panel-body { grid-template-columns: 1fr; }
+  .bias-row { grid-template-columns: 1fr; }
+  .bias-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<div class="back-nav">
+  <a class="back-link" href="tinpigprod-home.html">← TinPigProd</a>
+  <span class="back-nav-brand">FictionalPig · Succession Planning</span>
+</div>
+
+<div class="main">
+
+  <div class="tool-header">
+    <div class="tool-eyebrow"><div class="eyebrow-line"></div>TinPigProd · Talent enablement</div>
+    <h1 class="tool-title">Succession <em>Planning</em> Tool</h1>
+    <p class="tool-desc">See how subjective manager language becomes behavioral evidence, then watch two FictionalPig employees placed on dual 9-box views — Traditional (Performance x Potential) and Success Model (The What x The How).</p>
+  </div>
+
+  <!-- VIEW TOGGLE -->
+  <div class="view-toggle-wrap">
+    <span class="view-toggle-label">9-box view</span>
+    <div class="view-toggle">
+      <button class="view-btn active" id="btn-traditional" onclick="setView('traditional')">Traditional</button>
+      <button class="view-btn" id="btn-successmodel" onclick="setView('successmodel')">Success Model</button>
+    </div>
+  </div>
+
+  <!-- EMPLOYEE STRIP -->
+  <div class="employee-strip">
+    <div class="employee-card selected" id="card-jordan" onclick="selectEmployee('jordan')">
+      <div class="employee-avatar" style="background:rgba(45,184,184,0.15);color:var(--teal);">JM</div>
+      <div>
+        <div class="employee-info-name">Jordan Mills</div>
+        <div class="employee-info-role">Senior Software Engineer</div>
+        <div class="employee-info-level">IC · L4</div>
+      </div>
+    </div>
+    <div class="employee-card" id="card-taylor" onclick="selectEmployee('taylor')">
+      <div class="employee-avatar" style="background:rgba(232,168,56,0.15);color:var(--amber);">TC</div>
+      <div>
+        <div class="employee-info-name">Taylor Chen</div>
+        <div class="employee-info-role">Program Manager</div>
+        <div class="employee-info-level">Leading Teams · L5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9-BOX -->
+  <div class="ninebox-wrap">
+    <div class="ninebox-y-label" id="y-label">Potential</div>
+    <div class="ninebox-right">
+      <div class="ninebox-grid" id="ninebox-grid">
+        <!-- rendered by JS -->
+      </div>
+      <div class="ninebox-x-labels" id="x-labels">
+        <!-- rendered by JS -->
+      </div>
+      <div class="ninebox-x-axis-label" id="x-axis-label">Performance</div>
+    </div>
+  </div>
+
+  <!-- DETAIL PANEL -->
+  <div class="detail-panel" id="detail-panel">
+    <!-- rendered by JS -->
+  </div>
+
+  <!-- BIAS PANEL -->
+  <div class="bias-panel">
+    <div class="bias-panel-header">
+      <div class="bias-panel-title">Language transformation</div>
+      <div class="bias-panel-desc">How subjective phrases became behavioral evidence</div>
+    </div>
+    <div class="bias-panel-body" id="bias-panel-body">
+      <!-- rendered by JS -->
+    </div>
+  </div>
+
+  <!-- FRAMEWORK NOTE -->
+  <div class="framework-note">
+    <div class="framework-note-icon">⬡</div>
+    <div>
+      <div class="framework-note-title">Grounded in the FictionalPig Success Model</div>
+      <div class="framework-note-body">Every placement is anchored to The What (performance delivery) and The How (culture and growth) — the same competency framework used in feedback synthesis and development conversations. The Success Model view removes performance/potential subjectivity and replaces it with observable behavioral dimensions.</div>
+      <a class="framework-note-link" href="fictionalpig-success-model.html" target="_blank" rel="noopener noreferrer">Explore the full Success Model →</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const EMPLOYEES = {
+  jordan: {
+    name: 'Jordan Mills',
+    role: 'Senior Software Engineer',
+    level: 'Individual Contributor · L4',
+    initials: 'JM',
+    color: 'var(--teal)',
+    colorBg: 'rgba(45,184,184,0.15)',
+    traditional: { row: 2, col: 3, label: 'High Performer', rationale: 'Consistently delivers high-quality work and meets every deadline. Technical depth is exceptional for the level.' },
+    successmodel: { row: 1, col: 3, label: 'Strong What · Developing How', rationale: 'Drives Results and Plans and Aligns are at or above IC expectations. Collaborates and Communicates Effectively are below expected proficiency for L4.' },
+    strengths: [
+      { comp: 'Drives Results', tier: 'what', text: 'Delivers consistently and owns outcomes without prompting. Deadline adherence and technical quality are well above IC expectations.' },
+      { comp: 'Plans and Aligns', tier: 'what', text: 'Organizes own work effectively and communicates blockers before they become problems.' },
+      { comp: 'Learning Agility', tier: 'how', text: 'Applies new technical approaches quickly and adapts when architectural decisions shift.' }
+    ],
+    opportunities: [
+      { comp: 'Collaborates', tier: 'what', text: 'Operating below expected L4 proficiency. Technical decisions with cross-team impact are being made without flagging upstream, creating friction with dependent teams.' },
+      { comp: 'Communicates Effectively', tier: 'how', text: 'Communication in cross-functional settings is clipped and reactive rather than proactive and adaptive to audience.' },
+      { comp: 'Courage', tier: 'what', text: 'Feedback in peer settings is being shut down rather than engaged with. At L4, openness to technical challenge is an expected behavior.' }
+    ],
+    bias: [
+      { before: '"Goes heads down and doesn\'t loop people in"', after: 'Technical decisions with cross-team scope are being made without upstream flagging — an observable Collaborates gap at L4.', comp: 'Collaborates' },
+      { before: '"Gets defensive in code reviews"', after: 'When peers offer alternative approaches, the conversation closes rather than deepens — a Courage and Communicates gap.', comp: 'Courage · Communicates' },
+      { before: '"Not sure they\'re growing"', after: 'Delivery is strong but behavioral evidence for The How competencies (Collaborates, Communicates, Interpersonal Savvy) is absent at the expected L4 level.', comp: 'Learning Agility' }
+    ]
+  },
+  taylor: {
+    name: 'Taylor Chen',
+    role: 'Program Manager',
+    level: 'Leading Teams · L5',
+    initials: 'TC',
+    color: 'var(--amber)',
+    colorBg: 'rgba(232,168,56,0.15)',
+    traditional: { row: 2, col: 2, label: 'Core Performer', rationale: 'Solid execution and strong team relationships. Potential is harder to assess — not yet demonstrating the strategic indicators expected at L5.' },
+    successmodel: { row: 2, col: 2, label: 'Effective What · Developing How', rationale: 'Plans and Aligns and Drives Results meet L5 expectations in execution. Courage and Develops Talent are below expected proficiency for Leading Teams.' },
+    strengths: [
+      { comp: 'Plans and Aligns', tier: 'what', text: 'Team operates with clear visibility — meetings run effectively, statuses are current, and blockers surface before they escalate.' },
+      { comp: 'Instills Trust', tier: 'how', text: 'The team clearly feels safe and supported. Taylor has built genuine relational capital at the direct team level.' },
+      { comp: 'Drives Results', tier: 'what', text: 'Delivery against plan is consistent. The execution layer of this role is well managed.' }
+    ],
+    opportunities: [
+      { comp: 'Courage', tier: 'what', text: 'When scope changes arrived from Product, the response was to re-plan around them rather than challenge the decision. At L5, advocating for the team\'s capacity and pushing back on scope is an expected behavior.' },
+      { comp: 'Develops Talent', tier: 'how', text: 'Operating as a coordinator rather than a developer of people. The L5 expectation is to build individual development plans and coach directly — not just facilitate well.' },
+      { comp: 'Collaborates', tier: 'what', text: 'Relationship-building beyond the immediate pod is limited. Cross-functional influence is an expected L5 competency, not an L6 one.' }
+    ],
+    bias: [
+      { before: '"More of a coordinator than a leader"', after: 'Facilitating without direction is a Courage gap — not sharing a point of view in planning sessions when one is expected at L5.', comp: 'Courage' },
+      { before: '"Just accepted the scope change"', after: 'Failing to advocate for the team when scope shifts is a below-expectation Courage behavior for Leading Teams.', comp: 'Courage' },
+      { before: '"Hasn\'t built relationships outside the pod"', after: 'Cross-functional relationship building is a Collaborates expectation at L5 — not optional for this level.', comp: 'Collaborates' }
+    ]
+  }
+};
+
+let currentView = 'traditional';
+let selectedEmployee = 'jordan';
+
+const CELL_LABELS_TRADITIONAL = [
+  ['Low Performer', 'Inconsistent', 'High Potential'],
+  ['Effective', 'Core', 'Rising Star'],
+  ['Solid', 'Strong', 'Top Talent']
+];
+
+const CELL_LABELS_SM = [
+  ['Low What\nLow How', 'Strong What\nLow How', 'Strong What\nDeveloping How'],
+  ['Developing What\nSolid How', 'Effective\nBoth', 'Strong What\nStrong How'],
+  ['Low What\nHigh How', 'Developing What\nHigh How', 'Strong Both\nTop Talent']
+];
+
+const X_LABELS_TRADITIONAL = ['Low', 'Medium', 'High'];
+const X_LABELS_SM = ['The What', 'The What', 'The What'];
+const Y_LABELS_TRADITIONAL = 'Potential';
+const Y_LABELS_SM = 'The How';
+
+function setView(view) {
+  currentView = view;
+  document.getElementById('btn-traditional').classList.toggle('active', view === 'traditional');
+  document.getElementById('btn-successmodel').classList.toggle('active', view === 'successmodel');
+  renderBox();
+  renderDetail();
+}
+
+function selectEmployee(emp) {
+  selectedEmployee = emp;
+  document.getElementById('card-jordan').classList.toggle('selected', emp === 'jordan');
+  document.getElementById('card-taylor').classList.toggle('selected', emp === 'taylor');
+  renderDetail();
+  renderBias();
+}
+
+function renderBox() {
+  const grid = document.getElementById('ninebox-grid');
+  const xLabels = document.getElementById('x-labels');
+  const yLabel = document.getElementById('y-label');
+  const xAxisLabel = document.getElementById('x-axis-label');
+
+  yLabel.textContent = currentView === 'traditional' ? 'Potential' : 'The How';
+  xAxisLabel.textContent = currentView === 'traditional' ? 'Performance' : 'The What';
+
+  const labels = currentView === 'traditional' ? CELL_LABELS_TRADITIONAL : CELL_LABELS_SM;
+
+  // Build grid — rows 3 (top) to 1 (bottom), cols 1–3
+  let html = '';
+  for (let r = 3; r >= 1; r--) {
+    for (let c = 1; c <= 3; c++) {
+      const cellLabel = labels[r - 1][c - 1];
+      const dots = getDotForCell(r, c);
+      html += `<div class="cell cell-${r}${c}">
+        <div class="cell-label">${cellLabel.replace('\n', '<br>')}</div>
+        <div class="cell-dots">${dots}</div>
+      </div>`;
+    }
+  }
+  grid.innerHTML = html;
+
+  // X labels
+  const xl = currentView === 'traditional' ? ['Low', 'Medium', 'High'] : ['Developing', 'Effective', 'Advanced'];
+  xLabels.innerHTML = xl.map(l => `<div class="ninebox-x-label">${l}</div>`).join('');
+}
+
+function getDotForCell(r, c) {
+  let dots = '';
+  Object.entries(EMPLOYEES).forEach(([key, emp]) => {
+    const placement = emp[currentView];
+    if (placement.row === r && placement.col === c) {
+      const isSelected = key === selectedEmployee;
+      dots += `<div class="cell-dot ${isSelected ? 'selected' : ''}"
+        style="background:${emp.colorBg};color:${emp.color};border-color:${isSelected ? emp.color : 'transparent'};"
+        onclick="selectEmployee('${key}')"
+        title="${emp.name}">${emp.initials}</div>`;
+    }
+  });
+  return dots;
+}
+
+function renderDetail() {
+  const emp = EMPLOYEES[selectedEmployee];
+  const placement = emp[currentView];
+  const panel = document.getElementById('detail-panel');
+
+  const strengthsHTML = emp.strengths.map(s => `
+    <div class="detail-comp-item">
+      <span class="detail-comp-tag comp-${s.tier}">${s.comp}</span>
+      <span class="detail-comp-text">${s.text}</span>
+    </div>`).join('');
+
+  const oppsHTML = emp.opportunities.map(o => `
+    <div class="detail-comp-item">
+      <span class="detail-comp-tag comp-${o.tier}">${o.comp}</span>
+      <span class="detail-comp-text">${o.text}</span>
+    </div>`).join('');
+
+  panel.innerHTML = `
+    <div class="detail-panel-header">
+      <div class="detail-avatar" style="background:${emp.colorBg};color:${emp.color};">${emp.initials}</div>
+      <div>
+        <div class="detail-name">${emp.name}</div>
+        <div class="detail-role">${emp.role} · ${emp.level}</div>
+      </div>
+      <div class="detail-placement">
+        <div class="detail-placement-label">${currentView === 'traditional' ? 'Traditional placement' : 'Success Model placement'}</div>
+        <div class="detail-placement-value">${placement.label}</div>
+      </div>
+    </div>
+    <div class="detail-panel-body">
+      <div>
+        <div class="detail-col-label">Strengths</div>
+        <div class="detail-comp-list">${strengthsHTML}</div>
+      </div>
+      <div>
+        <div class="detail-col-label">Opportunities</div>
+        <div class="detail-comp-list">${oppsHTML}</div>
+      </div>
+    </div>
+    <div style="padding:0.85rem 1.25rem;border-top:0.5px solid var(--rule);font-size:12px;color:var(--ink-soft);font-style:italic;">${placement.rationale}</div>`;
+}
+
+function renderBias() {
+  const emp = EMPLOYEES[selectedEmployee];
+  const body = document.getElementById('bias-panel-body');
+  body.innerHTML = emp.bias.map(b => `
+    <div class="bias-row">
+      <div class="bias-before">${b.before}</div>
+      <div class="bias-arrow">→</div>
+      <div class="bias-after">${b.after}<span class="bias-after-comp">${b.comp}</span></div>
+    </div>`).join('');
+}
+
+// Init
+renderBox();
+renderDetail();
+renderBias();
+</script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FictionalPig Success Model — TinPig Productions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0E0E0E;
+  --bg2: #1A1A1A;
+  --bg3: #222222;
+  --rule: rgba(255,255,255,0.07);
+  --rule-mid: rgba(255,255,255,0.12);
+  --ink: #F5F5F0;
+  --ink-mid: #999999;
+  --ink-soft: #666666;
+  --ink-ghost: #3A3A3A;
+  --teal: #2DB8B8;
+  --teal-dim: rgba(45,184,184,0.10);
+  --teal-bright: rgba(45,184,184,0.20);
+  --pink: #FF6B8A;
+  --pink-dim: rgba(255,107,138,0.10);
+  --amber: #E8A838;
+  --amber-dim: rgba(232,168,56,0.10);
+  --what-color: #2DB8B8;
+  --how-color: #5DD4D4;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* GRAIN */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 300;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: 0.4;
+}
+
+/* HEADER */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(14,14,14,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--rule);
+  padding: 0 2rem; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.header-brand {
+  display: flex; align-items: baseline; gap: 6px;
+  font-size: 14px; font-weight: 500; color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.header-brand span { color: var(--teal); font-weight: 400; }
+
+.header-tag {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); font-family: 'DM Mono', monospace;
+}
+
+/* HERO */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 4rem 2rem 2rem;
+  display: grid; grid-template-columns: 1fr 320px;
+  gap: 4rem; align-items: start;
+}
+
+.hero-eyebrow {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 1rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.1; color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.hero-title em { font-style: italic; color: var(--teal); }
+
+.hero-desc {
+  font-size: 15px; color: var(--ink-mid); line-height: 1.75;
+  max-width: 480px;
+}
+
+/* TIER LEGEND */
+.tier-legend {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.tier-item {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  padding: 1rem; background: var(--bg2);
+  border: 0.5px solid var(--rule-mid); border-radius: 10px;
+}
+
+.tier-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 3px;
+}
+
+.tier-name { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.tier-desc { font-size: 11px; color: var(--ink-soft); line-height: 1.5; }
+
+/* LEVEL TOGGLE */
+.level-toggle-wrap {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 2rem 2rem;
+}
+
+.level-toggle-label {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 0.75rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.level-toggle {
+  display: flex; gap: 0; border: 0.5px solid var(--rule-mid);
+  border-radius: 8px; overflow: hidden; width: fit-content;
+}
+
+.level-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  padding: 8px 20px; cursor: pointer; border: none;
+  background: var(--bg2); color: var(--ink-soft);
+  border-right: 0.5px solid var(--rule);
+  transition: all 0.2s; letter-spacing: 0.02em;
+}
+
+.level-btn:last-child { border-right: none; }
+.level-btn:hover { color: var(--ink); background: var(--bg3); }
+.level-btn.active { background: var(--teal); color: #0E0E0E; font-weight: 600; }
+
+/* MAIN LAYOUT */
+.main-layout {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: grid; grid-template-columns: 260px 1fr;
+  gap: 2rem; align-items: start;
+}
+
+/* SIDEBAR — VALUES */
+.sidebar {
+  position: sticky; top: 68px;
+}
+
+.sidebar-section-label {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 0.75rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.value-btn {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  width: 100%; background: none; border: none; cursor: pointer;
+  text-align: left; padding: 0.85rem 1rem;
+  border-radius: 8px; margin-bottom: 4px;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.15s; border: 0.5px solid transparent;
+}
+
+.value-btn:hover { background: var(--bg2); }
+
+.value-btn.active {
+  background: var(--teal-dim);
+  border-color: rgba(45,184,184,0.2);
+}
+
+.value-btn.active .value-name { color: var(--teal); }
+
+.value-indicator {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ink-ghost); flex-shrink: 0; margin-top: 5px;
+  transition: background 0.2s;
+}
+
+.value-btn.active .value-indicator { background: var(--teal); }
+.value-btn.all-active .value-indicator { background: var(--teal); }
+
+.value-name {
+  font-size: 12px; font-weight: 600; color: var(--ink-mid);
+  margin-bottom: 2px; letter-spacing: 0.01em;
+}
+
+.value-tagline { font-size: 11px; color: var(--ink-soft); line-height: 1.4; }
+
+.sidebar-divider {
+  height: 0.5px; background: var(--rule);
+  margin: 1rem 0;
+}
+
+/* COMPETENCY GRID */
+.competency-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+.tier-group { margin-bottom: 0.5rem; }
+
+.tier-header {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 0.85rem; padding-bottom: 0.6rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.tier-header-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+
+.tier-header-title {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tier-header-count {
+  font-size: 10px; color: var(--ink-soft); margin-left: auto;
+  font-family: 'DM Mono', monospace;
+}
+
+.comp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+/* COMPETENCY CARD */
+.comp-card {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 12px; overflow: hidden;
+  cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+}
+
+.comp-card:hover { border-color: var(--rule-mid); transform: translateY(-1px); }
+.comp-card.active { border-color: var(--teal); }
+.comp-card.hidden { display: none; }
+
+.comp-card-header { padding: 1rem 1rem 0.6rem; }
+
+.comp-card-tier {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 600; margin-bottom: 0.4rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.comp-card-name {
+  font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3;
+}
+
+.comp-card-value {
+  font-size: 10px; color: var(--ink-soft); margin-top: 4px;
+}
+
+.comp-card-rating {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0.6rem 1rem; border-top: 0.5px solid var(--rule);
+  background: var(--bg);
+}
+
+.rating-pips { display: flex; gap: 3px; }
+
+.pip {
+  width: 10px; height: 10px; border-radius: 2px;
+  background: var(--ink-ghost); transition: background 0.2s;
+}
+
+.pip.filled-what { background: var(--what-color); }
+.pip.filled-how { background: var(--how-color); }
+
+.rating-label {
+  font-size: 10px; color: var(--ink-soft);
+  font-family: 'DM Mono', monospace; margin-left: 2px;
+}
+
+/* DETAIL PANEL */
+.detail-panel {
+  display: none; grid-column: 1 / -1;
+  background: var(--bg2); border: 0.5px solid var(--teal);
+  border-radius: 14px; overflow: hidden;
+  animation: slideDown 0.25s ease;
+}
+
+.detail-panel.open { display: block; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 0.5px solid var(--rule);
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+
+.detail-tier {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 600; margin-bottom: 0.4rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.detail-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px; color: var(--ink);
+}
+
+.detail-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg3); border: 0.5px solid var(--rule-mid);
+  color: var(--ink-soft); cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-left: 1rem; margin-top: 4px;
+  font-family: 'DM Sans', sans-serif; font-weight: 400;
+}
+
+.detail-close:hover { color: var(--ink); background: var(--bg); }
+
+.detail-body { padding: 1.5rem; }
+
+.detail-value-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+  background: var(--teal-dim); color: var(--teal);
+  border: 0.5px solid rgba(45,184,184,0.2); margin-bottom: 1rem;
+}
+
+.detail-level-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.detail-level-card {
+  background: var(--bg); border: 0.5px solid var(--rule);
+  border-radius: 10px; padding: 1rem; opacity: 0.4;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.detail-level-card.current {
+  opacity: 1; border-color: var(--teal);
+  background: rgba(45,184,184,0.04);
+}
+
+.dlc-level {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 0.4rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.dlc-level-current { color: var(--teal); }
+
+.dlc-rating {
+  display: flex; align-items: center; gap: 4px; margin-bottom: 0.6rem;
+}
+
+.dlc-desc { font-size: 12px; color: var(--ink-mid); line-height: 1.6; }
+
+.detail-level-card.current .dlc-desc { color: var(--ink); }
+
+/* RATING SCALE */
+.rating-scale {
+  display: flex; gap: 0.5rem; margin-top: 2rem; padding-top: 1.25rem;
+  border-top: 0.5px solid var(--rule);
+}
+
+.scale-item {
+  flex: 1; display: flex; align-items: flex-start; gap: 6px;
+}
+
+.scale-num {
+  font-size: 11px; font-weight: 600; color: var(--teal);
+  font-family: 'DM Mono', monospace; flex-shrink: 0; padding-top: 1px;
+}
+
+.scale-desc { font-size: 10px; color: var(--ink-soft); line-height: 1.45; }
+
+/* SITE FOOTER */
+.site-footer {
+  border-top: 0.5px solid var(--rule); padding: 1.5rem 2rem;
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--ink-soft);
+  font-family: 'DM Mono', monospace;
+  max-width: 1100px; margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; gap: 2rem; }
+  .main-layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .comp-cards { grid-template-columns: 1fr; }
+  .detail-level-grid { grid-template-columns: 1fr 1fr; }
+  .level-toggle { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-brand">TinPigProd</div>
+  <div class="header-tag">FictionalPig · Success Model</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">FictionalPig · Success Model v1.0</div>
+    <h1 class="hero-title">The <em>what</em> and<br>the <em>how</em> of<br>performance.</h1>
+    <p class="hero-desc">A competency framework anchored in FictionalPig values — defining what excellence looks like at every career level, across two dimensions: what you deliver, and how you deliver it.</p>
+  </div>
+  <div class="tier-legend">
+    <div class="tier-item">
+      <div class="tier-dot" style="background:var(--what-color);"></div>
+      <div>
+        <div class="tier-name" style="color:var(--what-color);">The What</div>
+        <div class="tier-desc">Enterprise-critical competencies. The performance delivery dimension. What every role at FictionalPig must demonstrate.</div>
+      </div>
+    </div>
+    <div class="tier-item">
+      <div class="tier-dot" style="background:var(--how-color);"></div>
+      <div>
+        <div class="tier-name" style="color:var(--how-color);">The How</div>
+        <div class="tier-desc">Culture-differentiating competencies. The growth and culture dimension. What makes someone distinctly FictionalPig.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVEL TOGGLE -->
+<div class="level-toggle-wrap">
+  <div class="level-toggle-label">Viewing expectations for</div>
+  <div class="level-toggle">
+    <button class="level-btn active" data-level="ic" onclick="setLevel('ic')">Individual Contributor</button>
+    <button class="level-btn" data-level="tl" onclick="setLevel('tl')">Leading Teams</button>
+    <button class="level-btn" data-level="ll" onclick="setLevel('ll')">Leading Leaders</button>
+    <button class="level-btn" data-level="ex" onclick="setLevel('ex')">Executive</button>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section-label">Filter by value</div>
+    <button class="value-btn active" data-value="all" onclick="filterValue('all')">
+      <div class="value-indicator"></div>
+      <div>
+        <div class="value-name">All values</div>
+        <div class="value-tagline">Show all 11 competencies</div>
+      </div>
+    </button>
+    <div class="sidebar-divider"></div>
+    <button class="value-btn" data-value="curiosity" onclick="filterValue('curiosity')">
+      <div class="value-indicator"></div>
+      <div>
+        <div class="value-name">Curate curiosity</div>
+        <div class="value-tagline">Psychological safety, questions, failure, challenge</div>
+      </div>
+    </button>
+    <button class="value-btn" data-value="people" onclick="filterValue('people')">
+      <div class="value-indicator"></div>
+      <div>
+        <div class="value-name">Prioritize people</div>
+        <div class="value-tagline">Expectations, empowerment, retention</div>
+      </div>
+    </button>
+    <button class="value-btn" data-value="integrity" onclick="filterValue('integrity')">
+      <div class="value-indicator"></div>
+      <div>
+        <div class="value-name">Operate with integrity</div>
+        <div class="value-tagline">Do the right thing, even when it's hard</div>
+      </div>
+    </button>
+    <button class="value-btn" data-value="collaborate" onclick="filterValue('collaborate')">
+      <div class="value-indicator"></div>
+      <div>
+        <div class="value-name">Collaborate to execute</div>
+        <div class="value-tagline">Better together, goals, accountability</div>
+      </div>
+    </button>
+    <button class="value-btn" data-value="impact" onclick="filterValue('impact')">
+      <div class="value-indicator"></div>
+      <div>
+        <div class="value-name">User impact</div>
+        <div class="value-tagline">Understand needs, build what matters</div>
+      </div>
+    </button>
+  </aside>
+
+  <!-- COMPETENCY GRID -->
+  <div class="competency-grid" id="comp-grid">
+
+    <!-- THE WHAT -->
+    <div class="tier-group" id="tier-what">
+      <div class="tier-header">
+        <div class="tier-header-dot" style="background:var(--what-color);"></div>
+        <div class="tier-header-title" style="color:var(--what-color);">The What — Performance delivery</div>
+        <div class="tier-header-count">6 competencies</div>
+      </div>
+      <div class="comp-cards" id="what-cards">
+
+        <div class="comp-card" data-comp="results" data-tier="what" data-values="collaborate" onclick="openComp('results')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--what-color);">The What</div>
+            <div class="comp-card-name">Drives Results</div>
+            <div class="comp-card-value">Collaborate to execute</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-results"></div>
+            <div class="rating-label" id="label-results"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="customer" data-tier="what" data-values="impact" onclick="openComp('customer')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--what-color);">The What</div>
+            <div class="comp-card-name">Customer Focus</div>
+            <div class="comp-card-value">User impact</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-customer"></div>
+            <div class="rating-label" id="label-customer"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="collaborates" data-tier="what" data-values="collaborate" onclick="openComp('collaborates')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--what-color);">The What</div>
+            <div class="comp-card-name">Collaborates</div>
+            <div class="comp-card-value">Collaborate to execute</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-collaborates"></div>
+            <div class="rating-label" id="label-collaborates"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="decision" data-tier="what" data-values="integrity" onclick="openComp('decision')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--what-color);">The What</div>
+            <div class="comp-card-name">Decision Quality</div>
+            <div class="comp-card-value">Operate with integrity</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-decision"></div>
+            <div class="rating-label" id="label-decision"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="courage" data-tier="what" data-values="integrity" onclick="openComp('courage')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--what-color);">The What</div>
+            <div class="comp-card-name">Courage</div>
+            <div class="comp-card-value">Operate with integrity</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-courage"></div>
+            <div class="rating-label" id="label-courage"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="plans" data-tier="what" data-values="collaborate" onclick="openComp('plans')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--what-color);">The What</div>
+            <div class="comp-card-name">Plans and Aligns</div>
+            <div class="comp-card-value">Collaborate to execute</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-plans"></div>
+            <div class="rating-label" id="label-plans"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Detail panel for What -->
+    <div class="detail-panel" id="detail-panel-what"></div>
+
+    <!-- THE HOW -->
+    <div class="tier-group" id="tier-how">
+      <div class="tier-header">
+        <div class="tier-header-dot" style="background:var(--how-color);"></div>
+        <div class="tier-header-title" style="color:var(--how-color);">The How — Culture and growth</div>
+        <div class="tier-header-count">5 competencies</div>
+      </div>
+      <div class="comp-cards" id="how-cards">
+
+        <div class="comp-card" data-comp="learning" data-tier="how" data-values="curiosity" onclick="openComp('learning')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--how-color);">The How</div>
+            <div class="comp-card-name">Learning Agility</div>
+            <div class="comp-card-value">Curate curiosity</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-learning"></div>
+            <div class="rating-label" id="label-learning"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="resilient" data-tier="how" data-values="curiosity" onclick="openComp('resilient')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--how-color);">The How</div>
+            <div class="comp-card-name">Being Resilient</div>
+            <div class="comp-card-value">Curate curiosity</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-resilient"></div>
+            <div class="rating-label" id="label-resilient"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="develops" data-tier="how" data-values="people" onclick="openComp('develops')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--how-color);">The How</div>
+            <div class="comp-card-name">Develops Talent</div>
+            <div class="comp-card-value">Prioritize people</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-develops"></div>
+            <div class="rating-label" id="label-develops"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="communicates" data-tier="how" data-values="collaborate" onclick="openComp('communicates')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--how-color);">The How</div>
+            <div class="comp-card-name">Communicates Effectively</div>
+            <div class="comp-card-value">Collaborate to execute</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-communicates"></div>
+            <div class="rating-label" id="label-communicates"></div>
+          </div>
+        </div>
+
+        <div class="comp-card" data-comp="trust" data-tier="how" data-values="integrity people" onclick="openComp('trust')">
+          <div class="comp-card-header">
+            <div class="comp-card-tier" style="color:var(--how-color);">The How</div>
+            <div class="comp-card-name">Instills Trust</div>
+            <div class="comp-card-value">Integrity · Prioritize people</div>
+          </div>
+          <div class="comp-card-rating">
+            <div class="rating-pips" id="pips-trust"></div>
+            <div class="rating-label" id="label-trust"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Detail panel for How -->
+    <div class="detail-panel" id="detail-panel-how"></div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>TinPigProd · FictionalPig Success Model v1.0</span>
+  <span>Korn Ferry aligned · Four career levels</span>
+</footer>
+
+<script>
+const RATING_LABELS = ['', 'Developing', 'Effective', 'Advanced', 'Expert'];
+
+const DATA = {
+  results: {
+    name: 'Drives Results', tier: 'what', value: 'Collaborate to execute',
+    ratings: { ic: 2, tl: 3, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Delivers on commitments consistently, owns personal outcomes, flags risks early before they become problems.',
+      tl: 'Holds team accountable to outcomes, removes blockers, maintains delivery standards under pressure.',
+      ll: 'Drives results through others, sets ambitious targets, builds cultures of accountability across functions.',
+      ex: 'Sets organizational performance standards, models relentless execution, ensures enterprise-wide delivery against strategic priorities.'
+    }
+  },
+  customer: {
+    name: 'Customer Focus', tier: 'what', value: 'User impact',
+    ratings: { ic: 2, tl: 2, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Understands user needs within their domain, incorporates feedback into their work.',
+      tl: 'Ensures team output is grounded in user insight, advocates for the user in team decisions.',
+      ll: 'Builds customer-centric practices into how functions operate, uses user data to drive investment decisions.',
+      ex: 'Shapes organizational strategy around user impact, defines what customer focus means at scale.'
+    }
+  },
+  collaborates: {
+    name: 'Collaborates', tier: 'what', value: 'Collaborate to execute',
+    ratings: { ic: 2, tl: 3, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Works effectively across team boundaries, shares information proactively, pulls others in rather than working in isolation.',
+      tl: 'Models collaborative behavior, builds bridges across functions, ensures team does not operate as a silo.',
+      ll: 'Creates structural conditions for cross-functional collaboration, breaks down organizational barriers.',
+      ex: 'Designs the organizational architecture that enables collaboration at scale, models enterprise-first thinking.'
+    }
+  },
+  decision: {
+    name: 'Decision Quality', tier: 'what', value: 'Operate with integrity',
+    ratings: { ic: 1, tl: 2, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Makes sound decisions within their scope, knows when to escalate, uses available data.',
+      tl: 'Makes timely decisions with incomplete information, balances speed and rigor, involves the right people.',
+      ll: 'Makes high-stakes decisions confidently, builds decision frameworks teams can use independently.',
+      ex: 'Sets the standard for organizational decision-making, models sound judgment under uncertainty and ambiguity.'
+    }
+  },
+  courage: {
+    name: 'Courage', tier: 'what', value: 'Operate with integrity',
+    ratings: { ic: 1, tl: 2, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Shares honest perspective when asked, raises concerns through appropriate channels.',
+      tl: 'Delivers difficult feedback directly, advocates for their team, names problems rather than avoiding them.',
+      ll: 'Challenges upward when necessary, addresses organizational dysfunction, models candor as a leadership standard.',
+      ex: 'Defines what courageous leadership looks like for the organization, creates conditions where truth-telling is expected and rewarded.'
+    }
+  },
+  plans: {
+    name: 'Plans and Aligns', tier: 'what', value: 'Collaborate to execute',
+    ratings: { ic: 2, tl: 2, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Organizes own work effectively, meets deadlines, communicates progress and blockers.',
+      tl: 'Sets clear team goals, translates priorities into workable plans, maintains visibility across team commitments.',
+      ll: 'Aligns multiple teams to shared objectives, builds planning cadences, ensures cross-functional coordination.',
+      ex: 'Drives enterprise planning processes, translates vision into organizational roadmaps, ensures strategic coherence.'
+    }
+  },
+  learning: {
+    name: 'Learning Agility', tier: 'how', value: 'Curate curiosity',
+    ratings: { ic: 2, tl: 2, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Seeks feedback actively, applies learning quickly, adapts when approaches are not working.',
+      tl: 'Creates learning moments for their team, models intellectual curiosity, normalizes failure as data.',
+      ll: 'Builds learning into how their function operates, rewards experimentation, identifies capability gaps early.',
+      ex: 'Shapes a learning culture at the organizational level, invests in capability development as a strategic priority.'
+    }
+  },
+  resilient: {
+    name: 'Being Resilient', tier: 'how', value: 'Curate curiosity',
+    ratings: { ic: 2, tl: 2, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Recovers from setbacks without losing momentum, maintains effectiveness under pressure.',
+      tl: 'Steadies the team during uncertainty, models composure, protects team capacity during high-pressure periods.',
+      ll: 'Sustains performance through organizational change, builds resilient team cultures, leads through ambiguity without creating anxiety downstream.',
+      ex: 'Navigates enterprise-level disruption with confidence and clarity, models resilience as an organizational capability.'
+    }
+  },
+  develops: {
+    name: 'Develops Talent', tier: 'how', value: 'Prioritize people',
+    ratings: { ic: 1, tl: 3, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Invests in own development, mentors peers informally, gives constructive feedback when asked.',
+      tl: 'Builds individual development plans, coaches directly, identifies and grows high-potential team members.',
+      ll: 'Develops a pipeline of leaders, identifies succession candidates, holds managers accountable for developing their people.',
+      ex: 'Builds organizational talent strategy, invests in leadership pipelines, ensures talent development is a cultural and strategic priority.'
+    }
+  },
+  communicates: {
+    name: 'Communicates Effectively', tier: 'how', value: 'Collaborate to execute',
+    ratings: { ic: 2, tl: 2, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Communicates clearly in writing and verbally, adapts to audience, ensures shared understanding.',
+      tl: 'Translates strategy into team-level clarity, runs effective meetings, communicates upward and downward with equal skill.',
+      ll: 'Drives alignment across functions through communication, represents their organization credibly to senior stakeholders.',
+      ex: 'Sets the organizational communication standard, shapes narrative at the enterprise level, communicates with precision across all audiences.'
+    }
+  },
+  trust: {
+    name: 'Instills Trust', tier: 'how', value: 'Integrity · Prioritize people',
+    ratings: { ic: 2, tl: 3, ll: 3, ex: 4 },
+    descs: {
+      ic: 'Does what they say, is honest under pressure, maintains confidentiality, builds credibility through consistency.',
+      tl: 'Creates psychological safety within their team, models vulnerability, addresses trust violations directly and quickly.',
+      ll: 'Builds trust across organizational boundaries, holds themselves and others to the same standard, makes the implicit explicit.',
+      ex: 'Defines the trust standard for the organization, models transparency at scale, creates conditions where people feel safe to tell the truth.'
+    }
+  }
+};
+
+let currentLevel = 'ic';
+let currentValue = 'all';
+let openComp_id = null;
+
+const LEVEL_KEYS = ['ic', 'tl', 'll', 'ex'];
+const LEVEL_LABELS = {
+  ic: 'Individual Contributor',
+  tl: 'Leading Teams',
+  ll: 'Leading Leaders',
+  ex: 'Executive'
+};
+
+function renderPips(compId, level) {
+  const d = DATA[compId];
+  const r = d.ratings[level];
+  const tier = d.tier;
+  const pipsEl = document.getElementById('pips-' + compId);
+  const labelEl = document.getElementById('label-' + compId);
+  if (!pipsEl) return;
+  pipsEl.innerHTML = '';
+  for (let i = 1; i <= 4; i++) {
+    const pip = document.createElement('div');
+    pip.className = 'pip' + (i <= r ? (tier === 'what' ? ' filled-what' : ' filled-how') : '');
+    pipsEl.appendChild(pip);
+  }
+  if (labelEl) labelEl.textContent = RATING_LABELS[r];
+}
+
+function renderAllPips() {
+  Object.keys(DATA).forEach(id => renderPips(id, currentLevel));
+}
+
+function setLevel(level) {
+  currentLevel = level;
+  document.querySelectorAll('.level-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.level === level);
+  });
+  renderAllPips();
+  if (openComp_id) renderDetailPanel(openComp_id);
+}
+
+function filterValue(value) {
+  currentValue = value;
+  document.querySelectorAll('.value-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.value === value);
+  });
+  document.querySelectorAll('.comp-card').forEach(card => {
+    if (value === 'all') {
+      card.classList.remove('hidden');
+    } else {
+      const vals = card.dataset.values || '';
+      card.classList.toggle('hidden', !vals.includes(value));
+    }
+  });
+  if (openComp_id) {
+    const card = document.querySelector(`[data-comp="${openComp_id}"]`);
+    if (card && card.classList.contains('hidden')) closeDetail();
+  }
+}
+
+function makePipsHTML(rating, tier) {
+  let html = '<div class="rating-pips">';
+  for (let i = 1; i <= 4; i++) {
+    const cls = i <= rating ? (tier === 'what' ? 'pip filled-what' : 'pip filled-how') : 'pip';
+    html += `<div class="${cls}"></div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderDetailPanel(compId) {
+  const d = DATA[compId];
+  const tier = d.tier;
+  const panelId = 'detail-panel-' + tier;
+  const panel = document.getElementById(panelId);
+
+  let levelsHTML = '';
+  LEVEL_KEYS.forEach(lk => {
+    const r = d.ratings[lk];
+    const isCurrent = lk === currentLevel;
+    levelsHTML += `
+      <div class="detail-level-card ${isCurrent ? 'current' : ''}">
+        <div class="dlc-level ${isCurrent ? 'dlc-level-current' : ''}">${LEVEL_LABELS[lk]}</div>
+        <div class="dlc-rating">
+          ${makePipsHTML(r, tier)}
+          <span style="font-size:10px;color:${isCurrent ? 'var(--teal)' : 'var(--ink-soft)'};margin-left:4px;font-family:'DM Mono',monospace;">${RATING_LABELS[r]}</span>
+        </div>
+        <div class="dlc-desc">${d.descs[lk]}</div>
+      </div>`;
+  });
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <div>
+        <div class="detail-tier" style="color:${tier === 'what' ? 'var(--what-color)' : 'var(--how-color)'};">
+          ${tier === 'what' ? 'The What' : 'The How'}
+        </div>
+        <div class="detail-name">${d.name}</div>
+      </div>
+      <div class="detail-close" onclick="closeDetail()">✕</div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-value-tag">⬡ ${d.value}</div>
+      <div class="detail-level-grid">${levelsHTML}</div>
+      <div class="rating-scale">
+        <div class="scale-item"><div class="scale-num">1</div><div class="scale-desc">Developing — building foundational understanding, requires guidance</div></div>
+        <div class="scale-item"><div class="scale-num">2</div><div class="scale-desc">Effective — consistently demonstrates, works independently</div></div>
+        <div class="scale-item"><div class="scale-num">3</div><div class="scale-desc">Advanced — models the behavior, coaches others, raises the bar</div></div>
+        <div class="scale-item"><div class="scale-num">4</div><div class="scale-desc">Expert — defines standards, drives organizational capability, shapes culture</div></div>
+      </div>
+    </div>`;
+}
+
+function openComp(compId) {
+  const d = DATA[compId];
+  const tier = d.tier;
+  const panelId = 'detail-panel-' + tier;
+  const otherPanelId = tier === 'what' ? 'detail-panel-how' : 'detail-panel-what';
+
+  // Close other panel
+  document.getElementById(otherPanelId).classList.remove('open');
+
+  // If same comp already open, close it
+  if (openComp_id === compId) {
+    closeDetail();
+    return;
+  }
+
+  // Mark active card
+  document.querySelectorAll('.comp-card').forEach(c => c.classList.remove('active'));
+  document.querySelector(`[data-comp="${compId}"]`).classList.add('active');
+
+  openComp_id = compId;
+  renderDetailPanel(compId);
+  document.getElementById(panelId).classList.add('open');
+
+  // Smooth scroll to panel
+  setTimeout(() => {
+    document.getElementById(panelId).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 50);
+}
+
+function closeDetail() {
+  document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.comp-card').forEach(c => c.classList.remove('active'));
+  openComp_id = null;
+}
+
+// Init
+renderAllPips();
+</script>
+</body>
+</html>
