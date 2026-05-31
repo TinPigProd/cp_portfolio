@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TinPigProd — Learning infrastructure for organizations that have outgrown their systems</title>
+<title>TinPigProductionsuctions Learning Architecture and Experience Design for organizations that have outgrown their systems</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -23,8 +23,6 @@
   --teal-light: #5DD4D4;
   --teal-dim: rgba(45,184,184,0.10);
   --teal-bright: rgba(45,184,184,0.18);
-  --pink: #FF6B8A;
-  --pink-dim: rgba(255,107,138,0.10);
 }
 
 body {
@@ -64,308 +62,294 @@ body::before {
 
 .nav-link {
   font-size: 12px; color: var(--ink-soft); padding: 5px 12px;
-  border-radius: 4px; cursor: pointer; transition: color 0.15s;
-  text-decoration: none;
+  border-radius: 4px; transition: color 0.15s; text-decoration: none;
 }
 
 .nav-link:hover { color: var(--ink); }
-.nav-link.active { color: var(--teal); font-weight: 500; }
 
-/* AUDIENCE TOGGLE */
-.audience-toggle-wrap {
-  position: fixed; top: 52px; left: 0; right: 0; z-index: 99;
-  display: flex; justify-content: center;
-  padding: 0.6rem 2rem;
-  background: rgba(14,14,14,0.85);
-  backdrop-filter: blur(8px);
-  border-bottom: 0.5px solid var(--rule);
-}
-
-.audience-toggle {
-  display: flex;
-  background: var(--bg2);
-  border: 0.5px solid var(--rule-mid);
-  border-radius: 100px;
-  padding: 3px; gap: 2px;
-}
-
-.audience-btn {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px; font-weight: 500;
-  padding: 6px 22px; border-radius: 100px;
-  cursor: pointer; border: none;
-  background: transparent; color: var(--ink-soft);
-  transition: all 0.2s; letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-
-.audience-btn.active { background: var(--teal); color: #0E0E0E; font-weight: 600; }
-
-/* MAIN */
-.main { position: relative; z-index: 1; padding-top: 104px; }
-
-/* HERO */
+/* HERO full screen */
 .hero {
-  min-height: calc(100vh - 104px);
+  position: relative; z-index: 1;
+  min-height: 100vh;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 3rem 2rem 2rem;
-  text-align: center; position: relative;
-}
-
-.hero::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 55% 45% at 50% 55%, rgba(45,184,184,0.05) 0%, transparent 70%);
-  pointer-events: none;
+  justify-content: center;
+  padding: 6rem 2rem 4rem;
+  max-width: 860px; margin: 0 auto;
 }
 
 .hero-eyebrow {
   font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--teal); margin-bottom: 1.25rem;
+  color: var(--teal); margin-bottom: 1.5rem;
   font-family: 'DM Mono', monospace;
   display: flex; align-items: center; gap: 0.75rem;
-  animation: fadeUp 0.6s ease both;
+  animation: fadeUp 0.5s ease both;
 }
 
 .eyebrow-line { width: 24px; height: 0.5px; background: var(--teal); opacity: 0.5; }
 
 .hero-title {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(34px, 5.5vw, 68px);
-  line-height: 1.08; color: var(--ink);
-  margin-bottom: 1.5rem;
-  animation: fadeUp 0.6s 0.1s ease both;
+  font-size: clamp(36px, 5.5vw, 72px);
+  line-height: 1.06; color: var(--ink);
+  margin-bottom: 2rem;
+  animation: fadeUp 0.5s 0.1s ease both;
 }
 
 .hero-title em { font-style: italic; color: var(--teal); }
 
-/* AUDIENCE PANELS */
-.audience-content {
-  max-width: 580px; margin: 0 auto;
-  animation: fadeUp 0.6s 0.2s ease both;
+.hero-thesis {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--ink-mid); line-height: 1.75;
+  max-width: 580px; margin-bottom: 3rem;
+  animation: fadeUp 0.5s 0.2s ease both;
 }
 
-.audience-panel { display: none; flex-direction: column; align-items: center; gap: 1.5rem; }
-.audience-panel.active { display: flex; }
+.hero-thesis strong { color: var(--ink); font-weight: 500; }
 
-.hero-desc { font-size: 15px; color: var(--ink-mid); line-height: 1.75; text-align: center; }
-
-.hero-subpoints {
-  display: flex; flex-direction: column; gap: 8px;
-  width: 100%; max-width: 460px;
+/* ARGUMENT STRIP */
+.hero-argument {
+  display: flex; flex-direction: column; gap: 0;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.5s 0.3s ease both;
+  max-width: 580px;
 }
 
-.hero-subpoint {
-  display: flex; align-items: flex-start; gap: 10px;
-  font-size: 13px; color: var(--ink-soft); line-height: 1.5; text-align: left;
+.argument-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1rem 0;
+  border-top: 0.5px solid var(--rule);
 }
 
-.subpoint-mark { color: var(--teal); flex-shrink: 0; font-family: 'DM Mono', monospace; font-size: 12px; margin-top: 1px; }
+.argument-item:last-child { border-bottom: 0.5px solid var(--rule); }
 
-.hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+.argument-num {
+  font-size: 10px; color: var(--ink-ghost);
+  font-family: 'DM Mono', monospace;
+  flex-shrink: 0; margin-top: 3px; width: 20px;
+}
+
+.argument-text {
+  font-size: 14px; color: var(--ink-mid); line-height: 1.6;
+}
+
+.argument-text strong { color: var(--ink); font-weight: 500; }
+
+/* HERO CTAS */
+.hero-ctas {
+  display: flex; gap: 0.75rem; flex-wrap: wrap;
+  animation: fadeUp 0.5s 0.4s ease both;
+}
 
 .btn-primary {
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
+  font-size: 13px; font-weight: 600;
   background: var(--teal); color: #0E0E0E;
-  padding: 10px 24px; border-radius: 6px;
+  padding: 11px 26px; border-radius: 6px;
   border: none; cursor: pointer; text-decoration: none;
   transition: opacity 0.15s; display: inline-block;
+  letter-spacing: 0.01em;
 }
+
 .btn-primary:hover { opacity: 0.85; }
 
 .btn-secondary {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 500;
-  background: var(--bg2); color: var(--ink-mid);
+  background: transparent; color: var(--ink-mid);
   border: 0.5px solid var(--rule-mid);
-  padding: 10px 24px; border-radius: 6px;
+  padding: 11px 26px; border-radius: 6px;
   cursor: pointer; text-decoration: none;
   transition: color 0.15s; display: inline-block;
 }
+
 .btn-secondary:hover { color: var(--ink); }
 
-/* EXPLORE THE WORK — TWO PATHS */
-.explore-section {
-  max-width: 900px; margin: 0 auto;
-  padding: 0 2rem 3rem;
+/* SCROLL INDICATOR */
+.scroll-indicator {
+  position: absolute; bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-size: 10px; color: var(--ink-ghost);
+  font-family: 'DM Mono', monospace; letter-spacing: 0.08em;
+  animation: fadeUp 0.5s 0.6s ease both;
 }
 
-.explore-label {
-  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--ink-ghost); margin-bottom: 1.25rem;
+.scroll-line {
+  width: 0.5px; height: 32px; background: var(--ink-ghost);
+  animation: scrollpulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollpulse { 0%,100%{opacity:0.3;transform:scaleY(0.6)} 50%{opacity:1;transform:scaleY(1)} }
+
+/* FRAMEWORK SECTION */
+.section {
+  position: relative; z-index: 1;
+  max-width: 860px; margin: 0 auto;
+  padding: 4rem 2rem;
+  border-top: 0.5px solid var(--rule);
+}
+
+.section-eyebrow {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 1.25rem;
   font-family: 'DM Mono', monospace;
   display: flex; align-items: center; gap: 0.75rem;
 }
 
-.explore-label::before,
-.explore-label::after { content: ''; flex: 1; height: 0.5px; background: var(--rule); }
-
-.path-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.path-card {
-  background: var(--bg2); border: 0.5px solid var(--rule-mid);
-  border-radius: 14px; overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
-  cursor: pointer; text-decoration: none; display: block;
-}
-
-.path-card:hover { transform: translateY(-2px); }
-
-.path-card.talent:hover { border-color: var(--teal); }
-.path-card.customer { opacity: 0.6; cursor: default; }
-.path-card.customer:hover { transform: none; border-color: var(--rule-mid); }
-
-.path-card-accent { height: 3px; }
-.path-card.talent .path-card-accent { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
-.path-card.customer .path-card-accent { background: var(--ink-ghost); }
-
-.path-card-body { padding: 1.5rem; }
-
-.path-card-eyebrow {
-  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
-  font-family: 'DM Mono', monospace; margin-bottom: 0.5rem;
-}
-
-.path-card.talent .path-card-eyebrow { color: var(--teal); }
-.path-card.customer .path-card-eyebrow { color: var(--ink-ghost); }
-
-.path-card-title {
+.section-title {
   font-family: 'DM Serif Display', serif;
-  font-size: 22px; color: var(--ink); margin-bottom: 0.5rem;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.15; color: var(--ink);
+  margin-bottom: 1rem;
 }
 
-.path-card.customer .path-card-title { color: var(--ink-mid); }
+.section-title em { font-style: italic; color: var(--teal); }
 
-.path-card-desc {
-  font-size: 13px; color: var(--ink-soft); line-height: 1.65;
-  margin-bottom: 1.25rem;
+.section-body {
+  font-size: 15px; color: var(--ink-mid); line-height: 1.75;
+  max-width: 620px; margin-bottom: 2rem;
 }
 
-.path-card-artifacts {
-  display: flex; flex-direction: column; gap: 5px;
-  margin-bottom: 1.25rem;
+.section-body strong { color: var(--ink); font-weight: 500; }
+.section-body p { margin-bottom: 1rem; }
+.section-body p:last-child { margin-bottom: 0; }
+
+/* TALENT SYSTEM DIAGRAM */
+.system-diagram {
+  display: flex; flex-direction: column; gap: 0;
+  margin-bottom: 2rem;
 }
 
-.path-artifact {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: var(--ink-soft);
+.system-row {
+  display: grid; grid-template-columns: 160px 1fr;
+  gap: 0; border-top: 0.5px solid var(--rule);
 }
 
-.path-artifact-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-.path-card.talent .path-artifact-dot { background: var(--teal); }
-.path-card.customer .path-artifact-dot { background: var(--ink-ghost); }
+.system-row:last-child { border-bottom: 0.5px solid var(--rule); }
 
-.path-card-cta {
-  font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;
+.system-stage {
+  padding: 1rem 1.25rem 1rem 0;
+  border-right: 0.5px solid var(--rule);
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.system-stage-num {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-ghost); font-family: 'DM Mono', monospace; margin-bottom: 3px;
+}
+
+.system-stage-name {
+  font-size: 13px; font-weight: 500; color: var(--ink);
+}
+
+.system-content {
+  padding: 1rem 0 1rem 1.25rem;
+  font-size: 13px; color: var(--ink-soft); line-height: 1.6;
+}
+
+.system-content strong { color: var(--ink-mid); font-weight: 500; }
+
+/* WORK SECTION */
+.work-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.75rem; margin-bottom: 2rem;
+}
+
+.work-card {
+  background: var(--bg2); border: 0.5px solid var(--rule-mid);
+  border-radius: 10px; padding: 1.25rem;
+  text-decoration: none; display: block;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.work-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+
+.work-card-eyebrow {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 0.5rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.work-card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; color: var(--ink); margin-bottom: 0.5rem;
+}
+
+.work-card-desc {
+  font-size: 12px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 0.85rem;
+}
+
+.work-card-artifacts {
+  display: flex; flex-direction: column; gap: 4px;
+}
+
+.work-artifact {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; color: var(--ink-soft);
+}
+
+.work-artifact-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--teal); flex-shrink: 0;
+}
+
+.work-card-cta {
+  font-size: 12px; font-weight: 600; color: var(--teal);
+  margin-top: 1rem; display: flex; align-items: center; gap: 5px;
   transition: gap 0.15s;
 }
 
-.path-card.talent .path-card-cta { color: var(--teal); }
-.path-card.customer .path-card-cta { color: var(--ink-ghost); }
+.work-card:hover .work-card-cta { gap: 9px; }
 
-.path-card.talent:hover .path-card-cta { gap: 10px; }
-
-.coming-soon-badge {
-  font-size: 9px; font-weight: 600; padding: 2px 8px;
-  border-radius: 100px; letter-spacing: 0.06em;
-  background: var(--bg3); color: var(--ink-ghost);
-  border: 0.5px solid var(--rule-mid);
-  font-family: 'DM Mono', monospace;
+.work-card-coming {
+  opacity: 0.5; cursor: default;
 }
 
-/* SERVICE STRIP */
-.service-strip {
-  max-width: 900px; margin: 0 auto;
-  padding: 0 2rem 3rem;
-}
+.work-card-coming:hover { transform: none; border-color: var(--rule-mid); }
 
-.section-label {
-  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--ink-ghost); margin-bottom: 1.25rem;
-  font-family: 'DM Mono', monospace;
-  display: flex; align-items: center; gap: 0.75rem;
-}
-.section-label::before,
-.section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--rule); }
-
-.service-grid {
+/* EXPERIENCE STRIP */
+.exp-strip {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  gap: 0; border: 0.5px solid var(--rule-mid);
+  border-radius: 10px; overflow: hidden;
+  margin-bottom: 2rem;
 }
 
-.service-card {
-  background: var(--bg2); border: 0.5px solid var(--rule);
-  border-radius: 10px; padding: 1rem 1.1rem;
-  transition: border-color 0.2s;
+.exp-item {
+  padding: 1rem 1.1rem;
+  border-right: 0.5px solid var(--rule);
 }
 
-.service-card:hover { border-color: var(--rule-mid); }
+.exp-item:last-child { border-right: none; }
 
-.service-icon {
-  font-size: 16px; margin-bottom: 0.5rem;
-  font-family: 'DM Mono', monospace; color: var(--teal);
-}
-
-.service-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
-.service-desc { font-size: 11px; color: var(--ink-soft); line-height: 1.55; }
-
-/* POV STRIP */
-.pov-strip {
-  max-width: 900px; margin: 0 auto;
-  padding: 0 2rem 3rem;
-}
-
-.pov-card {
-  background: var(--bg2); border: 0.5px solid var(--rule);
-  border-radius: 12px; padding: 2rem;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
-}
-
-.pov-quote {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(16px, 2vw, 22px);
-  font-style: italic; color: var(--ink); line-height: 1.4;
-}
-
-.pov-quote em { color: var(--teal); font-style: normal; }
-
-.pov-body { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
-.pov-body p { margin-bottom: 0.75rem; }
-.pov-body p:last-child { margin-bottom: 0; }
-
-.pov-link {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 12px; color: var(--teal); text-decoration: none;
-  font-weight: 500; margin-top: 0.85rem; transition: gap 0.15s;
-}
-.pov-link:hover { gap: 9px; }
+.exp-co { font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.exp-role { font-size: 11px; color: var(--ink-soft); line-height: 1.4; }
 
 /* FOOTER */
 .site-footer {
+  position: relative; z-index: 1;
   border-top: 0.5px solid var(--rule);
   padding: 1.5rem 2rem;
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; justify-content: space-between;
   font-size: 11px; color: var(--ink-soft);
   font-family: 'DM Mono', monospace;
-  position: relative; z-index: 1;
-  max-width: 900px; margin: 0 auto;
+  max-width: 860px; margin: 0 auto;
 }
 
-.footer-fp span { color: var(--pink); }
-
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 700px) {
-  .path-grid { grid-template-columns: 1fr; }
-  .service-grid { grid-template-columns: 1fr 1fr; }
-  .pov-card { grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  .work-grid { grid-template-columns: 1fr; }
+  .exp-strip { grid-template-columns: 1fr 1fr; }
+  .exp-item:nth-child(2) { border-right: none; }
+  .exp-item:nth-child(3) { border-right: 0.5px solid var(--rule); border-top: 0.5px solid var(--rule); }
+  .exp-item:nth-child(4) { border-top: 0.5px solid var(--rule); border-right: none; }
+  .system-row { grid-template-columns: 1fr; }
+  .system-stage { border-right: none; border-bottom: 0.5px solid var(--rule); padding-bottom: 0.5rem; }
+  .system-content { padding-left: 0; }
   .nav-links { display: none; }
 }
 </style>
@@ -374,186 +358,55 @@ body::before {
 
 <!-- NAV -->
 <nav class="site-nav">
-  <a class="nav-brand" href="tinpigprod-home.html">TinPig<span>Prod</span></a>
+  <a class="nav-brand" href="#">TinPig<span>Productions</span></a>
   <div class="nav-links">
-    <a class="nav-link active" href="tinpigprod-home.html">Home</a>
+    <a class="nav-link" href="#framework">Framework</a>
+    <a class="nav-link" href="#work">The work</a>
     <a class="nav-link" href="tinpigprod-pov.html">Point of View</a>
     <a class="nav-link" href="tinpigprod-about.html">About</a>
   </div>
 </nav>
 
-<!-- AUDIENCE TOGGLE -->
-<div class="audience-toggle-wrap">
-  <div class="audience-toggle">
-    <button class="audience-btn active" id="btn-explore" onclick="setAudience('explore')">Explore the work</button>
-    <button class="audience-btn" id="btn-partner" onclick="setAudience('partner')">Partner with me</button>
-  </div>
-</div>
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-title">
+    Learning is not<br>
+    the program.<br>
+    It's the <em>foundation.</em>
+  </h1>
 
-<div class="main">
+  <p class="hero-thesis">
+    We often get caught up in learning events and completion rates rather than behavior change and talent culture. I look beyond the learning event to the foundational organizational design: <strong>competency frameworks, feedback loops, succession tools, in-platform delivery</strong>. I ask how learning can be embedded in the work rather than a separate event.
+  </p>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-eyebrow">
-      <div class="eyebrow-line"></div>
-      TinPigProd · Learning infrastructure
-      <div class="eyebrow-line"></div>
+  <div class="hero-argument">
+    <div class="argument-item">
+      <div class="argument-num">01</div>
+      <div class="argument-text"><strong>You can't develop people without a shared definition of performance.</strong> A competency framework is not an HR document. It's the foundation that makes feedback, succession, and development conversations possible.</div>
     </div>
-    <h1 class="hero-title">The <em>what</em> and the <em>how</em><br>of building capability.</h1>
-
-    <div class="audience-content">
-
-      <!-- EXPLORE PANEL -->
-      <div class="audience-panel active" id="panel-explore">
-        <p class="hero-desc">TinPigProd is a learning design practice that builds AI-enabled talent and learning infrastructure. The work below shows two streams — talent enablement and customer enablement — built for a fictional client called FictionalPig.</p>
-        <div class="hero-subpoints">
-          <div class="hero-subpoint">
-            <span class="subpoint-mark">⬡</span>
-            <span>Competency frameworks anchored in organizational values and validated behavioral science</span>
-          </div>
-          <div class="hero-subpoint">
-            <span class="subpoint-mark">⬡</span>
-            <span>AI-enabled tools that turn raw observations into structured, actionable insight</span>
-          </div>
-          <div class="hero-subpoint">
-            <span class="subpoint-mark">⬡</span>
-            <span>In-platform learning delivery that surfaces at the moment of need, not on a calendar cadence</span>
-          </div>
-        </div>
-        <div class="hero-ctas">
-          <a class="btn-primary" href="tinpigprod-lifecycle.html">See the full lifecycle →</a>
-          <a class="btn-secondary" href="tinpigprod-pov.html">Point of View</a>
-        </div>
-      </div>
-
-      <!-- PARTNER PANEL -->
-      <div class="audience-panel" id="panel-partner">
-        <p class="hero-desc">If your organization has outgrown its current learning infrastructure, TinPigProd builds the systems that close the gap — between a framework and a behavior, between a feedback moment and a development action.</p>
-        <div class="hero-subpoints">
-          <div class="hero-subpoint">
-            <span class="subpoint-mark">⬡</span>
-            <span>Competency frameworks and career architecture that translate strategy into shared behavioral language</span>
-          </div>
-          <div class="hero-subpoint">
-            <span class="subpoint-mark">⬡</span>
-            <span>AI-enabled feedback and talent tools that work inside the systems your leaders already use</span>
-          </div>
-          <div class="hero-subpoint">
-            <span class="subpoint-mark">⬡</span>
-            <span>LXP ecosystem design and in-platform learning that meets people where they are</span>
-          </div>
-        </div>
-        <div class="hero-ctas">
-          <a class="btn-primary" href="tinpigprod-about.html">About TinPigProd →</a>
-          <a class="btn-secondary" href="tinpigprod-pov.html">Our point of view</a>
-        </div>
-      </div>
-
+    <div class="argument-item">
+      <div class="argument-num">02</div>
+      <div class="argument-text"><strong>The systems have to connect.</strong> A framework that lives in a PDF is not infrastructure. Feedback that doesn't trigger learning is a missed moment. Tools that require leaving the workflow don't get used.</div>
     </div>
-  </section>
-
-  <!-- EXPLORE THE WORK — TWO PATHS -->
-  <div class="explore-section">
-    <div class="explore-label">Explore the work</div>
-    <div class="path-grid">
-
-      <!-- TALENT ENABLEMENT -->
-      <a class="path-card talent" href="tinpigprod-lifecycle.html">
-        <div class="path-card-accent"></div>
-        <div class="path-card-body">
-          <div class="path-card-eyebrow">Stream 01 · Live</div>
-          <div class="path-card-title">Talent Enablement</div>
-          <div class="path-card-desc">Competency frameworks, AI-enabled feedback infrastructure, succession planning, and in-platform learning delivery. Built for people teams and leaders who need shared behavioral language across the talent lifecycle.</div>
-          <div class="path-card-artifacts">
-            <div class="path-artifact"><div class="path-artifact-dot"></div>FictionalPig Success Model</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>Feedback Synthesis Tool</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>Succession Planning Tool</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>FlyingPig — In-platform learning</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>FictionalPig LXP</div>
-          </div>
-          <div class="path-card-cta">Enter the Talent stream →</div>
-        </div>
-      </a>
-
-      <!-- CUSTOMER ENABLEMENT -->
-      <div class="path-card customer">
-        <div class="path-card-accent"></div>
-        <div class="path-card-body">
-          <div class="path-card-eyebrow">Stream 02 · <span class="coming-soon-badge">In development</span></div>
-          <div class="path-card-title">Customer Enablement</div>
-          <div class="path-card-desc">Onboarding design, feature adoption pathways, learning hub architecture, and customer education content. Built for organizations that need customers to find value faster and stay longer.</div>
-          <div class="path-card-artifacts">
-            <div class="path-artifact"><div class="path-artifact-dot"></div>Customer onboarding pathway</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>Feature adoption framework</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>Learning hub architecture</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>Customer education content</div>
-            <div class="path-artifact"><div class="path-artifact-dot"></div>Discover → Onboard → Adopt → Expand</div>
-          </div>
-          <div class="path-card-cta">In development</div>
-        </div>
-      </div>
-
+    <div class="argument-item">
+      <div class="argument-num">03</div>
+      <div class="argument-text"><strong>The How matters as much as the What.</strong> Performance delivery (the What) is measured everywhere. The behaviors that make performance sustainable (the How): how people collaborate, develop others, instill trust, are less often captured.</div>
     </div>
   </div>
 
-  <!-- SERVICE AREAS -->
-  <div class="service-strip">
-    <div class="section-label">What TinPigProd builds</div>
-    <div class="service-grid">
-      <div class="service-card">
-        <div class="service-icon">◈</div>
-        <div class="service-name">Learning audits</div>
-        <div class="service-desc">Assess existing structures before building new ones. Identify what's working, what's redundant, and where the real gaps are.</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">◇</div>
-        <div class="service-name">Change management</div>
-        <div class="service-desc">Pragmatic, Prosci-certified support through system changes, platform transitions, and capability transformations.</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">⬡</div>
-        <div class="service-name">Learning design</div>
-        <div class="service-desc">Instructional design as a feature. UX-informed, workflow-native experiences that treat learning as a product.</div>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">△</div>
-        <div class="service-name">Talent programs</div>
-        <div class="service-desc">Infrastructure gap analysis for the full talent lifecycle. Identifying what's missing and building what closes the gap.</div>
-      </div>
-    </div>
+  <div class="hero-ctas">
+    <a class="btn-primary" href="#work">See the work →</a>
+    <a class="btn-secondary" href="tinpigprod-pov.html">Point of View</a>
+    <a class="btn-secondary" href="tinpigprod-about.html">About</a>
   </div>
 
-  <!-- POINT OF VIEW STRIP -->
-  <div class="pov-strip">
-    <div class="section-label">The philosophy</div>
-    <div class="pov-card">
-      <div class="pov-quote">
-        "Most organizations measure <em>what</em> gets done.<br>The best ones also measure <em>how.</em>"
-      </div>
-      <div class="pov-body">
-        <p>The What and The How aren't just tier labels in a competency framework. They're a philosophy about what makes performance sustainable — and what makes organizations worth staying in.</p>
-        <p>TinPigProd builds infrastructure for both dimensions, informed by Korn Ferry's behavioral science and Brené Brown's research on psychological safety and vulnerability in high-performing teams.</p>
-        <a class="pov-link" href="tinpigprod-pov.html">Read the full point of view →</a>
-      </div>
-    </div>
-  </div>
 
-  <footer class="site-footer">
-    <span>TinPigProd · Learning infrastructure</span>
-    <span class="footer-fp">Built for Fictional<span>Pig</span> · and organizations like it</span>
-  </footer>
+</section>
 
-</div>
+<footer class="site-footer">
+  <span>TinPigProductionsuctions · Learning Architecture and Experience Design</span>
+  <span>Built for FictionalPig · and organizations like it</span>
+</footer>
 
-<script>
-function setAudience(audience) {
-  document.querySelectorAll('.audience-btn').forEach(b => {
-    b.classList.toggle('active', b.id === `btn-${audience}`);
-  });
-  document.querySelectorAll('.audience-panel').forEach(p => {
-    p.classList.toggle('active', p.id === `panel-${audience}`);
-  });
-}
-</script>
 </body>
 </html>

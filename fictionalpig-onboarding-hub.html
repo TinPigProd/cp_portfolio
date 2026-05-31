@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FictionalPig Onboarding Hub, Jordan Mills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F7F6F2;
+  --bg2: #FFFFFF;
+  --bg3: #EFEDE7;
+  --bg4: #E4E2DA;
+  --rule: rgba(0,0,0,0.08);
+  --rule-mid: rgba(0,0,0,0.14);
+  --ink: #18180F;
+  --ink-mid: #4A4A40;
+  --ink-soft: #8A8A80;
+  --ink-ghost: #C2C2B8;
+  --teal: #1A9E9E;
+  --teal-light: #2DB8B8;
+  --teal-dim: rgba(26,158,158,0.10);
+  --teal-bright: rgba(26,158,158,0.20);
+  --amber: #B87517;
+  --amber-dim: rgba(184,117,23,0.10);
+  --green: #1A8A55;
+  --green-dim: rgba(26,138,85,0.10);
+  --pink: #D94F70;
+  --pink-dim: rgba(217,79,112,0.10);
+  --blue: #2B6CB0;
+  --blue-dim: rgba(43,108,176,0.10);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: 0.2;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-overlay.hidden { display: none; }
+
+.modal {
+  background: var(--bg2); border: 0.5px solid var(--rule-mid);
+  border-radius: 16px; max-width: 520px; width: 100%;
+  overflow: hidden; animation: slideUp 0.4s ease;
+}
+
+.modal-header {
+  padding: 2rem 2rem 1.5rem;
+  background: linear-gradient(135deg, var(--teal-dim), transparent);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.modal-logo {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--teal); font-family: 'DM Mono', monospace; margin-bottom: 1rem;
+}
+
+.modal-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px; color: var(--ink); margin-bottom: 0.5rem;
+}
+
+.modal-title em { font-style: italic; color: var(--teal); }
+
+.modal-body { padding: 1.5rem 2rem; }
+
+.modal-body p {
+  font-size: 14px; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1rem;
+}
+
+.modal-body p:last-child { margin-bottom: 0; }
+
+.modal-body strong { color: var(--ink); font-weight: 500; }
+
+.modal-footer {
+  padding: 1.25rem 2rem; border-top: 0.5px solid var(--rule);
+  display: flex; justify-content: flex-end; gap: 0.75rem;
+}
+
+.btn-primary {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  background: var(--teal); color: #FFFFFF;
+  border: none; border-radius: 6px;
+  padding: 9px 22px; cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-ghost {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; color: var(--ink-soft);
+  background: none; border: 0.5px solid var(--rule-mid);
+  border-radius: 6px; padding: 9px 22px; cursor: pointer;
+  transition: color 0.15s;
+}
+
+.btn-ghost:hover { color: var(--ink); }
+
+/* TOUR OVERLAY */
+.tour-overlay {
+  position: fixed; inset: 0; z-index: 900;
+  pointer-events: none;
+}
+
+.tour-highlight {
+  position: absolute; border: 2px solid var(--teal);
+  border-radius: 8px; box-shadow: 0 0 0 4000px rgba(0,0,0,0.7);
+  transition: all 0.4s ease; pointer-events: none;
+}
+
+.tour-tooltip {
+  position: absolute; background: var(--bg2);
+  border: 0.5px solid var(--teal);
+  border-radius: 10px; padding: 1rem 1.25rem;
+  max-width: 280px; pointer-events: all;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.tour-tooltip-title {
+  font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px;
+}
+
+.tour-tooltip-body { font-size: 12px; color: var(--ink-mid); line-height: 1.55; margin-bottom: 0.85rem; }
+
+.tour-tooltip-nav { display: flex; align-items: center; justify-content: space-between; }
+
+.tour-step-indicator { font-size: 10px; color: var(--ink-soft); font-family: 'DM Mono', monospace; }
+
+.tour-btn {
+  font-size: 11px; font-weight: 600; padding: 5px 14px;
+  border-radius: 4px; cursor: pointer; border: none;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.tour-btn-primary { background: var(--teal); color: #0E0E0E; }
+.tour-btn-skip { background: none; color: var(--ink-soft); border: 0.5px solid var(--rule-mid); }
+
+/* SHELL */
+.shell {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 52px 1fr;
+  min-height: 100vh;
+}
+
+/* TOP NAV */
+.top-nav {
+  grid-column: 1 / -1;
+  background: rgba(247,246,242,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid rgba(0,0,0,0.12);
+  padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+
+.nav-brand {
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  display: flex; align-items: center; gap: 0.75rem;
+}
+
+.nav-brand-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--teal); animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+.nav-brand span { color: var(--teal); font-weight: 400; }
+
+.nav-center {
+  font-size: 11px; color: var(--ink-soft);
+  font-family: 'DM Mono', monospace; letter-spacing: 0.06em;
+}
+
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+
+.nav-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+}
+
+.nav-view-switch {
+  display: flex; gap: 2px;
+  background: var(--bg4); border: 0.5px solid var(--rule-mid);
+  border-radius: 6px; padding: 2px;
+}
+
+.view-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 500;
+  padding: 4px 12px; border-radius: 4px;
+  border: none; cursor: pointer;
+  background: transparent; color: var(--ink-soft);
+  transition: all 0.15s;
+}
+
+.view-btn.active { background: var(--teal); color: #FFFFFF; font-weight: 600; }
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--bg3); border-right: 0.5px solid var(--rule);
+  padding: 1.5rem 0;
+  overflow-y: auto;
+}
+
+.sidebar-section { margin-bottom: 1.5rem; }
+
+.sidebar-label {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-ghost); padding: 0 1rem; margin-bottom: 0.5rem;
+  font-family: 'DM Mono', monospace;
+}
+
+.sidebar-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 1rem; cursor: pointer;
+  font-size: 13px; color: var(--ink-soft);
+  transition: all 0.15s; border-left: 2px solid transparent;
+}
+
+.sidebar-item:hover { color: var(--ink); background: var(--bg3); }
+.sidebar-item.active { color: var(--ink); background: var(--teal-dim); border-left-color: var(--teal); }
+.sidebar-item-icon { font-size: 14px; width: 16px; text-align: center; }
+
+.sidebar-phase {
+  padding: 0.35rem 1rem; cursor: pointer;
+  font-size: 12px; color: var(--ink-soft);
+  transition: color 0.15s; display: flex; align-items: center; gap: 0.5rem;
+}
+
+.sidebar-phase:hover { color: var(--ink-mid); }
+.sidebar-phase.active { color: var(--teal); }
+.sidebar-phase.done { color: var(--ink-ghost); text-decoration: line-through; }
+.sidebar-phase.active .phase-dot,
+.sidebar-phase.done .phase-dot { background: var(--teal); }
+
+.phase-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--ink-ghost); flex-shrink: 0; transition: background 0.2s;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  overflow-y: auto; padding: 2rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+
+/* RIGHT COLUMN */
+.right-col {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  position: sticky; top: 1.5rem;
+}
+
+.right-col-card {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 12px; overflow: hidden;
+}
+
+.right-col-header {
+  padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--rule);
+  font-size: 11px; font-weight: 600; color: var(--ink-soft);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+
+.right-col-body { padding: 1rem; }
+
+.phase-list { display: flex; flex-direction: column; gap: 0; }
+
+.phase-list-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 0; border-bottom: 0.5px solid var(--rule);
+  font-size: 12px; color: var(--ink-soft);
+}
+
+.phase-list-item:last-child { border-bottom: none; padding-bottom: 0; }
+.phase-list-item.active { color: var(--teal); }
+.phase-list-item.done { color: var(--ink-ghost); text-decoration: line-through; }
+.phase-list-item.done .phase-dot { background: var(--teal); }
+.phase-list-item.active .phase-dot { background: var(--teal); }
+
+/* VIEWS */
+.view { display: none; flex-direction: column; gap: 1.5rem; }
+.view.active { display: flex; }
+.view-left-col { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* WELCOME HEADER */
+.welcome-header {
+  background: var(--bg2); border: 0.5px solid var(--rule-mid);
+  border-radius: 14px; padding: 1.75rem;
+  background-image: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(26,158,158,0.08), transparent);
+}
+
+.welcome-eyebrow {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 0.5rem; font-family: 'DM Mono', monospace;
+}
+
+.welcome-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px; color: var(--ink); margin-bottom: 0.4rem;
+}
+
+.welcome-name em { font-style: italic; color: var(--teal); }
+
+.welcome-meta { font-size: 13px; color: var(--ink-soft); margin-bottom: 1.25rem; }
+
+.welcome-stats {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+
+.welcome-stat {
+  background: var(--bg3); border: 0.5px solid var(--rule);
+  border-radius: 8px; padding: 0.6rem 1rem;
+  font-size: 12px; color: var(--ink-soft);
+}
+
+.welcome-stat strong { color: var(--teal); font-weight: 600; display: block; font-size: 18px; }
+
+/* PROGRESS RING */
+.progress-section {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 1.5rem; align-items: center;
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 14px; padding: 1.5rem;
+}
+
+.donut-wrap {
+  position: relative; width: 110px; height: 110px; flex-shrink: 0;
+}
+
+.donut-svg { width: 110px; height: 110px; transform: rotate(-90deg); }
+
+.donut-track { fill: none; stroke: var(--bg4); stroke-width: 10; }
+
+.donut-fill {
+  fill: none; stroke: var(--teal); stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.donut-label {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+
+.donut-pct {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: var(--ink); line-height: 1;
+}
+
+.donut-sub { font-size: 9px; color: var(--ink-soft); font-family: 'DM Mono', monospace; }
+
+.progress-details { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.progress-phase {
+  display: flex; align-items: center; gap: 0.75rem;
+}
+
+.progress-phase-label { font-size: 12px; color: var(--ink-mid); flex: 1; }
+
+.progress-bar-wrap {
+  flex: 2; height: 4px; background: var(--bg4); border-radius: 2px; overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%; border-radius: 2px; background: var(--teal);
+  transition: width 0.8s ease;
+}
+
+.progress-phase-pct { font-size: 11px; color: var(--ink-soft); font-family: 'DM Mono', monospace; width: 32px; text-align: right; }
+
+/* TODAY CARD */
+.today-card {
+  background: var(--bg2); border: 0.5px solid var(--rule-mid);
+  border-radius: 14px; overflow: hidden;
+}
+
+.today-card-header {
+  padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.today-card-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+.today-badge {
+  font-size: 9px; font-weight: 600; padding: 2px 8px;
+  border-radius: 100px; letter-spacing: 0.06em;
+  background: var(--teal-dim); color: var(--teal);
+  border: 0.5px solid rgba(45,184,184,0.2);
+  font-family: 'DM Mono', monospace;
+}
+
+.today-card-body { padding: 1.25rem; }
+
+.today-guidance {
+  font-size: 14px; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1rem;
+}
+
+.today-guidance strong { color: var(--ink); font-weight: 500; }
+
+.ai-note {
+  font-size: 11px; color: var(--ink-ghost);
+  font-family: 'DM Mono', monospace;
+  padding: 6px 10px; background: var(--bg3);
+  border-radius: 4px; border-left: 2px solid var(--ink-ghost);
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* CHECKLIST */
+.checklist-section {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 14px; overflow: hidden;
+}
+
+.checklist-header {
+  padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.checklist-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+.checklist-count {
+  font-size: 11px; color: var(--ink-soft); font-family: 'DM Mono', monospace;
+}
+
+.checklist-phase-group { border-bottom: 0.5px solid var(--rule); }
+.checklist-phase-group:last-child { border-bottom: none; }
+
+.checklist-phase-header {
+  padding: 0.75rem 1.25rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  cursor: pointer; background: var(--bg3);
+  transition: background 0.15s;
+}
+
+.checklist-phase-header:hover { background: var(--bg4); }
+
+.checklist-phase-name { font-size: 12px; font-weight: 500; color: var(--ink-mid); flex: 1; }
+
+.checklist-phase-progress {
+  font-size: 10px; color: var(--ink-soft); font-family: 'DM Mono', monospace;
+}
+
+.checklist-phase-chevron {
+  font-size: 10px; color: var(--ink-ghost); transition: transform 0.2s;
+}
+
+.checklist-phase-header.open .checklist-phase-chevron { transform: rotate(180deg); }
+
+.checklist-items { display: none; }
+.checklist-items.open { display: block; }
+
+.checklist-item {
+  padding: 0.65rem 1.25rem 0.65rem 1.5rem;
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  border-bottom: 0.5px solid var(--rule);
+  transition: background 0.15s; cursor: pointer;
+}
+
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item:hover { background: var(--bg3); }
+.checklist-item.completed { opacity: 0.6; }
+
+.checklist-checkbox {
+  width: 16px; height: 16px; border-radius: 4px;
+  border: 1.5px solid var(--ink-ghost); flex-shrink: 0;
+  margin-top: 2px; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; background: transparent;
+}
+
+.checklist-item.completed .checklist-checkbox {
+  background: var(--teal); border-color: var(--teal);
+}
+.checklist-item.completed .checklist-checkbox-check { color: #FFFFFF; }
+
+.checklist-checkbox-check {
+  font-size: 9px; color: #0E0E0E; opacity: 0; transition: opacity 0.2s;
+}
+
+.checklist-item.completed .checklist-checkbox-check { opacity: 1; }
+
+.checklist-item-label {
+  font-size: 13px; color: var(--ink-mid); line-height: 1.45; flex: 1;
+}
+
+.checklist-item.completed .checklist-item-label {
+  text-decoration: line-through; color: var(--ink-soft);
+}
+
+.checklist-item-trigger {
+  font-size: 9px; color: var(--teal); font-family: 'DM Mono', monospace;
+  background: var(--teal-dim); padding: 1px 6px; border-radius: 3px;
+  white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+}
+
+/* PEOPLE SECTION */
+.people-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.person-card {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 12px; padding: 1.1rem;
+}
+
+.person-card-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+
+.person-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+}
+
+.person-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.person-role { font-size: 11px; color: var(--ink-soft); }
+
+.person-card-desc {
+  font-size: 12px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 0.75rem;
+}
+
+.person-card-action {
+  font-size: 11px; color: var(--teal); font-weight: 500; cursor: pointer;
+  display: flex; align-items: center; gap: 4px;
+}
+
+/* MANAGER VIEW */
+.manager-header {
+  background: var(--bg2); border: 0.5px solid var(--rule-mid);
+  border-radius: 14px; padding: 1.5rem;
+  background-image: radial-gradient(ellipse 60% 80% at 90% 50%, var(--amber-dim), transparent);
+}
+
+.manager-alert {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem;
+}
+
+.manager-alert-header {
+  padding: 0.75rem 1rem; border-bottom: 0.5px solid var(--rule);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+
+.alert-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+
+.alert-title { font-size: 12px; font-weight: 600; color: var(--ink); flex: 1; }
+.alert-time { font-size: 10px; color: var(--ink-soft); font-family: 'DM Mono', monospace; }
+
+.manager-alert-body { padding: 0.75rem 1rem; font-size: 12px; color: var(--ink-mid); line-height: 1.55; }
+
+.nudge-card {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 12px; padding: 1.1rem; margin-bottom: 0.75rem;
+}
+
+.nudge-card-label {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-ghost); font-family: 'DM Mono', monospace; margin-bottom: 0.4rem;
+}
+
+.nudge-card-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; }
+.nudge-card-body { font-size: 12px; color: var(--ink-mid); line-height: 1.6; }
+
+/* MENTOR SLACK VIEW */
+.slack-wrap {
+  background: #1A1D21; border-radius: 14px; overflow: hidden;
+  border: 0.5px solid rgba(255,255,255,0.1);
+}
+
+.slack-header {
+  background: #1A1D21; padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 14px; font-weight: 700; color: #fff;
+  font-family: 'Lato', 'DM Sans', sans-serif;
+}
+
+.slack-messages { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+
+.slack-message {
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  padding: 0.5rem; border-radius: 6px; transition: background 0.1s;
+}
+
+.slack-message:hover { background: rgba(255,255,255,0.04); }
+
+.slack-avatar {
+  width: 36px; height: 36px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; color: white;
+}
+
+.slack-sender {
+  font-size: 14px; font-weight: 700; color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.slack-sender.flyingpig { color: var(--teal); }
+.slack-time { font-size: 11px; color: rgba(255,255,255,0.35); margin-left: 6px; }
+.slack-text { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.5; font-family: 'DM Sans', sans-serif; }
+
+.slack-card {
+  background: #222529; border: 1px solid rgba(255,255,255,0.1);
+  border-left: 3px solid var(--teal);
+  border-radius: 4px; overflow: hidden; margin-top: 4px; max-width: 480px;
+}
+
+.slack-card-header {
+  padding: 8px 12px; background: var(--teal-dim);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.slack-card-title { font-size: 13px; font-weight: 700; color: var(--teal); font-family: 'DM Sans', sans-serif; }
+.slack-card-body { padding: 10px 12px; }
+
+.slack-card-section { margin-bottom: 0.75rem; }
+.slack-card-section:last-child { margin-bottom: 0; }
+
+.slack-card-section-title {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.6);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 4px; font-family: 'DM Sans', sans-serif;
+}
+
+.slack-card-section-body {
+  font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.55;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.slack-card-question {
+  padding: 4px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.45;
+  font-family: 'DM Sans', sans-serif;
+  display: flex; align-items: flex-start; gap: 6px;
+}
+
+.slack-card-question:last-child { border-bottom: none; }
+.slack-card-question-num { color: var(--teal); flex-shrink: 0; font-size: 11px; font-weight: 600; }
+
+/* TRIGGER DEMO */
+.trigger-demo {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 14px; padding: 1.25rem;
+}
+
+.trigger-demo-title {
+  font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+.trigger-demo-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 1rem; }
+
+.trigger-items { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.trigger-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: var(--bg3); border: 0.5px solid var(--rule);
+  border-radius: 8px; cursor: pointer; transition: all 0.15s;
+}
+
+.trigger-item:hover { border-color: var(--teal); }
+.trigger-item.fired { border-color: var(--teal); background: var(--teal-dim); }
+
+.trigger-item-label { font-size: 12px; color: var(--ink-mid); flex: 1; }
+.trigger-item.fired .trigger-item-label { color: var(--ink); }
+
+.trigger-item-status {
+  font-size: 10px; color: var(--ink-ghost); font-family: 'DM Mono', monospace;
+}
+
+.trigger-item.fired .trigger-item-status { color: var(--teal); }
+
+/* DEPLOYMENT NOTE */
+.deployment-note {
+  background: var(--bg2); border: 0.5px solid var(--rule);
+  border-radius: 10px; padding: 1rem 1.25rem;
+  display: flex; align-items: flex-start; gap: 0.75rem;
+}
+
+.deployment-note-icon { font-size: 14px; color: var(--blue); flex-shrink: 0; }
+.deployment-note-title { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.deployment-note-body { font-size: 11px; color: var(--ink-soft); line-height: 1.55; }
+
+.deploy-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+
+.deploy-tag {
+  font-size: 10px; padding: 2px 8px; border-radius: 100px;
+  border: 0.5px solid var(--rule-mid); color: var(--ink-soft);
+  font-family: 'DM Mono', monospace;
+}
+
+/* SLACK NOTIFICATION (triggered) */
+.slack-notification {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 500;
+  background: #1A1D21; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px; padding: 1rem;
+  max-width: 340px; width: 100%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  transform: translateY(120%); opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slack-notification.show { transform: translateY(0); opacity: 1; }
+
+.slack-notification-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+}
+
+.slack-notification-title { font-size: 13px; font-weight: 700; color: var(--teal); font-family: 'DM Sans', sans-serif; }
+.slack-notification-close { margin-left: auto; color: rgba(255,255,255,0.4); cursor: pointer; font-size: 14px; }
+
+.slack-notification-body { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.55; font-family: 'DM Sans', sans-serif; }
+.slack-notification-action { font-size: 11px; color: var(--teal); margin-top: 8px; cursor: pointer; font-weight: 500; }
+
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+@media (max-width: 768px) {
+  .shell { grid-template-columns: 1fr; grid-template-rows: 52px auto 1fr; }
+  .sidebar { display: none; }
+  .people-section { grid-template-columns: 1fr; }
+  .progress-section { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- WELCOME MODAL -->
+<div class="modal-overlay" id="welcome-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-logo">From the desk of the CEO</div>
+      <h2 class="modal-title">Welcome to FictionalPig, <em>Jordan.</em></h2>
+    </div>
+    <div class="modal-body">
+      <p>We're glad you're here! At FictionalPig, you're joining a team that values curiosity, prioritizes our people, and strives for integrity in all we do. These values are reflected in what we build and the way we build it, and we're excited to have you here.</p>
+      <p>These next 90 days are designed to help you settle in. This page directs you to the tools and systems to help you succeed, but that's not all. Your manager and your onboarding buddy will be with you every step of the way.</p>
+      <p>Welcome to the team. We're happy to have you here with us as we challenge the idea of "when pigs fly."</p>
+      <p style="color:var(--ink);font-weight:500;">Kris Park<br><span style="color:var(--ink-soft);font-weight:400;font-size:12px;">VP, Product and Engineering · FictionalPig</span></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="skipModal()">Skip tour</button>
+      <button class="btn-primary" onclick="startTour()">Start site tour →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLACK NOTIFICATION -->
+<div class="slack-notification" id="slack-notif">
+  <div class="slack-notification-header">
+    <div class="slack-avatar" style="width:20px;height:20px;background:var(--teal-dim);color:var(--teal);font-size:10px;border-radius:3px;">⬡</div>
+    <span class="slack-notification-title">FlyingPig sent Joey Nguyen a nudge</span>
+    <span class="slack-notification-close" onclick="closeNotif()">✕</span>
+  </div>
+  <div class="slack-notification-body" id="slack-notif-body">Jordan just completed a task. Joey has a touchpoint script waiting in Slack.</div>
+  <div class="slack-notification-action" onclick="switchToMentor()">View mentor Slack thread →</div>
+</div>
+
+<!-- SHELL -->
+<div class="shell">
+
+  <!-- TOP NAV -->
+  <nav class="top-nav" id="top-nav">
+    <div class="nav-brand">
+      <div class="nav-brand-dot"></div>
+      FictionalPig · Onboarding Hub
+    </div>
+    <div class="nav-center">FictionalPig · Onboarding Hub</div>
+    <div class="nav-right">
+      <div style="font-size:11px;color:var(--ink-soft);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:0.5rem;">
+        <span style="color:var(--teal);">◎</span> Portfolio Prototype · Three User Views Available
+      </div>
+      <div class="nav-view-switch">
+        <button class="view-btn active" onclick="switchView('newhire')" id="vbtn-newhire">New hire</button>
+        <button class="view-btn" onclick="switchView('manager')" id="vbtn-manager">Manager</button>
+        <button class="view-btn" onclick="switchView('mentor')" id="vbtn-mentor">Mentor</button>
+      </div>
+      <div class="nav-avatar" style="background:var(--teal-dim);color:var(--teal);">JM</div>
+    </div>
+  </nav>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <div class="sidebar-item active" onclick="scrollTo('today-section')">
+        <span class="sidebar-item-icon">⬡</span> Today's guidance
+      </div>
+      <div class="sidebar-item" onclick="scrollTo('checklist-section')">
+        <span class="sidebar-item-icon">◈</span> My checklist
+      </div>
+      <div class="sidebar-item" onclick="scrollTo('people-section')">
+        <span class="sidebar-item-icon">◇</span> My team
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">90-day phases</div>
+      <div class="sidebar-phase done">
+        <div class="phase-dot"></div> Day 1 · Welcome
+      </div>
+      <div class="sidebar-phase active">
+        <div class="phase-dot"></div> Days 2-5 · Orientation
+      </div>
+      <div class="sidebar-phase">
+        <div class="phase-dot"></div> Days 6-30 · First 30
+      </div>
+      <div class="sidebar-phase">
+        <div class="phase-dot"></div> Days 31-60 · Settling in
+      </div>
+      <div class="sidebar-phase">
+        <div class="phase-dot"></div> Days 61-90 · Finalize
+      </div>
+    </div>
+
+    <div class="sidebar-section" style="padding: 0 1rem;">
+      <div class="sidebar-label" style="padding:0;margin-bottom:0.75rem;">Track your progress</div>
+      <div class="donut-wrap" style="margin:0 auto 1rem;">
+        <svg class="donut-svg" viewBox="0 0 110 110">
+          <circle class="donut-track" cx="55" cy="55" r="45"/>
+          <circle class="donut-fill" cx="55" cy="55" r="45" id="donut-fill"/>
+        </svg>
+        <div class="donut-label">
+          <div class="donut-pct" id="donut-pct">4%</div>
+          <div class="donut-sub">of 90 days</div>
+        </div>
+      </div>
+      <div class="progress-details">
+        <div class="progress-phase">
+          <div class="progress-phase-label" style="font-size:11px;">Day 1</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:100%;"></div></div>
+          <div class="progress-phase-pct">100%</div>
+        </div>
+        <div class="progress-phase">
+          <div class="progress-phase-label" style="font-size:11px;">Days 2-5</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" id="bar-phase2" style="width:40%;"></div></div>
+          <div class="progress-phase-pct" id="pct-phase2">40%</div>
+        </div>
+        <div class="progress-phase">
+          <div class="progress-phase-label" style="font-size:11px;">Days 6-30</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%;"></div></div>
+          <div class="progress-phase-pct">0%</div>
+        </div>
+        <div class="progress-phase">
+          <div class="progress-phase-label" style="font-size:11px;">Days 31-60</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%;"></div></div>
+          <div class="progress-phase-pct">0%</div>
+        </div>
+        <div class="progress-phase">
+          <div class="progress-phase-label" style="font-size:11px;">Days 61-90</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%;"></div></div>
+          <div class="progress-phase-pct">0%</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- NEW HIRE VIEW -->
+    <div class="view active" id="view-newhire">
+      
+
+      <!-- WELCOME HEADER -->
+      <div class="welcome-header">
+        <div class="welcome-eyebrow">FictionalPig · Day 4 of 90</div>
+        <h1 class="welcome-name">Good morning, <em>Jordan.</em></h1>
+        <div class="welcome-meta">Senior Software Engineer · Engineering · Reporting to Taylor Chen</div>
+        <div class="welcome-stats">
+          <div class="welcome-stat"><strong id="stat-complete">6</strong>tasks complete</div>
+          <div class="welcome-stat"><strong id="stat-remaining">4</strong>tasks this phase</div>
+          <div class="welcome-stat"><strong style="color:var(--amber);">30</strong>days to benefits deadline</div>
+        </div>
+      </div>
+
+      <!-- TODAY'S GUIDANCE -->
+      <div class="today-card" id="today-section">
+        <div class="today-card-header">
+          <div class="today-card-title">Today's guidance</div>
+          <div class="today-badge">Day 4 · Orientation</div>
+        </div>
+        <div class="today-card-body">
+          <div class="today-guidance">
+            Today is about <strong>building context, not proving yourself.</strong> You have four remaining orientation tasks, the Company Operating Model, Values in Action deep dive, systems access setup, and your first sync with Joey. None of these require you to be "ready." They require you to show up and ask questions.
+            <br><br>
+            One thing worth knowing: FictionalPig moves fast and documents heavily. If something feels unclear, it's not you, it's an invitation to ask. Taylor's door is open. Joey has been in your seat recently enough to remember what it felt like.
+          </div>
+          <div class="ai-note">⬡ AI integration point: In production, daily guidance is generated by FlyingPig based on Jordan's current phase, completed tasks, and calendar context.</div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <div class="checklist-section" id="checklist-section">
+        <div class="checklist-header">
+          <div class="checklist-title">My 90-day checklist</div>
+          <div class="checklist-count" id="checklist-count">6 of 20 complete</div>
+        </div>
+
+        <!-- PHASE 1 -->
+        <div class="checklist-phase-group">
+          <div class="checklist-phase-header" onclick="togglePhase(this)">
+            <div class="phase-dot" style="background:var(--teal);"></div>
+            <div class="checklist-phase-name">Day 1 · Welcome</div>
+            <div class="checklist-phase-progress">4 of 4 ✓</div>
+            <div class="checklist-phase-chevron">▼</div>
+          </div>
+          <div class="checklist-items">
+            <div class="checklist-item completed" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete IT onboarding and device setup</div>
+            </div>
+            <div class="checklist-item completed" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Review benefits overview and enrollment timeline</div>
+            </div>
+            <div class="checklist-item completed" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete onboarding hub tour</div>
+            </div>
+            <div class="checklist-item completed" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Introduce yourself in #engineering Slack channel</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 2 -->
+        <div class="checklist-phase-group">
+          <div class="checklist-phase-header open" onclick="togglePhase(this)">
+            <div class="phase-dot" style="background:var(--teal);"></div>
+            <div class="checklist-phase-name">Days 2-5 · Orientation</div>
+            <div class="checklist-phase-progress" id="phase2-progress">2 of 5 complete</div>
+            <div class="checklist-phase-chevron">▼</div>
+          </div>
+          <div class="checklist-items open" id="phase2-items">
+            <div class="checklist-item completed" onclick="toggleTask(this, 'company-history')">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Review FictionalPig company history and mission</div>
+              <div class="checklist-item-trigger">triggers Joey</div>
+            </div>
+            <div class="checklist-item completed" onclick="toggleTask(this, 'meet-mentor')">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Meet your mentor, schedule intro sync with Joey Nguyen</div>
+              <div class="checklist-item-trigger">triggers Joey</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, 'operating-model')">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Review FictionalPig Company Operating Model</div>
+              <div class="checklist-item-trigger">triggers Joey</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, 'values')">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete Values in Action deep dive</div>
+              <div class="checklist-item-trigger">triggers Joey</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, 'systems')">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete systems access setup (Jira, Confluence, GitHub)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 3 -->
+        <div class="checklist-phase-group">
+          <div class="checklist-phase-header" onclick="togglePhase(this)">
+            <div class="phase-dot"></div>
+            <div class="checklist-phase-name">Days 6-30 · First 30 days</div>
+            <div class="checklist-phase-progress">0 of 6 complete</div>
+            <div class="checklist-phase-chevron">▼</div>
+          </div>
+          <div class="checklist-items">
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Schedule recurring 1:1 with Taylor Chen</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Set up meetings with immediate team members</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete role-specific onboarding modules</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete assigned role-specific training</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Submit first pull request or project contribution</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete benefits enrollment by Day 30 ⚠</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 4 -->
+        <div class="checklist-phase-group">
+          <div class="checklist-phase-header" onclick="togglePhase(this)">
+            <div class="phase-dot"></div>
+            <div class="checklist-phase-name">Days 31-60 · Settling in</div>
+            <div class="checklist-phase-progress">0 of 3 complete</div>
+            <div class="checklist-phase-chevron">▼</div>
+          </div>
+          <div class="checklist-items">
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Schedule meetings with frequent cross-functional collaborators</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Meet with Taylor to align on 90-day goals</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete 30-day check-in survey</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 5 -->
+        <div class="checklist-phase-group">
+          <div class="checklist-phase-header" onclick="togglePhase(this)">
+            <div class="phase-dot"></div>
+            <div class="checklist-phase-name">Days 61-90 · Finalize</div>
+            <div class="checklist-phase-progress">0 of 2 complete</div>
+            <div class="checklist-phase-chevron">▼</div>
+          </div>
+          <div class="checklist-items">
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Complete all outstanding role-specific training</div>
+            </div>
+            <div class="checklist-item" onclick="toggleTask(this, null)">
+              <div class="checklist-checkbox"><span class="checklist-checkbox-check">✓</span></div>
+              <div class="checklist-item-label">Finalize 90-day goals in performance system</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PEOPLE -->
+      <div class="people-section" id="people-section">
+        <div class="person-card">
+          <div class="person-card-top">
+            <div class="person-avatar" style="background:var(--amber-dim);color:var(--amber);">TC</div>
+            <div>
+              <div class="person-name">Taylor Chen</div>
+              <div class="person-role">Program Manager · Your manager</div>
+            </div>
+          </div>
+          <div class="person-card-desc">Taylor owns the day-to-day for your team and is your primary point of contact for goals, priorities, and anything role-related. Weekly 1:1 starts Week 2.</div>
+          <div class="person-card-action">📅 Schedule 1:1 →</div>
+        </div>
+        <div class="person-card">
+          <div class="person-card-top">
+            <div class="person-avatar" style="background:var(--teal-dim);color:var(--teal);">JN</div>
+            <div>
+              <div class="person-name">Joey Nguyen</div>
+              <div class="person-role">Junior Software Engineer · Your mentor</div>
+            </div>
+          </div>
+          <div class="person-card-desc">Joey joined FictionalPig eight months ago and knows the ropes. Your go-to for culture questions, system navigation, and unwritten norms. Joey gets notified when you hit key milestones.</div>
+          <div class="person-card-action">💬 Message Joey →</div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- MANAGER VIEW -->
+    <div class="view" id="view-manager">
+
+      <div class="manager-header">
+        <div class="welcome-eyebrow">Taylor Chen · Manager view</div>
+        <h2 class="welcome-name" style="font-size:22px;">Jordan is on Day 4.<br>Two orientation items still open.</h2>
+        <div class="welcome-meta" style="margin-top:0.5rem;">Orientation phase completes Day 5. Benefits deadline: Day 30.</div>
+      </div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:0.08em;text-transform:uppercase;font-family:'DM Mono',monospace;">Milestone alerts</div>
+
+      <div class="manager-alert">
+        <div class="manager-alert-header">
+          <div class="alert-dot" style="background:var(--teal);"></div>
+          <div class="alert-title">Jordan completed: Company history and mission</div>
+          <div class="alert-time">Day 2</div>
+        </div>
+        <div class="manager-alert-body">Jordan has reviewed the company history and mission module. Joey has been notified and a touchpoint script has been sent to start the culture conversation.</div>
+      </div>
+
+      <div class="manager-alert">
+        <div class="manager-alert-header">
+          <div class="alert-dot" style="background:var(--teal);"></div>
+          <div class="alert-title">Jordan completed: Meet your mentor</div>
+          <div class="alert-time">Day 3</div>
+        </div>
+        <div class="manager-alert-body">Jordan has scheduled an intro sync with Joey Nguyen. No action needed, the mentor relationship is active.</div>
+      </div>
+
+      <div class="manager-alert">
+        <div class="manager-alert-header">
+          <div class="alert-dot" style="background:var(--amber);animation:pulse 2s infinite;"></div>
+          <div class="alert-title">Upcoming: Company Operating Model, not yet complete</div>
+          <div class="alert-time">Day 4</div>
+        </div>
+        <div class="manager-alert-body">Jordan has two orientation tasks remaining today. No action needed unless Day 5 passes without completion, the system will alert you.</div>
+      </div>
+
+      <div style="font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:0.08em;text-transform:uppercase;font-family:'DM Mono',monospace;margin-top:0.5rem;">Manager nudges</div>
+
+      <div class="nudge-card">
+        <div class="nudge-label" style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-ghost);font-family:'DM Mono',monospace;margin-bottom:0.4rem;">Suggested check-in · Day 5</div>
+        <div class="nudge-card-title">Orientation wrap-up conversation</div>
+        <div class="nudge-card-body">Jordan finishes orientation tomorrow. A 15-minute informal check-in, not a performance conversation, is recommended. Suggested questions: What surprised you most this week? What's still unclear about how we work? Is there anything you need from me before Week 2?</div>
+        <div class="ai-note" style="margin-top:0.75rem;">⬡ AI integration point: In production, nudge scripts are generated by FlyingPig based on Jordan's completion data and Taylor's calendar availability.</div>
+      </div>
+
+      <div class="nudge-card">
+        <div class="nudge-label" style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-ghost);font-family:'DM Mono',monospace;margin-bottom:0.4rem;">Reminder · Day 30 deadline</div>
+        <div class="nudge-card-title">Benefits enrollment closes in 26 days</div>
+        <div class="nudge-card-body">Jordan has not yet completed benefits enrollment. The system will surface a reminder to Jordan at Day 20 and Day 28. No action needed unless Jordan flags a question.</div>
+      </div>
+
+    </div>
+
+    <!-- MENTOR VIEW -->
+    <div class="view" id="view-mentor">
+
+      <div class="manager-header" style="background-image:radial-gradient(ellipse 60% 80% at 90% 50%, var(--teal-dim), transparent);">
+        <div class="welcome-eyebrow">Joey Nguyen · Mentor view</div>
+        <h2 class="welcome-name" style="font-size:22px;">You have 2 touchpoint<br>scripts from FlyingPig.</h2>
+        <div class="welcome-meta" style="margin-top:0.5rem;">Jordan triggered these by completing orientation milestones. No prep required, scripts are ready.</div>
+      </div>
+
+      <div class="trigger-demo">
+        <div class="trigger-demo-title">⬡ How trigger-based mentoring works</div>
+        <div class="trigger-demo-desc">When Jordan completes a task marked "triggers Joey," FlyingPig sends a Slack message with a touchpoint script. You don't need to track Jordan's progress, the system tells you when to reach out and what to cover.</div>
+        <div class="trigger-items">
+          <div class="trigger-item fired">
+            <div class="trigger-item-label">Jordan completed: Company history and mission</div>
+            <div class="trigger-item-status">✓ Script sent · Day 2</div>
+          </div>
+          <div class="trigger-item fired">
+            <div class="trigger-item-label">Jordan completed: Meet your mentor</div>
+            <div class="trigger-item-status">✓ Script sent · Day 3</div>
+          </div>
+          <div class="trigger-item" id="trigger-operating" onclick="fireTrigger()">
+            <div class="trigger-item-label">Jordan completes: Company Operating Model → click to simulate</div>
+            <div class="trigger-item-status">Waiting</div>
+          </div>
+          <div class="trigger-item">
+            <div class="trigger-item-label">Jordan completes: Values in Action deep dive</div>
+            <div class="trigger-item-status">Waiting</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLACK SIMULATION -->
+      <div class="slack-wrap">
+        <div class="slack-header">
+          <span style="opacity:0.5;">#</span> direct-messages · FlyingPig → Joey Nguyen
+        </div>
+        <div class="slack-messages" id="slack-messages">
+
+          <!-- Message 1 -->
+          <div class="slack-message">
+            <div class="slack-avatar" style="background:rgba(45,184,184,0.2);color:var(--teal);font-size:14px;">⬡</div>
+            <div>
+              <div><span class="slack-sender flyingpig">FlyingPig</span><span class="slack-time">Day 2 · 2:14 PM</span></div>
+              <div class="slack-text">Jordan just completed <strong>Company history and mission</strong>. Here's a touchpoint script to help you start the culture conversation.</div>
+              <div class="slack-card">
+                <div class="slack-card-header">
+                  <span style="font-size:14px;color:var(--teal);">⬡</span>
+                  <span class="slack-card-title">Touchpoint script · Company history and mission</span>
+                </div>
+                <div class="slack-card-body">
+                  <div class="slack-card-section">
+                    <div class="slack-card-section-title">Context</div>
+                    <div class="slack-card-section-body">Jordan has reviewed the company history and mission module. This touchpoint is about making sure the content landed and opening a conversation about how the mission shows up day-to-day in Engineering.</div>
+                  </div>
+                  <div class="slack-card-section">
+                    <div class="slack-card-section-title">Suggested questions</div>
+                    <div class="slack-card-question"><span class="slack-card-question-num">1.</span>What stood out to you about where FictionalPig started versus where we are now?</div>
+                    <div class="slack-card-question"><span class="slack-card-question-num">2.</span>How do you see the mission connecting to the engineering work specifically, or does it feel abstract yet?</div>
+                    <div class="slack-card-question"><span class="slack-card-question-num">3.</span>Is there anything about the company story that felt surprising or that you want to understand better?</div>
+                  </div>
+                  <div class="slack-card-section">
+                    <div class="slack-card-section-title">Your role as mentor</div>
+                    <div class="slack-card-section-body">You're not testing Jordan, you're bridging the gap between what's in the content and how it actually works here. Share your own honest experience of the mission if it's useful.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message 2 -->
+          <div class="slack-message">
+            <div class="slack-avatar" style="background:rgba(45,184,184,0.2);color:var(--teal);font-size:14px;">⬡</div>
+            <div>
+              <div><span class="slack-sender flyingpig">FlyingPig</span><span class="slack-time">Day 3 · 9:47 AM</span></div>
+              <div class="slack-text">Jordan scheduled an intro sync with you, nice work getting that on the calendar early. Here's a script to help make your first meeting count.</div>
+              <div class="slack-card">
+                <div class="slack-card-header">
+                  <span style="font-size:14px;color:var(--teal);">⬡</span>
+                  <span class="slack-card-title">Touchpoint script · Mentor intro sync</span>
+                </div>
+                <div class="slack-card-body">
+                  <div class="slack-card-section">
+                    <div class="slack-card-section-title">Context</div>
+                    <div class="slack-card-section-body">This is your first real conversation with Jordan. The goal is to establish trust, not to cover everything. Keep it loose. Your job is to make Jordan feel like they have someone to go to.</div>
+                  </div>
+                  <div class="slack-card-section">
+                    <div class="slack-card-section-title">Suggested questions</div>
+                    <div class="slack-card-question"><span class="slack-card-question-num">1.</span>What's been the most disorienting part of the first few days, the systems, the people, the pace, or something else?</div>
+                    <div class="slack-card-question"><span class="slack-card-question-num">2.</span>Is there anything about how Engineering works here that you wish someone had told you on Day 1?</div>
+                    <div class="slack-card-question"><span class="slack-card-question-num">3.</span>What's one thing you're hoping to figure out in the next two weeks?</div>
+                  </div>
+                  <div class="slack-card-section">
+                    <div class="slack-card-section-title">Your role as mentor</div>
+                    <div class="slack-card-section-body">Share something real from your own first 30 days. The more honest you are about what was hard, the more Jordan will trust you when something is hard for them.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>
+const TOTAL_TASKS = 20;
+let completedTasks = 6;
+let phase2Complete = 2;
+const PHASE2_TOTAL = 5;
+
+const TRIGGER_SCRIPTS = {
+  'operating-model': {
+    task: 'Company Operating Model',
+    context: "Jordan has reviewed the Company Operating Model, how FictionalPig makes decisions, sets priorities, and organizes work. This is one of the most culture-dense pieces of content in orientation. The goal of this touchpoint is to help Jordan connect the model to how things actually work in Engineering day-to-day.",
+    questions: [
+      "Which part of the operating model felt most different from how you've worked before?",
+      "Is there anything about how we make decisions here that still feels unclear, or that you'd want to see in practice before it makes sense?",
+      "The operating model talks about accountability and velocity together. How are you thinking about that balance so far?"
+    ],
+    role: "You know how the operating model actually plays out in Engineering, not just how it's written. The gap between the document and the reality is where Jordan needs your perspective most."
+  },
+  'company-history': {
+    task: 'Company history and mission',
+    context: "Jordan has reviewed the company history and mission. This touchpoint opens the culture conversation.",
+    questions: [
+      "What stood out to you about where FictionalPig started versus where we are now?",
+      "How do you see the mission connecting to engineering work specifically?",
+      "Is there anything about the company story that felt surprising?"
+    ],
+    role: "Bridge the gap between the content and how the mission actually shows up here."
+  },
+  'meet-mentor': {
+    task: 'Mentor intro sync',
+    context: "Jordan has scheduled a sync with you. This is your first real conversation.",
+    questions: [
+      "What's been the most disorienting part of the first few days?",
+      "Is there anything about how Engineering works that you wish someone had told you on Day 1?",
+      "What's one thing you're hoping to figure out in the next two weeks?"
+    ],
+    role: "Share something real from your own first 30 days. Honesty builds trust."
+  }
+};
+
+function skipModal() {
+  document.getElementById('welcome-modal').classList.add('hidden');
+  animateDonut();
+}
+
+function startTour() {
+  document.getElementById('welcome-modal').classList.add('hidden');
+  runTour();
+}
+
+function animateDonut() {
+  const pct = Math.round((completedTasks / TOTAL_TASKS) * 100);
+  const offset = 283 - (283 * pct / 100);
+  document.getElementById('donut-fill').style.strokeDashoffset = offset;
+  document.getElementById('donut-pct').textContent = pct + '%';
+}
+
+const TOUR_STEPS = [
+  { target: 'top-nav', title: 'Your onboarding hub', body: 'This is your 90-day home base. Switch between your view, your manager\'s view, and your mentor\'s view using the buttons in the top right.', position: 'bottom' },
+  { target: 'sidebar', title: 'Navigation and phases', body: 'The sidebar shows your 90-day phases and quick links to each section. Your current phase is highlighted.', position: 'right' },
+  { target: 'progress-section', title: 'Track your progress', body: 'The donut ring shows your overall 90-day completion. Each phase bar shows how far along you are in that phase.', position: 'bottom' },
+  { target: 'checklist-section', title: 'Your checklist', body: 'Check off tasks as you complete them. Tasks marked "triggers Joey" will automatically send your mentor a touchpoint script in Slack.', position: 'top' },
+];
+
+let currentTourStep = 0;
+let tourOverlay = null;
+
+function runTour() {
+  tourOverlay = document.createElement('div');
+  tourOverlay.className = 'tour-overlay';
+  document.body.appendChild(tourOverlay);
+  showTourStep(0);
+}
+
+function showTourStep(index) {
+  if (index >= TOUR_STEPS.length) { endTour(); return; }
+  currentTourStep = index;
+  const step = TOUR_STEPS[index];
+  tourOverlay.innerHTML = '';
+
+  const target = document.getElementById(step.target);
+  if (!target) { showTourStep(index + 1); return; }
+
+  const rect = target.getBoundingClientRect();
+  const highlight = document.createElement('div');
+  highlight.className = 'tour-highlight';
+  highlight.style.top = (rect.top - 4) + 'px';
+  highlight.style.left = (rect.left - 4) + 'px';
+  highlight.style.width = (rect.width + 8) + 'px';
+  highlight.style.height = (rect.height + 8) + 'px';
+  tourOverlay.appendChild(highlight);
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tour-tooltip';
+
+  let top = rect.bottom + 16;
+  let left = rect.left;
+  if (step.position === 'right') { top = rect.top; left = rect.right + 16; }
+  if (step.position === 'top') { top = rect.top - 160; }
+
+  tooltip.style.top = Math.max(8, Math.min(top, window.innerHeight - 200)) + 'px';
+  tooltip.style.left = Math.max(8, Math.min(left, window.innerWidth - 300)) + 'px';
+
+  tooltip.innerHTML = `
+    <div class="tour-tooltip-title">${step.title}</div>
+    <div class="tour-tooltip-body">${step.body}</div>
+    <div class="tour-tooltip-nav">
+      <span class="tour-step-indicator">${index + 1} of ${TOUR_STEPS.length}</span>
+      <div style="display:flex;gap:6px;">
+        <button class="tour-btn tour-btn-skip" onclick="endTour()">Skip</button>
+        <button class="tour-btn tour-btn-primary" onclick="showTourStep(${index + 1})">${index === TOUR_STEPS.length - 1 ? "Done" : "Next →"}</button>
+      </div>
+    </div>`;
+  tourOverlay.appendChild(tooltip);
+}
+
+function endTour() {
+  if (tourOverlay) { tourOverlay.remove(); tourOverlay = null; }
+  animateDonut();
+}
+
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.getElementById('vbtn-' + view).classList.add('active');
+
+  const avatars = { newhire: {text:'JM', bg:'var(--teal-dim)', color:'var(--teal)'}, manager: {text:'TC', bg:'var(--amber-dim)', color:'var(--amber)'}, mentor: {text:'JN', bg:'var(--teal-dim)', color:'var(--teal)'} };
+  const av = avatars[view];
+  const navAv = document.querySelector('.nav-avatar');
+  navAv.textContent = av.text;
+  navAv.style.background = av.bg;
+  navAv.style.color = av.color;
+}
+
+function switchToMentor() {
+  switchView('mentor');
+  closeNotif();
+}
+
+function togglePhase(header) {
+  header.classList.toggle('open');
+  const items = header.nextElementSibling;
+  items.classList.toggle('open');
+}
+
+function toggleTask(item, triggerId) {
+  item.classList.toggle('completed');
+  updateCounts();
+  if (item.classList.contains('completed') && triggerId) {
+    fireSlackNotification(triggerId);
+  }
+}
+
+function updateCounts() {
+  const allItems = document.querySelectorAll('#view-newhire .checklist-item');
+  const allCompleted = document.querySelectorAll('#view-newhire .checklist-item.completed');
+  completedTasks = allCompleted.length;
+  document.getElementById('checklist-count').textContent = `${completedTasks} of ${allItems.length} complete`;
+  document.getElementById('stat-complete').textContent = completedTasks;
+
+  const phase2Items = document.querySelectorAll('#phase2-items .checklist-item');
+  const phase2Done = document.querySelectorAll('#phase2-items .checklist-item.completed');
+  const p2pct = Math.round((phase2Done.length / phase2Items.length) * 100);
+  document.getElementById('phase2-progress').textContent = `${phase2Done.length} of ${phase2Items.length} complete`;
+  document.getElementById('bar-phase2').style.width = p2pct + '%';
+  document.getElementById('pct-phase2').textContent = p2pct + '%';
+
+  const pct = Math.round((completedTasks / allItems.length) * 100);
+  const offset = 283 - (283 * pct / 100);
+  document.getElementById('donut-fill').style.strokeDashoffset = offset;
+  document.getElementById('donut-pct').textContent = pct + '%';
+}
+
+function fireSlackNotification(triggerId) {
+  const script = TRIGGER_SCRIPTS[triggerId];
+  if (!script) return;
+  const notif = document.getElementById('slack-notif');
+  document.getElementById('slack-notif-body').textContent = `Jordan just completed "${script.task}." Joey has a touchpoint script waiting in Slack.`;
+  notif.classList.add('show');
+  setTimeout(() => notif.classList.remove('show'), 6000);
+
+  if (triggerId === 'operating-model') {
+    const trigger = document.getElementById('trigger-operating');
+    if (trigger) { trigger.classList.add('fired'); trigger.querySelector('.trigger-item-status').textContent = '✓ Script sent · Day 4'; }
+    addSlackMessage(script);
+  }
+}
+
+function fireTrigger() {
+  const trigger = document.getElementById('trigger-operating');
+  if (trigger.classList.contains('fired')) return;
+  trigger.classList.add('fired');
+  trigger.querySelector('.trigger-item-status').textContent = '✓ Script sent · Day 4';
+
+  const script = TRIGGER_SCRIPTS['operating-model'];
+  addSlackMessage(script);
+
+  const notif = document.getElementById('slack-notif');
+  document.getElementById('slack-notif-body').textContent = `Jordan just completed "${script.task}." Joey has a touchpoint script waiting in Slack.`;
+  notif.classList.add('show');
+  setTimeout(() => notif.classList.remove('show'), 6000);
+}
+
+function addSlackMessage(script) {
+  const container = document.getElementById('slack-messages');
+  const msg = document.createElement('div');
+  msg.className = 'slack-message';
+  msg.style.animation = 'slideUp 0.4s ease';
+  msg.innerHTML = `
+    <div class="slack-avatar" style="background:rgba(45,184,184,0.2);color:var(--teal);font-size:14px;">⬡</div>
+    <div>
+      <div><span class="slack-sender flyingpig">FlyingPig</span><span class="slack-time">Day 4 · Just now</span></div>
+      <div class="slack-text">Jordan just completed <strong>${script.task}</strong>. Here's your touchpoint script.</div>
+      <div class="slack-card">
+        <div class="slack-card-header">
+          <span style="font-size:14px;color:var(--teal);">⬡</span>
+          <span class="slack-card-title">Touchpoint script · ${script.task}</span>
+        </div>
+        <div class="slack-card-body">
+          <div class="slack-card-section">
+            <div class="slack-card-section-title">Context</div>
+            <div class="slack-card-section-body">${script.context}</div>
+          </div>
+          <div class="slack-card-section">
+            <div class="slack-card-section-title">Suggested questions</div>
+            ${script.questions.map((q,i) => `<div class="slack-card-question"><span class="slack-card-question-num">${i+1}.</span>${q}</div>`).join('')}
+          </div>
+          <div class="slack-card-section">
+            <div class="slack-card-section-title">Your role as mentor</div>
+            <div class="slack-card-section-body">${script.role}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  container.appendChild(msg);
+  msg.scrollIntoView({ behavior: 'smooth', block: 'end' });
+}
+
+function closeNotif() {
+  document.getElementById('slack-notif').classList.remove('show');
+}
+
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const offset = 283 - (283 * 4 / 100);
+    document.getElementById('donut-fill').style.strokeDashoffset = offset;
+  }, 300);
+});
+</script>
+</body>
+</html>

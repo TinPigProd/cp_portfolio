@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FictionalPig LXP Jordan Mills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── LIGHT THEME (default) ── */
+[data-theme="light"] {
+  --bg: #F7F6F2;
+  --bg2: #EFEDE8;
+  --surface: #FFFFFF;
+  --surface2: #F4F3EF;
+  --rule: rgba(0,0,0,0.07);
+  --rule-mid: rgba(0,0,0,0.11);
+  --ink: #1A1814;
+  --ink-mid: #4A4740;
+  --ink-soft: #8A8780;
+  --ink-ghost: #C4C2BC;
+  --teal: #1A9E9E;
+  --teal-light: #4DC4C4;
+  --teal-dim: rgba(26,158,158,0.08);
+  --teal-bright: rgba(26,158,158,0.15);
+  --what-color: #1A9E9E;
+  --how-color: #4DC4C4;
+  --amber: #C47A1A;
+  --amber-dim: rgba(196,122,26,0.08);
+  --green: #2A9E6A;
+  --green-dim: rgba(42,158,106,0.08);
+  --red: #D44040;
+  --red-dim: rgba(212,64,64,0.08);
+  --nav-bg: #1A1814;
+  --nav-ink: rgba(255,255,255,0.85);
+  --nav-ink-soft: rgba(255,255,255,0.45);
+  --nav-rule: rgba(255,255,255,0.08);
+  --fp-pink: #FF6B8A;
+}
+
+/* ── DARK THEME (override) ── */
+[data-theme="dark"] {
+  --bg: #0E0E0E;
+  --bg2: #1A1A1A;
+  --surface: #222222;
+  --surface2: #2A2A2A;
+  --rule: rgba(255,255,255,0.07);
+  --rule-mid: rgba(255,255,255,0.12);
+  --ink: #F5F5F0;
+  --ink-mid: #999999;
+  --ink-soft: #666666;
+  --ink-ghost: #3A3A3A;
+  --teal: #2DB8B8;
+  --teal-light: #5DD4D4;
+  --teal-dim: rgba(45,184,184,0.10);
+  --teal-bright: rgba(45,184,184,0.18);
+  --what-color: #2DB8B8;
+  --how-color: #5DD4D4;
+  --amber: #E8A838;
+  --amber-dim: rgba(232,168,56,0.12);
+  --green: #3AB87A;
+  --green-dim: rgba(58,184,122,0.10);
+  --red: #E85050;
+  --red-dim: rgba(232,80,80,0.10);
+  --nav-bg: #0E0E0E;
+  --nav-ink: rgba(255,255,255,0.85);
+  --nav-ink-soft: rgba(255,255,255,0.4);
+  --nav-rule: rgba(255,255,255,0.07);
+  --fp-pink: #FF6B8A;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── TOP NAV ── */
+.top-nav {
+  background: var(--nav-bg);
+  height: 52px;
+  display: flex; align-items: center;
+  padding: 0 1.5rem;
+  gap: 1.5rem;
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 0.5px solid var(--nav-rule);
+}
+
+.nav-logo {
+  display: flex; align-items: baseline; gap: 4px;
+  font-size: 15px; font-weight: 600; letter-spacing: -0.02em;
+  color: white; flex-shrink: 0;
+}
+
+.nav-logo-pig { color: var(--fp-pink); font-weight: 400; }
+.nav-logo-lxp { color: var(--teal-light); font-size: 12px; font-weight: 400; margin-left: 2px; }
+
+.nav-links { display: flex; gap: 0.25rem; flex: 1; }
+
+.nav-link {
+  font-size: 12px; color: var(--nav-ink-soft);
+  padding: 5px 12px; border-radius: 5px; cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.nav-link:hover { color: var(--nav-ink); background: rgba(255,255,255,0.06); }
+.nav-link.active { color: white; background: rgba(255,255,255,0.10); font-weight: 500; }
+
+.nav-right { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+.nav-theme-btn {
+  font-size: 11px; color: var(--nav-ink-soft);
+  background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1);
+  padding: 4px 10px; border-radius: 4px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: color 0.15s;
+}
+
+.nav-theme-btn:hover { color: var(--nav-ink); }
+
+.nav-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--teal); color: white;
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── LEARNER HEADER ── */
+.learner-header {
+  background: var(--surface);
+  border-bottom: 0.5px solid var(--rule-mid);
+  padding: 1.5rem 1.5rem 0;
+}
+
+.learner-header-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.learner-greeting {
+  font-size: 12px; color: var(--ink-soft); margin-bottom: 4px;
+}
+
+.learner-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px; color: var(--ink); margin-bottom: 4px;
+}
+
+.learner-meta {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 12px; color: var(--ink-soft);
+}
+
+.learner-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-ghost); }
+
+.learner-meta-badge {
+  font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 100px;
+  background: var(--teal-dim); color: var(--teal); border: 0.5px solid rgba(26,158,158,0.2);
+}
+
+/* SKILL SNAPSHOT */
+.skill-snapshot {
+  display: flex; gap: 1.5rem; align-items: center;
+}
+
+.skill-item { display: flex; flex-direction: column; gap: 4px; }
+
+.skill-name {
+  font-size: 10px; color: var(--ink-soft); letter-spacing: 0.04em;
+  font-family: 'DM Mono', monospace;
+}
+
+.skill-bar-wrap {
+  width: 100px; height: 5px;
+  background: var(--bg2); border-radius: 3px; overflow: hidden;
+}
+
+.skill-bar { height: 100%; border-radius: 3px; }
+
+.skill-pct {
+  font-size: 10px; color: var(--ink-soft);
+  font-family: 'DM Mono', monospace;
+}
+
+/* LANE TABS */
+.lane-tabs {
+  display: flex; gap: 0; border-top: 0.5px solid var(--rule);
+  margin-top: 1rem;
+}
+
+.lane-tab {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; color: var(--ink-soft);
+  padding: 10px 16px; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.lane-tab:hover { color: var(--ink); }
+.lane-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+.lane-tab-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; opacity: 0.6;
+}
+
+.lane-tab-count {
+  font-size: 10px; font-weight: 500;
+  background: var(--teal-dim); color: var(--teal);
+  padding: 1px 6px; border-radius: 100px;
+}
+
+/* ── MAIN CONTENT ── */
+.main-content {
+  max-width: 1100px; margin: 0 auto;
+  padding: 1.5rem;
+  display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem;
+}
+
+/* ── LANES ── */
+.lanes-area { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.lane-section { display: none; }
+.lane-section.active { display: block; }
+
+.lane-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.lane-header-left { display: flex; align-items: center; gap: 0.75rem; }
+
+.lane-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-family: 'DM Mono', monospace;
+  flex-shrink: 0;
+}
+
+.lane-title { font-size: 15px; font-weight: 500; color: var(--ink); }
+.lane-subtitle { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.lane-action { font-size: 12px; color: var(--teal); cursor: pointer; }
+
+/* LEARNING CARDS */
+.card-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.learning-card {
+  background: var(--surface); border: 0.5px solid var(--rule-mid);
+  border-radius: 12px; overflow: hidden;
+  display: flex; transition: box-shadow 0.15s, transform 0.15s;
+  cursor: pointer;
+}
+
+.learning-card:hover {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+
+.learning-card.completed { opacity: 0.6; }
+
+.card-accent { width: 4px; flex-shrink: 0; }
+
+.card-body {
+  flex: 1; padding: 1rem 1.1rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+
+.card-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+}
+
+.card-info { flex: 1; min-width: 0; }
+
+.card-type {
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 600; margin-bottom: 3px;
+  font-family: 'DM Mono', monospace;
+}
+
+.card-title {
+  font-size: 13px; font-weight: 500; color: var(--ink);
+  margin-bottom: 3px; line-height: 1.35;
+}
+
+.card-meta {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: var(--ink-soft);
+}
+
+.card-meta-dot { width: 2px; height: 2px; border-radius: 50%; background: var(--ink-ghost); }
+
+.card-right { flex-shrink: 0; display: flex; align-items: center; gap: 0.75rem; padding-right: 0.5rem; }
+
+.card-action-btn {
+  font-size: 11px; font-weight: 500; padding: 5px 14px; border-radius: 6px;
+  cursor: pointer; border: none; font-family: 'DM Sans', sans-serif;
+  transition: opacity 0.15s;
+}
+
+.card-action-btn:hover { opacity: 0.85; }
+
+.card-source-tag {
+  font-size: 9px; font-weight: 500; padding: 2px 8px; border-radius: 100px;
+  letter-spacing: 0.04em; white-space: nowrap;
+}
+
+/* Source indicators */
+.source-role { background: var(--teal-dim); color: var(--teal); border: 0.5px solid rgba(26,158,158,0.2); }
+.source-coaching { background: var(--amber-dim); color: var(--amber); border: 0.5px solid rgba(196,122,26,0.2); }
+.source-self { background: var(--green-dim); color: var(--green); border: 0.5px solid rgba(42,158,106,0.2); }
+
+/* COMPETENCY TAGS */
+.card-comp-tag {
+  font-size: 9px; padding: 2px 7px; border-radius: 100px;
+  letter-spacing: 0.04em; font-weight: 500;
+}
+
+.tag-what { background: var(--teal-dim); color: var(--teal); }
+.tag-how { background: rgba(77,196,196,0.10); color: var(--teal-light); }
+
+/* COACHING TRIGGER CARD */
+.coaching-trigger {
+  background: var(--amber-dim); border: 0.5px solid rgba(196,122,26,0.2);
+  border-radius: 10px; padding: 1rem 1.1rem;
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.coaching-trigger-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+.coaching-trigger-title { font-size: 12px; font-weight: 500; color: var(--amber); margin-bottom: 3px; }
+.coaching-trigger-body { font-size: 11px; color: var(--ink-mid); line-height: 1.55; }
+
+/* PATHWAY PROGRESS */
+.pathway-card {
+  background: var(--surface); border: 0.5px solid var(--rule-mid);
+  border-radius: 12px; overflow: hidden; margin-bottom: 0.75rem;
+}
+
+.pathway-header-card {
+  padding: 1rem 1.1rem 0.75rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.pathway-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.pathway-progress-wrap { display: flex; align-items: center; gap: 8px; }
+.pathway-bar-wrap { width: 80px; height: 5px; background: var(--bg2); border-radius: 3px; overflow: hidden; }
+.pathway-bar-fill { height: 100%; background: var(--teal); border-radius: 3px; }
+.pathway-pct { font-size: 11px; color: var(--teal); font-family: 'DM Mono', monospace; }
+
+.pathway-steps { padding: 0.6rem 1.1rem; }
+
+.pathway-step {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 0; border-bottom: 0.5px solid var(--rule);
+  font-size: 12px; color: var(--ink-mid);
+}
+
+.pathway-step:last-child { border-bottom: none; }
+
+.pathway-step-check {
+  width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-family: 'DM Mono', monospace;
+}
+
+.step-done { background: var(--teal-dim); color: var(--teal); border: 0.5px solid rgba(26,158,158,0.3); }
+.step-current { background: var(--amber-dim); color: var(--amber); border: 0.5px solid rgba(196,122,26,0.3); }
+.step-todo { background: var(--bg2); color: var(--ink-ghost); border: 0.5px solid var(--rule-mid); }
+
+/* ── RIGHT SIDEBAR ── */
+.sidebar { display: flex; flex-direction: column; gap: 1rem; }
+
+.sidebar-card {
+  background: var(--surface); border: 0.5px solid var(--rule-mid);
+  border-radius: 12px; overflow: hidden;
+}
+
+.sidebar-card-header {
+  padding: 0.85rem 1rem; border-bottom: 0.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.sidebar-card-title { font-size: 12px; font-weight: 600; color: var(--ink); }
+.sidebar-card-action { font-size: 11px; color: var(--teal); cursor: pointer; }
+.sidebar-card-body { padding: 1rem; }
+
+/* COMPETENCY SNAPSHOT */
+.comp-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+
+.comp-row:last-child { margin-bottom: 0; }
+
+.comp-name { font-size: 12px; color: var(--ink-mid); flex: 1; }
+
+.comp-bar-wrap { width: 64px; height: 4px; background: var(--bg2); border-radius: 2px; overflow: hidden; }
+.comp-bar-fill { height: 100%; border-radius: 2px; }
+
+.comp-level { font-size: 10px; color: var(--ink-soft); font-family: 'DM Mono', monospace; width: 24px; text-align: right; }
+
+/* FLYINGPIG NOTIFICATION */
+.flyingpig-notif {
+  background: var(--surface); border: 0.5px solid rgba(26,158,158,0.3);
+  border-radius: 12px; overflow: hidden;
+}
+
+.fp-notif-header {
+  background: var(--teal-dim); padding: 0.75rem 1rem;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 0.5px solid rgba(26,158,158,0.15);
+}
+
+.fp-notif-logo {
+  font-size: 16px; color: var(--teal);
+  font-family: 'DM Mono', monospace;
+}
+
+.fp-notif-name { font-size: 12px; font-weight: 600; color: var(--teal); }
+.fp-notif-sub { font-size: 10px; color: var(--ink-soft); }
+
+.fp-notif-body { padding: 0.85rem 1rem; }
+.fp-notif-msg { font-size: 12px; color: var(--ink-mid); line-height: 1.55; margin-bottom: 0.75rem; }
+
+.fp-notif-card {
+  background: var(--bg2); border: 0.5px solid var(--rule-mid);
+  border-radius: 8px; padding: 0.6rem 0.75rem;
+  font-size: 11px; color: var(--ink-mid); margin-bottom: 5px;
+  display: flex; align-items: center; gap: 6px; cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fp-notif-card:hover { background: var(--teal-dim); }
+
+.fp-notif-card-icon { font-size: 13px; color: var(--teal); font-family: 'DM Mono', monospace; }
+.fp-notif-card-title { font-size: 11px; color: var(--ink); font-weight: 500; }
+.fp-notif-card-meta { font-size: 10px; color: var(--ink-soft); margin-top: 1px; }
+
+/* ACTIVITY FEED */
+.activity-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 6px 0; border-bottom: 0.5px solid var(--rule);
+  font-size: 11px;
+}
+
+.activity-item:last-child { border-bottom: none; }
+.activity-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.activity-text { color: var(--ink-mid); line-height: 1.45; flex: 1; }
+.activity-time { color: var(--ink-ghost); flex-shrink: 0; font-family: 'DM Mono', monospace; }
+
+/* ── SEARCH + FILTERS ── */
+.search-bar {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.search-input-wrap {
+  flex: 1; display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 0.5px solid var(--rule-mid);
+  border-radius: 8px; padding: 6px 12px;
+  font-size: 13px; color: var(--ink-soft);
+}
+
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+
+.filter-chip {
+  font-size: 11px; padding: 3px 10px; border-radius: 100px;
+  background: var(--surface); border: 0.5px solid var(--rule-mid);
+  color: var(--ink-soft); cursor: pointer; transition: all 0.15s;
+}
+
+.filter-chip:hover { color: var(--ink); border-color: var(--rule-mid); }
+.filter-chip.active { background: var(--teal-dim); color: var(--teal); border-color: rgba(26,158,158,0.25); }
+
+/* PORTFOLIO FOOTER */
+.portfolio-footer {
+  border-top: 0.5px solid var(--rule);
+  padding: 1rem 1.5rem;
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--ink-soft);
+  font-family: 'DM Mono', monospace;
+}
+
+@media (max-width: 860px) {
+  .main-content { grid-template-columns: 1fr; }
+  .sidebar { order: -1; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-logo">Fictional<span class="nav-logo-pig">Pig</span><span class="nav-logo-lxp">LXP</span></div>
+  <div class="nav-links">
+    <div class="nav-link active">Home</div>
+    <div class="nav-link">Discover</div>
+    <div class="nav-link">My Pathways</div>
+    <div class="nav-link">Skills</div>
+    <div class="nav-link">People</div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-theme-btn" onclick="toggleTheme()">Toggle theme</button>
+    <div class="nav-avatar">JM</div>
+  </div>
+</nav>
+
+<!-- LEARNER HEADER -->
+<div class="learner-header">
+  <div class="learner-header-top">
+    <div>
+      <div class="learner-greeting">Good morning</div>
+      <div class="learner-name">Jordan Mills</div>
+      <div class="learner-meta">
+        <span>Senior Software Engineer</span>
+        <div class="learner-meta-dot"></div>
+        <span>Engineering · L4</span>
+        <div class="learner-meta-dot"></div>
+        <span class="learner-meta-badge">Individual Contributor</span>
+      </div>
+    </div>
+    <div class="skill-snapshot">
+      <div class="skill-item">
+        <div class="skill-name">Collaborates</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar" style="width:55%;background:var(--what-color);"></div>
+        </div>
+        <div class="skill-pct">L2 → L3</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Communicates</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar" style="width:60%;background:var(--how-color);"></div>
+        </div>
+        <div class="skill-pct">L2 → L3</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Interpersonal</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar" style="width:40%;background:var(--how-color);"></div>
+        </div>
+        <div class="skill-pct">L2 → L3</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Drives Results</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar" style="width:80%;background:var(--what-color);"></div>
+        </div>
+        <div class="skill-pct">L2 ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANE TABS -->
+  <div class="lane-tabs">
+    <div class="lane-tab active" onclick="setLane('all')">
+      <div class="lane-tab-dot"></div>
+      All learning
+      <span class="lane-tab-count">9</span>
+    </div>
+    <div class="lane-tab" onclick="setLane('role')">
+      <div class="lane-tab-dot" style="color:var(--teal);"></div>
+      My role
+      <span class="lane-tab-count">3</span>
+    </div>
+    <div class="lane-tab" onclick="setLane('coaching')">
+      <div class="lane-tab-dot" style="color:var(--amber);"></div>
+      From coaching
+      <span class="lane-tab-count">4</span>
+    </div>
+    <div class="lane-tab" onclick="setLane('self')">
+      <div class="lane-tab-dot" style="color:var(--green);"></div>
+      Self-directed
+      <span class="lane-tab-count">2</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+  <!-- LEFT: LANES -->
+  <div class="lanes-area">
+
+    <!-- ALL LANE -->
+    <div class="lane-section active" id="lane-all">
+      <div class="search-bar">
+        <div class="search-input-wrap">⬡ Search your learning...</div>
+      </div>
+      <div class="filter-chips">
+        <div class="filter-chip active">All</div>
+        <div class="filter-chip">Article</div>
+        <div class="filter-chip">Video</div>
+        <div class="filter-chip">Framework</div>
+        <div class="filter-chip">Micro-lesson</div>
+        <div class="filter-chip">Assessment</div>
+        <div class="filter-chip">The What</div>
+        <div class="filter-chip">The How</div>
+      </div>
+
+      <!-- Role assigned -->
+      <div class="lane-header">
+        <div class="lane-header-left">
+          <div class="lane-icon" style="background:var(--teal-dim);color:var(--teal);">◈</div>
+          <div>
+            <div class="lane-title">My role</div>
+            <div class="lane-subtitle">Assigned to all L4 Senior Software Engineers</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-list" style="margin-bottom:1.5rem;">
+
+        <div class="learning-card completed">
+          <div class="card-accent" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">✓</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--teal);">Framework · The What</div>
+              <div class="card-title">FictionalPig Engineering Principles: How we build and ship</div>
+              <div class="card-meta"><span>People Development</span><div class="card-meta-dot"></div><span>15 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Drives Results</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-role">Role assigned</span>
+              <button class="card-action-btn" style="background:var(--bg2);color:var(--ink-soft);">Review</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">▷</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--teal);">Video · The What</div>
+              <div class="card-title">Cross-functional collaboration for senior engineers</div>
+              <div class="card-meta"><span>LinkedIn Learning</span><div class="card-meta-dot"></div><span>18 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Collaborates</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-role">Role assigned</span>
+              <button class="card-action-btn" style="background:var(--teal);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">◎</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--teal);">Assessment · The What</div>
+              <div class="card-title">L4 competency self-assessment: Annual check-in</div>
+              <div class="card-meta"><span>FictionalPig Internal</span><div class="card-meta-dot"></div><span>12 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Plans and Aligns</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-role">Role assigned</span>
+              <button class="card-action-btn" style="background:var(--teal);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Coaching connected -->
+      <div class="lane-header">
+        <div class="lane-header-left">
+          <div class="lane-icon" style="background:var(--amber-dim);color:var(--amber);">⬡</div>
+          <div>
+            <div class="lane-title">From coaching</div>
+            <div class="lane-subtitle">Surfaced by FlyingPig after your conversation with Taylor Chen, May 17</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="coaching-trigger">
+        <div class="coaching-trigger-icon">⬡</div>
+        <div>
+          <div class="coaching-trigger-title">FlyingPig surfaced these after your May 17 coaching conversation</div>
+          <div class="coaching-trigger-body">Taylor Chen completed a feedback synthesis on May 17. FlyingPig identified development opportunities in Collaborates, Communicates Effectively, and Interpersonal Savvy and surfaced targeted resources. These are here to support your growth, not to evaluate it.</div>
+        </div>
+      </div>
+
+      <div class="card-list" style="margin-bottom:1.5rem;">
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">📖</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Article · The What</div>
+              <div class="card-title">The Collaboration Paradox: Why High Performers Work Alone</div>
+              <div class="card-meta"><span>Harvard Business Review</span><div class="card-meta-dot"></div><span>8 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Collaborates</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">⬡</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Framework · The How</div>
+              <div class="card-title">The PREP Model: Structuring technical perspective for non-technical audiences</div>
+              <div class="card-meta"><span>People Development</span><div class="card-meta-dot"></div><span>5 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Communicates Effectively</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">⚡</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Micro-lesson · The How</div>
+              <div class="card-title">Generating energy without authority: The exothermic model</div>
+              <div class="card-meta"><span>FlyingPig · Generated</span><div class="card-meta-dot"></div><span>3 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Interpersonal Savvy</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">🎙</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Podcast · The How</div>
+              <div class="card-title">How senior ICs build influence without formal authority</div>
+              <div class="card-meta"><span>Lenny's Newsletter</span><div class="card-meta-dot"></div><span>45 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Interpersonal Savvy</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Self-directed -->
+      <div class="lane-header">
+        <div class="lane-header-left">
+          <div class="lane-icon" style="background:var(--green-dim);color:var(--green);">△</div>
+          <div>
+            <div class="lane-title">Self-directed</div>
+            <div class="lane-subtitle">Added by you learning you chose for yourself</div>
+          </div>
+        </div>
+        <div class="lane-action">+ Add learning</div>
+      </div>
+
+      <div class="card-list">
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--green);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--green-dim);color:var(--green);">▷</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--green);">Video · The How</div>
+              <div class="card-title">Radical Candor: Giving feedback that actually changes behavior</div>
+              <div class="card-meta"><span>LinkedIn Learning</span><div class="card-meta-dot"></div><span>22 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Collaborates</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-self">Self-directed</span>
+              <button class="card-action-btn" style="background:var(--green);color:white;">Continue</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--green);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--green-dim);color:var(--green);">📖</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--green);">Article · The How</div>
+              <div class="card-title">Daring leadership: How vulnerability builds high-performing teams</div>
+              <div class="card-meta"><span>Brené Brown · Dare to Lead</span><div class="card-meta-dot"></div><span>12 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Instills Trust</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-self">Self-directed</span>
+              <button class="card-action-btn" style="background:var(--green);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ROLE LANE -->
+    <div class="lane-section" id="lane-role">
+      <div class="lane-header">
+        <div class="lane-header-left">
+          <div class="lane-icon" style="background:var(--teal-dim);color:var(--teal);">◈</div>
+          <div>
+            <div class="lane-title">My role</div>
+            <div class="lane-subtitle">Assigned to all L4 Senior Software Engineers expected, not remedial</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-list">
+        <div class="learning-card completed">
+          <div class="card-accent" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">✓</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--teal);">Framework · The What</div>
+              <div class="card-title">FictionalPig Engineering Principles: How we build and ship</div>
+              <div class="card-meta"><span>People Development</span><div class="card-meta-dot"></div><span>15 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Drives Results</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-role">Role assigned</span>
+              <button class="card-action-btn" style="background:var(--bg2);color:var(--ink-soft);">Review</button>
+            </div>
+          </div>
+        </div>
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">▷</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--teal);">Video · The What</div>
+              <div class="card-title">Cross-functional collaboration for senior engineers</div>
+              <div class="card-meta"><span>LinkedIn Learning</span><div class="card-meta-dot"></div><span>18 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Collaborates</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-role">Role assigned</span>
+              <button class="card-action-btn" style="background:var(--teal);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--teal);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--teal-dim);color:var(--teal);">◎</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--teal);">Assessment · The What</div>
+              <div class="card-title">L4 competency self-assessment: Annual check-in</div>
+              <div class="card-meta"><span>FictionalPig Internal</span><div class="card-meta-dot"></div><span>12 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Plans and Aligns</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-role">Role assigned</span>
+              <button class="card-action-btn" style="background:var(--teal);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COACHING LANE -->
+    <div class="lane-section" id="lane-coaching">
+      <div class="coaching-trigger">
+        <div class="coaching-trigger-icon">⬡</div>
+        <div>
+          <div class="coaching-trigger-title">FlyingPig surfaced these after your May 17 coaching conversation</div>
+          <div class="coaching-trigger-body">Taylor Chen completed a feedback synthesis on May 17. FlyingPig identified development opportunities in Collaborates, Communicates Effectively, and Interpersonal Savvy and surfaced targeted resources. These are here to support your growth, not to evaluate it.</div>
+        </div>
+      </div>
+      <div class="card-list">
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">📖</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Article · The What</div>
+              <div class="card-title">The Collaboration Paradox: Why High Performers Work Alone</div>
+              <div class="card-meta"><span>Harvard Business Review</span><div class="card-meta-dot"></div><span>8 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Collaborates</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">⬡</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Framework · The How</div>
+              <div class="card-title">The PREP Model: Structuring technical perspective for non-technical audiences</div>
+              <div class="card-meta"><span>People Development</span><div class="card-meta-dot"></div><span>5 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Communicates Effectively</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">⚡</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Micro-lesson · The How</div>
+              <div class="card-title">Generating energy without authority: The exothermic model</div>
+              <div class="card-meta"><span>FlyingPig · Generated</span><div class="card-meta-dot"></div><span>3 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Interpersonal Savvy</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--amber);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--amber-dim);color:var(--amber);">🎙</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--amber);">Podcast · The How</div>
+              <div class="card-title">How senior ICs build influence without formal authority</div>
+              <div class="card-meta"><span>Lenny's Newsletter</span><div class="card-meta-dot"></div><span>45 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Interpersonal Savvy</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-coaching">From coaching</span>
+              <button class="card-action-btn" style="background:var(--amber);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELF LANE -->
+    <div class="lane-section" id="lane-self">
+      <div class="lane-header">
+        <div class="lane-header-left">
+          <div class="lane-icon" style="background:var(--green-dim);color:var(--green);">△</div>
+          <div>
+            <div class="lane-title">Self-directed</div>
+            <div class="lane-subtitle">Learning you chose for yourself your agenda, your pace</div>
+          </div>
+        </div>
+        <div class="lane-action">+ Add learning</div>
+      </div>
+      <div class="card-list">
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--green);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--green-dim);color:var(--green);">▷</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--green);">Video · The How</div>
+              <div class="card-title">Radical Candor: Giving feedback that actually changes behavior</div>
+              <div class="card-meta"><span>LinkedIn Learning</span><div class="card-meta-dot"></div><span>22 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-what">Collaborates</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-self">Self-directed</span>
+              <button class="card-action-btn" style="background:var(--green);color:white;">Continue</button>
+            </div>
+          </div>
+        </div>
+        <div class="learning-card">
+          <div class="card-accent" style="background:var(--green);"></div>
+          <div class="card-body">
+            <div class="card-icon" style="background:var(--green-dim);color:var(--green);">📖</div>
+            <div class="card-info">
+              <div class="card-type" style="color:var(--green);">Article · The How</div>
+              <div class="card-title">Daring leadership: How vulnerability builds high-performing teams</div>
+              <div class="card-meta"><span>Brené Brown · Dare to Lead</span><div class="card-meta-dot"></div><span>12 min</span><div class="card-meta-dot"></div><span class="card-comp-tag tag-how">Instills Trust</span></div>
+            </div>
+            <div class="card-right">
+              <span class="card-source-tag source-self">Self-directed</span>
+              <button class="card-action-btn" style="background:var(--green);color:white;">Start</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- FlyingPig notification -->
+    <div class="flyingpig-notif">
+      <div class="fp-notif-header">
+        <div class="fp-notif-logo">⬡</div>
+        <div>
+          <div class="fp-notif-name">FlyingPig</div>
+          <div class="fp-notif-sub">Learning agent · Just now</div>
+        </div>
+      </div>
+      <div class="fp-notif-body">
+        <div class="fp-notif-msg">Based on your May 17 conversation with Taylor Chen, I surfaced three targeted resources. When you're ready, start with the HBR article it's the shortest and maps directly to what came up.</div>
+        <div class="fp-notif-card">
+          <div class="fp-notif-card-icon">📖</div>
+          <div>
+            <div class="fp-notif-card-title">The Collaboration Paradox</div>
+            <div class="fp-notif-card-meta">HBR · 8 min · Collaborates</div>
+          </div>
+        </div>
+        <div class="fp-notif-card">
+          <div class="fp-notif-card-icon">⬡</div>
+          <div>
+            <div class="fp-notif-card-title">The PREP Model</div>
+            <div class="fp-notif-card-meta">People Dev · 5 min · Communicates</div>
+          </div>
+        </div>
+        <div class="fp-notif-card">
+          <div class="fp-notif-card-icon">⚡</div>
+          <div>
+            <div class="fp-notif-card-title">The Exothermic Model</div>
+            <div class="fp-notif-card-meta">FlyingPig · 3 min · Interpersonal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pathway progress -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">
+        <div class="sidebar-card-title">Active pathway</div>
+        <div class="sidebar-card-action">View all</div>
+      </div>
+      <div class="sidebar-card-body">
+        <div class="pathway-card">
+          <div class="pathway-header-card">
+            <div class="pathway-name">Collaboration and Influence</div>
+            <div class="pathway-progress-wrap">
+              <div class="pathway-bar-wrap">
+                <div class="pathway-bar-fill" style="width:14%;"></div>
+              </div>
+              <div class="pathway-pct">1/7</div>
+            </div>
+          </div>
+          <div class="pathway-steps">
+            <div class="pathway-step">
+              <div class="pathway-step-check step-done">✓</div>
+              <span>FictionalPig Engineering Principles</span>
+            </div>
+            <div class="pathway-step">
+              <div class="pathway-step-check step-current">→</div>
+              <span>The Collaboration Paradox</span>
+            </div>
+            <div class="pathway-step">
+              <div class="pathway-step-check step-todo">○</div>
+              <span>The PREP Model</span>
+            </div>
+            <div class="pathway-step">
+              <div class="pathway-step-check step-todo">○</div>
+              <span>The Exothermic Model</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Competency snapshot -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">
+        <div class="sidebar-card-title">My competency profile</div>
+        <div class="sidebar-card-action">Full view</div>
+      </div>
+      <div class="sidebar-card-body">
+        <div class="comp-row">
+          <div class="comp-name">Drives Results</div>
+          <div class="comp-bar-wrap"><div class="comp-bar-fill" style="width:80%;background:var(--what-color);"></div></div>
+          <div class="comp-level">L2</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Collaborates</div>
+          <div class="comp-bar-wrap"><div class="comp-bar-fill" style="width:55%;background:var(--what-color);"></div></div>
+          <div class="comp-level">L2</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Plans and Aligns</div>
+          <div class="comp-bar-wrap"><div class="comp-bar-fill" style="width:70%;background:var(--what-color);"></div></div>
+          <div class="comp-level">L2</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Learning Agility</div>
+          <div class="comp-bar-wrap"><div class="comp-bar-fill" style="width:75%;background:var(--how-color);"></div></div>
+          <div class="comp-level">L2</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Communicates</div>
+          <div class="comp-bar-wrap"><div class="comp-bar-fill" style="width:60%;background:var(--how-color);"></div></div>
+          <div class="comp-level">L2</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Interpersonal Savvy</div>
+          <div class="comp-bar-wrap"><div class="comp-bar-fill" style="width:40%;background:var(--how-color);"></div></div>
+          <div class="comp-level">L2</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">Instills Trust</div>
+          <div class="comp-bar-wrap"><div class="comp-bar-fill" style="width:65%;background:var(--how-color);"></div></div>
+          <div class="comp-level">L2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent activity -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">
+        <div class="sidebar-card-title">Recent activity</div>
+      </div>
+      <div class="sidebar-card-body">
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--teal);"></div>
+          <div class="activity-text">Completed FictionalPig Engineering Principles</div>
+          <div class="activity-time">2d</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--amber);"></div>
+          <div class="activity-text">FlyingPig surfaced 3 resources from coaching conversation</div>
+          <div class="activity-time">3d</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--green);"></div>
+          <div class="activity-text">Added Radical Candor to self-directed learning</div>
+          <div class="activity-time">5d</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--teal);"></div>
+          <div class="activity-text">Enrolled in Collaboration and Influence pathway</div>
+          <div class="activity-time">1w</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<footer class="portfolio-footer">
+  <span>TinPigProductions · FictionalPig LXP · Jordan Mills</span>
+  <span>Learning environment simulation · Three-lane model</span>
+</footer>
+
+<script>
+function setLane(lane) {
+  document.querySelectorAll('.lane-tab').forEach((t, i) => {
+    const lanes = ['all', 'role', 'coaching', 'self'];
+    t.classList.toggle('active', lanes[i] === lane);
+  });
+  document.querySelectorAll('.lane-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('lane-' + lane).classList.add('active');
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'light' ? 'dark' : 'light';
+}
+</script>
+</body>
+</html>
