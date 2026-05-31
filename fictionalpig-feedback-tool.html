@@ -761,9 +761,18 @@ Please synthesize this feedback using the FictionalPig Success Model, calibrated
     });
 
     const data = await response.json();
-    const raw = data.content.map(c => c.text || '').join('');
+    const anthropicData = data.content ? data : (data.body ? JSON.parse(data.body) : data);
+    const raw = (anthropicData.content || []).map(c => c.text || '').join('');
     const clean = raw.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
+    let parsed;
+    try {
+      parsed = JSON.parse(clean);
+    } catch (e) {
+      const sanitized = clean
+        .replace(/[‘’]/g, "\'")
+        .replace(/[“”]/g, '\"');
+      parsed = JSON.parse(sanitized);
+    }
 
     clearInterval(msgInterval);
     renderResults(parsed, name, role);
