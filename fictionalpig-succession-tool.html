@@ -34,6 +34,8 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
@@ -376,7 +378,7 @@ body::before {
   <div class="tool-header">
     <div class="tool-eyebrow"><div class="eyebrow-line"></div>TinPigProductions · Talent enablement</div>
     <h1 class="tool-title">Succession <em>Planning</em> Tool</h1>
-    <p class="tool-desc">See how subjective manager language becomes behavioral evidence, then watch two FictionalPig employees placed on dual 9-box views Traditional (Performance x Potential) and Success Model (The What x The How).</p>
+    <p class="tool-desc">See how subjective manager language becomes behavioral evidence, then watch two FictionalPig employees placed on dual 9-box views Traditional (Performance x Potential) and Success Framework (The What x The How).</p>
   </div>
 
   <!-- VIEW TOGGLE -->
@@ -384,7 +386,7 @@ body::before {
     <span class="view-toggle-label">9-box view</span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-traditional" onclick="setView('traditional')">Traditional</button>
-      <button class="view-btn" id="btn-successmodel" onclick="setView('successmodel')">Success Model</button>
+      <button class="view-btn" id="btn-successmodel" onclick="setView('successmodel')">Success Framework</button>
     </div>
   </div>
 
@@ -442,9 +444,9 @@ body::before {
   <div class="framework-note">
     <div class="framework-note-icon">⬡</div>
     <div>
-      <div class="framework-note-title">Grounded in the FictionalPig Success Model</div>
-      <div class="framework-note-body">Every placement is anchored to The What (performance delivery) and The How (culture and growth) the same competency framework used in feedback synthesis and development conversations. The Success Model view removes performance/potential subjectivity and replaces it with observable behavioral dimensions.</div>
-      <a class="framework-note-link" href="fictionalpig-success-model.html" target="_blank" rel="noopener noreferrer">Explore the full Success Model →</a>
+      <div class="framework-note-title">Grounded in the FictionalPig Success Framework</div>
+      <div class="framework-note-body">Every placement is anchored to The What (performance delivery) and The How (culture and growth) the same competency framework used in feedback synthesis and development conversations. The Success Framework view removes performance/potential subjectivity and replaces it with observable behavioral dimensions.</div>
+      <a class="framework-note-link" href="fictionalpig-success-model.html" target="_blank" rel="noopener noreferrer">Explore the full Success Framework →</a>
     </div>
   </div>
 
@@ -610,7 +612,7 @@ function renderDetail() {
         <div class="detail-role">${emp.role} · ${emp.level}</div>
       </div>
       <div class="detail-placement">
-        <div class="detail-placement-label">${currentView === 'traditional' ? 'Traditional placement' : 'Success Model placement'}</div>
+        <div class="detail-placement-label">${currentView === 'traditional' ? 'Traditional placement' : 'Success Framework placement'}</div>
         <div class="detail-placement-value">${placement.label}</div>
       </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FictionalPig Success Model TinPig Productions</title>
+<title>FictionalPig Success Framework TinPig Productions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -32,6 +32,8 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
@@ -40,7 +42,7 @@ body {
 
 /* GRAIN */
 body::before {
-  content: ''; position: fixed; inset: 0; z-index: 300;
+  content: ''; position: fixed; inset: 0; z-index: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none; opacity: 0.4;
 }
@@ -404,13 +406,13 @@ body::before {
 
 <header class="site-header">
   <div class="header-brand">TinPigProductions</div>
-  <div class="header-tag">FictionalPig · Success Model</div>
+  <div class="header-tag">FictionalPig · Success Framework</div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <div>
-    <div class="hero-eyebrow">FictionalPig · Success Model v1.0</div>
+    <div class="hero-eyebrow">FictionalPig · Success Framework v1.0</div>
     <h1 class="hero-title">The <em>what</em> and<br>the <em>how</em> of<br>performance.</h1>
     <p class="hero-desc">A competency framework anchored in FictionalPig values defining what excellence looks like at every career level, across two dimensions: what you deliver, and how you deliver it.</p>
   </div>
@@ -663,7 +665,7 @@ body::before {
 </div>
 
 <footer class="site-footer">
-  <span>TinPigProductions · FictionalPig Success Model v1.0</span>
+  <span>TinPigProductions · FictionalPig Success Framework v1.0</span>
   <span>Korn Ferry aligned · Four career levels</span>
 </footer>
 

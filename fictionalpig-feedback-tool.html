@@ -34,6 +34,8 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
@@ -411,7 +413,7 @@ body::before {
   <div class="tool-header">
     <div class="tool-eyebrow"><div class="eyebrow-line"></div>TinPigProductions · Talent enablement</div>
     <h1 class="tool-title">Feedback <em>Synthesis</em> Tool</h1>
-    <p class="tool-desc">Enter raw manager observations about a FictionalPig employee. The tool synthesizes them into competency-anchored strengths, opportunities, and recommended actions grounded in the FictionalPig Success Model at the right career level.</p>
+    <p class="tool-desc">Enter raw manager observations about a FictionalPig employee. The tool synthesizes them into competency-anchored strengths, opportunities, and recommended actions grounded in the FictionalPig Success Framework at the right career level.</p>
     <div class="tier-legend" style="margin-top:0.75rem;">
       <div class="tier-legend-item">
         <div class="tier-legend-dot" style="background:var(--teal);"></div>
@@ -478,7 +480,7 @@ body::before {
         <button class="submit-btn" id="submit-btn" onclick="synthesize()">
           <span>⬡</span> Synthesize feedback
         </button>
-        <span class="submit-hint">Output anchored to FictionalPig Success Model</span>
+        <span class="submit-hint">Output anchored to FictionalPig Success Framework</span>
       </div>
 
     </div>
@@ -538,9 +540,9 @@ body::before {
     <div class="framework-footer">
       <div class="framework-footer-icon">⬡</div>
       <div>
-        <div class="framework-footer-title">Grounded in the FictionalPig Success Model</div>
+        <div class="framework-footer-title">Grounded in the FictionalPig Success Framework</div>
         <div class="framework-footer-body">Every output is anchored to one of 11 competencies across The What (performance delivery) and The How (culture and growth), calibrated to the selected career level's proficiency expectations.</div>
-        <a class="framework-footer-link" href="fictionalpig-success-model.html" target="_blank" rel="noopener noreferrer">Explore the full Success Model →</a>
+        <a class="framework-footer-link" href="fictionalpig-success-model.html" target="_blank" rel="noopener noreferrer">Explore the full Success Framework →</a>
       </div>
     </div>
 
@@ -582,7 +584,7 @@ const SCENARIOS = {
 };
 
 // ── SUCCESS MODEL SYSTEM PROMPT ──
-const SYSTEM_PROMPT = `You are a talent development expert using the FictionalPig Success Model to analyze manager feedback. Your role is to transform raw, unstructured manager observations into structured, competency-anchored feedback that is specific, behavioral, and useful in development conversations.
+const SYSTEM_PROMPT = `You are a talent development expert using the FictionalPig Success Framework to analyze manager feedback. Your role is to transform raw, unstructured manager observations into structured, competency-anchored feedback that is specific, behavioral, and useful in development conversations.
 
 THE FICTIONALPIG SUCCESS MODEL:
 
@@ -685,7 +687,7 @@ Return a JSON object with exactly this structure no markdown, no preamble, just 
 
 RULES:
 - Identify 2-4 items per category (strengths, opportunities, actions)
-- Every item must name a specific competency from the Success Model
+- Every item must name a specific competency from the Success Framework
 - Calibrate opportunity descriptions to the career level what's expected vs. what's being demonstrated
 - Reframe subjective language ("defensive", "quiet", "not a team player") into behavioral observations
 - Actions should be specific and actionable not generic ("have a conversation about growth") but concrete ("In the next 1:1, name the specific decision that impacted two teams and ask Jordan to walk you through how they'd handle it differently")
@@ -711,7 +713,7 @@ function loadScenario(key) {
 const LOADING_MESSAGES = [
   'Reading observations...',
   'Identifying behavioral patterns...',
-  'Mapping to Success Model competencies...',
+  'Mapping to Success Framework competencies...',
   'Calibrating to career level...',
   'Structuring output...'
 ];
@@ -746,7 +748,7 @@ Career Level: ${LEVEL_LABELS[currentLevel]}
 Manager observations:
 ${observations}
 
-Please synthesize this feedback using the FictionalPig Success Model, calibrated to the ${LEVEL_LABELS[currentLevel]} level.`;
+Please synthesize this feedback using the FictionalPig Success Framework, calibrated to the ${LEVEL_LABELS[currentLevel]} level.`;
 
   try {
     const response = await fetch('/api/synthesize', {
