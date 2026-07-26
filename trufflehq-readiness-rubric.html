@@ -29,7 +29,7 @@ body::before {
 .site-header { position:sticky; top:0; z-index:200; background:rgba(14,14,14,0.92); backdrop-filter:blur(12px); border-bottom:0.5px solid var(--rule); padding:0 2rem; height:52px; display:flex; align-items:center; justify-content:space-between; }
 .header-brand { font-size:14px; font-weight:600; color:var(--ink); letter-spacing:-0.01em; text-decoration:none; }
 .header-brand span { color:var(--teal); font-weight:400; }
-.header-back { font-size:12px; color:var(--ink-soft); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color 0.15s; }
+.header-back { font-size:12px; color:var(--ink-mid); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color 0.15s; }
 .header-back:hover { color:var(--ink); }
 
 .page { max-width:1040px; margin:0 auto; padding:0 2rem 6rem; position:relative; z-index:1; }
@@ -110,6 +110,22 @@ body::before {
   .comp-cell:nth-child(3), .comp-cell:nth-child(4) { display:none; }
   .obs-form-body { grid-template-columns:1fr; }
 }
+
+/* === SUBMENU === */
+.submenu { background:rgba(14,14,14,0.95); border-bottom:0.5px solid rgba(255,255,255,0.07); padding:0 2rem; height:38px; display:flex; align-items:center; gap:0; overflow-x:auto; position:sticky; top:52px; z-index:199; }
+.submenu a { font-size:11px; font-weight:400; color:#999999; text-decoration:none; white-space:nowrap; padding:0 1rem; height:38px; display:flex; align-items:center; border-right:0.5px solid rgba(255,255,255,0.07); transition:color 0.15s; font-family:'DM Mono',monospace; letter-spacing:0.04em; }
+.submenu a:first-child { padding-left:0; }
+.submenu a:hover { color:#F5F5F0; }
+.submenu a.active { color:#2DB8B8; }
+/* === END SUBMENU === */
+
+/* === STANDARD SITE HEADER === */
+.site-header { position:sticky; top:0; z-index:200; background:rgba(14,14,14,0.92); backdrop-filter:blur(12px); border-bottom:0.5px solid rgba(255,255,255,0.07); padding:0 2rem; height:52px; display:flex; align-items:center; justify-content:space-between; }
+.header-brand { font-size:14px; font-weight:600; color:#F5F5F0; letter-spacing:-0.01em; text-decoration:none; display:block; }
+.header-brand span { color:#2DB8B8; font-weight:400; }
+.header-back { font-size:12px; color:#F5F5F0; text-decoration:none; display:flex; align-items:center; gap:6px; transition:color 0.15s; }
+.header-back:hover { color:#2DB8B8; }
+/* === END STANDARD SITE HEADER === */
 </style>
 </head>
 <body>
@@ -118,6 +134,14 @@ body::before {
   <a class="header-brand" href="index.html">TinPig<span>Productions</span></a>
   <a class="header-back" href="tinpigprod-revenue-enablement.html">← Revenue Enablement</a>
 </header>
+<div class="submenu">
+  <a href="tinpigprod-revenue-enablement.html">Overview</a>
+  <a href="trufflehq-readiness-rubric.html" class="active">Ramp</a>
+  <a href="trufflehq-launch.html">Launch</a>
+  <a href="trufflehq-coach.html">Coach</a>
+  <a href="trufflehq-produce.html">Produce</a>
+  <a href="trufflehq-measure.html">Measure</a>
+</div>
 
 <div class="page">
 

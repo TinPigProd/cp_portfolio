@@ -29,19 +29,13 @@ body::before {
 }
 
 /* NAV */
-.site-header {
-  position:sticky; top:0; z-index:200;
-  background:rgba(14,14,14,0.92); backdrop-filter:blur(12px);
-  border-bottom:0.5px solid var(--rule);
-  padding:0 2rem; height:52px;
-  display:flex; align-items:center; justify-content:space-between;
-}
-.header-brand { font-size:14px; font-weight:600; color:var(--ink); letter-spacing:-0.01em; text-decoration:none; }
-.header-brand span { color:var(--teal); font-weight:400; }
-.header-nav { display:flex; gap:1.5rem; }
-.header-nav a { font-size:12px; color:var(--ink-soft); text-decoration:none; transition:color 0.15s; }
-.header-nav a:hover { color:var(--ink); }
-.header-nav a.active { color:var(--teal); }
+  .site-header { position:sticky; top:0; z-index:200; background:rgba(14,14,14,0.92); backdrop-filter:blur(12px); border-bottom:0.5px solid var(--rule); padding:0 2rem; height:52px; display:flex; align-items:center; justify-content:space-between; }
+  .header-brand { font-size:14px; font-weight:600; color:var(--ink); letter-spacing:-0.01em; text-decoration:none; }
+  .header-brand span { color:var(--teal); font-weight:400; }
+  .header-nav { display:flex; gap:1.5rem; }
+  .header-nav a { font-size:12px; color:var(--ink); text-decoration:none; transition:color 0.15s; }
+  .header-nav a:hover { color:var(--teal); }
+  .header-nav a.active { color:var(--teal); }
 
 /* PAGE */
 .page { max-width:960px; margin:0 auto; padding:0 2rem 6rem; position:relative; z-index:1; }
@@ -200,8 +194,25 @@ body::before {
   .work-grid { grid-template-columns:1fr; }
   .work-card-wide { grid-column:1; }
   .page-footnote { grid-template-columns:1fr; }
-  .header-nav { display:none; }
+  
 }
+/* === STANDARD SITE HEADER === */
+.site-header { position:sticky; top:0; z-index:200; background:rgba(14,14,14,0.92); backdrop-filter:blur(12px); border-bottom:0.5px solid rgba(255,255,255,0.07); padding:0 2rem; height:52px; display:flex; align-items:center; justify-content:space-between; }
+.header-brand { font-size:14px; font-weight:600; color:#F5F5F0; letter-spacing:-0.01em; text-decoration:none; display:block; }
+.header-brand span { color:#2DB8B8; font-weight:400; }
+.header-nav { display:flex; gap:1.5rem; align-items:center; }
+.header-nav a { font-size:12px; color:#F5F5F0; text-decoration:none; font-weight:400; white-space:nowrap; transition:color 0.15s; display:block; flex-direction:unset; padding:0; }
+.header-nav a:hover { color:#2DB8B8; }
+.header-nav a.active { color:#2DB8B8; }
+/* === END STANDARD SITE HEADER === */
+
+/* === SUBMENU === */
+.submenu { background:rgba(14,14,14,0.95); border-bottom:0.5px solid rgba(255,255,255,0.07); padding:0 2rem; height:38px; display:flex; align-items:center; gap:0; overflow-x:auto; position:sticky; top:52px; z-index:199; }
+.submenu a { font-size:11px; font-weight:400; color:#999999; text-decoration:none; white-space:nowrap; padding:0 1rem; height:38px; display:flex; align-items:center; border-right:0.5px solid rgba(255,255,255,0.07); transition:color 0.15s; font-family:'DM Mono',monospace; letter-spacing:0.04em; }
+.submenu a:first-child { padding-left:0; }
+.submenu a:hover { color:#F5F5F0; }
+.submenu a.active { color:#2DB8B8; }
+/* === END SUBMENU === */
 </style>
 </head>
 <body>
@@ -209,12 +220,19 @@ body::before {
 <header class="site-header">
   <a class="header-brand" href="index.html">TinPig<span>Productions</span></a>
   <nav class="header-nav">
-    <a href="tinpigprod-howithink.html">How I Think</a>
     <a href="tinpigprod-lifecycle.html">Talent Development</a>
     <a href="#" class="active">Revenue Enablement</a>
     <a href="tinpigprod-about.html">About</a>
   </nav>
 </header>
+<div class="submenu">
+  <a href="tinpigprod-revenue-enablement.html" class="active">Overview</a>
+  <a href="trufflehq-readiness-rubric.html">Ramp</a>
+  <a href="trufflehq-launch.html">Launch</a>
+  <a href="trufflehq-coach.html">Coach</a>
+  <a href="trufflehq-produce.html">Produce</a>
+  <a href="trufflehq-measure.html">Measure</a>
+</div>
 
 <div class="page">
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About TinPigProductions</title>
+<title>About - TinPigProductions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -40,25 +40,17 @@ body::before {
   pointer-events: none; opacity: 0.4;
 }
 
-/* BACK NAV */
-.back-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  background: rgba(14,14,14,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 0.5px solid var(--rule);
-  height: 44px; padding: 0 1.5rem;
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.back-link {
-  font-size: 12px; color: var(--ink-soft); text-decoration: none;
-  display: flex; align-items: center; gap: 6px; transition: color 0.15s;
-}
-.back-link:hover { color: var(--ink); }
-.back-nav-brand { font-size: 12px; color: var(--ink-ghost); font-family: 'DM Mono', monospace; }
+/* STANDARD SITE HEADER */
+.site-header { position:sticky; top:0; z-index:200; background:rgba(14,14,14,0.92); backdrop-filter:blur(12px); border-bottom:0.5px solid var(--rule); padding:0 2rem; height:52px; display:flex; align-items:center; justify-content:space-between; }
+.header-brand { font-size:14px; font-weight:600; color:var(--ink); letter-spacing:-0.01em; text-decoration:none; }
+.header-brand span { color:var(--teal); font-weight:400; }
+.header-nav { display:flex; gap:1.5rem; align-items:center; }
+.header-nav a { font-size:12px; color:var(--ink); text-decoration:none; font-weight:400; white-space:nowrap; transition:color 0.15s; display:block; }
+.header-nav a:hover { color:var(--teal); }
+.header-nav a.active { color:var(--teal); }
 
 /* MAIN */
-.main { position: relative; z-index: 1; padding-top: 44px; }
+.main { position: relative; z-index: 1; padding-top: 0; }
 
 /* HERO */
 .hero {
@@ -87,7 +79,7 @@ body::before {
 .hero-title em { font-style: italic; color: var(--teal); }
 
 .hero-body {
-  font-size: 15px; color: var(--ink-mid); line-height: 1.8;
+  font-size: 15px; color: var(--ink); line-height: 1.8; font-weight:300;
 }
 
 .hero-body p { margin-bottom: 1.25rem; }
@@ -109,13 +101,13 @@ body::before {
 
 .sidebar-card-label {
   font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--ink-ghost); font-family: 'DM Mono', monospace;
+  color: var(--teal); font-family: 'DM Mono', monospace; font-weight:600;
 }
 
 .sidebar-card-body { padding: 0.85rem 1rem; }
 
 .sidebar-card-body-text {
-  font-size: 12px; color: var(--ink-mid); line-height: 1.65;
+  font-size: 12px; color: var(--ink); line-height: 1.65; font-weight:300;
 }
 
 .sidebar-card-body-text strong { color: var(--ink); font-weight: 500; }
@@ -128,13 +120,13 @@ body::before {
 .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
 
 .exp-company { font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 1px; }
-.exp-title { font-size: 11px; color: var(--ink-soft); line-height: 1.4; }
+.exp-title { font-size: 12px; color: var(--ink); line-height: 1.4; font-weight:300; }
 
 .cap-list { display: flex; flex-direction: column; gap: 6px; }
 
 .cap-item {
   display: flex; align-items: flex-start; gap: 8px;
-  font-size: 11px; color: var(--ink-mid); line-height: 1.45;
+  font-size: 12px; color: var(--ink); line-height: 1.45; font-weight:300;
 }
 
 .cap-dot {
@@ -145,7 +137,7 @@ body::before {
 .cert-list { display: flex; flex-direction: column; gap: 5px; }
 
 .cert-item {
-  font-size: 11px; color: var(--ink-mid); line-height: 1.45;
+  font-size: 12px; color: var(--ink); line-height: 1.45; font-weight:300;
   padding-bottom: 5px; border-bottom: 0.5px solid var(--rule);
 }
 
@@ -187,7 +179,11 @@ body::before {
 
 .approach-card:hover { border-color: var(--rule-mid); }
 
-.approach-card-num { color:var(--teal); font-size:11px; font-weight:600; font-family:'DM Mono',monospace; letter-spacing:0.08em; }
+.approach-card-num {
+  font-size: 11px; font-weight:600; letter-spacing: 0.08em;
+  color: var(--teal); margin-bottom: 0.6rem;
+  font-family: 'DM Mono', monospace;
+}
 
 .approach-card-title {
   font-size: 14px; font-weight: 500; color: var(--ink);
@@ -195,7 +191,7 @@ body::before {
 }
 
 .approach-card-body {
-  font-size: 12px; color: var(--ink-soft); line-height: 1.6;
+  font-size: 13px; color: var(--ink); line-height: 1.65; font-weight:300;
 }
 
 /* SERVICE AREAS */
@@ -211,20 +207,17 @@ body::before {
   gap: 0.75rem; margin-top: 1.5rem;
 }
 
+
 .service-card {
   background: var(--bg2); border: 0.5px solid var(--rule);
   border-radius: 10px; padding: 1.25rem;
   display: flex; gap: 1rem; align-items: flex-start;
 }
 
-.service-icon {
-  font-size: 18px; color: var(--teal);
-  font-family: 'DM Mono', monospace; flex-shrink: 0;
-  margin-top: 2px;
-}
+.service-icon { flex-shrink: 0; }
 
 .service-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
-.service-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+.service-desc { font-size: 13px; color: var(--ink); line-height: 1.65; font-weight:300; }
 
 /* CTA */
 .cta-section {
@@ -245,7 +238,7 @@ body::before {
 
 .cta-title em { font-style: italic; color: var(--teal); }
 
-.cta-desc { font-size: 13px; color: var(--ink-soft); margin-top: 4px; line-height: 1.5; }
+.cta-desc { font-size: 13px; color: var(--ink); margin-top: 4px; line-height: 1.55; font-weight:300; }
 
 .cta-links { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
 
@@ -282,10 +275,14 @@ body::before {
 </head>
 <body>
 
-<div class="back-nav">
-  <a class="back-link" href="index.html">← TinPigProductions</a>
-  <span class="back-nav-brand">About</span>
-</div>
+<header class="site-header">
+  <a class="header-brand" href="index.html">TinPig<span>Productions</span></a>
+  <nav class="header-nav">
+    <a href="tinpigprod-lifecycle.html">Talent Development</a>
+    <a href="tinpigprod-revenue-enablement.html">Revenue Enablement</a>
+    <a href="#" class="active">About</a>
+  </nav>
+</header>
 
 <div class="main">
 
@@ -293,12 +290,12 @@ body::before {
   <div class="hero">
     <div>
       <div class="hero-eyebrow"><div class="eyebrow-line"></div>About TinPigProductions</div>
-      <h1 class="hero-title">A learning design<br>practice built for<br>organizations that have<br><em>outgrown their systems.</em></h1>
+      <h1 class="hero-title">Start with <em>curiosity.</em><br>Put <em>people</em> first.<br>Lead with <em>integrity.</em></h1>
       <div class="hero-body">
-        <p>TinPigProductions is the independent practice behind the FictionalPig engagement a consultancy that builds AI-enabled talent and learning infrastructure for high-growth organizations at the point where their existing systems have stopped keeping pace.</p>
-        <p>The work sits at the intersection of <strong>people strategy, instructional design, and AI enablement</strong> not as adjacent disciplines but as a single interconnected system. Competency frameworks that connect to feedback tools. Feedback tools that trigger learning. Learning that surfaces in the workflow rather than adjacent to it.</p>
+        <p>As an experience design architect, I always start with the user experience, looking across systems for how people experience them before I design any development and enablement programs.</p>
+        <p>The work sits at the intersection of <strong>people strategy, instructional design, and AI enablement</strong>, not as adjacent disciplines but as a single interconnected system. This applies equally to talent development and revenue enablement: whether building a feedback tool for a manager or a ramp system for a CSM, the question is always how to make the right behavior repeatable in the flow of work. Competency frameworks that connect to feedback tools. Feedback tools that trigger learning. Learning that surfaces in the workflow rather than adjacent to it.</p>
+        <p>TinPigProductions is the independent practice behind the FictionalPig and TruffleHQ engagements, a consultancy that builds AI-enabled talent and learning infrastructure for high-growth organizations at the point where their existing systems have stopped keeping pace.</p>
         <p>The practice draws on 10 years of building capability systems across enterprise, high-growth, and SaaS environments including enterprise leadership frameworks at a global manufacturing organization, LMS and LXP ecosystem architecture for customer and partner audiences at a leading storage technology company, and core talent infrastructure design at a rapidly scaling technology organization.</p>
-        <p>TinPigProductions is <strong>Prosci-certified in change management</strong> because the best-designed system still fails if the people inside the organization aren't brought along with it. Change enablement is not an add-on. It is part of the architecture.</p>
       </div>
     </div>
 
@@ -320,7 +317,7 @@ body::before {
           </div>
           <div class="exp-item">
             <div class="exp-company">Axon</div>
-            <div class="exp-title">Learning Consultant &amp; Talent Development Partner</div>
+            <div class="exp-title">Learning Consultant &amp; Talent Enablement Partner</div>
           </div>
           <div class="exp-item">
             <div class="exp-company">University of Phoenix</div>
@@ -328,19 +325,6 @@ body::before {
           </div>
         </div>
       </div>
-
-      <div class="sidebar-card">
-        <div class="sidebar-card-header">
-          <div class="sidebar-card-label">Platforms and tools</div>
-        </div>
-        <div class="sidebar-card-body">
-          <div class="cap-list">
-            <div class="cap-item"><div class="cap-dot"></div>Degreed · Intellum · Workday LMS · SuccessFactors</div>
-            <div class="cap-item"><div class="cap-dot"></div>Articulate 360 · Adobe Creative Cloud · Canva · Figma</div>
-            <div class="cap-item"><div class="cap-dot"></div>Claude · Copilot · Runway</div>
-            <div class="cap-item"><div class="cap-dot"></div>Jira · Asana · Smartsheet · Agile/Kanban</div>
-          </div>
-        </div>
       </div>
 
       <div class="sidebar-card">
@@ -417,31 +401,45 @@ body::before {
     <h2 class="approach-title">Four ways TinPigProductions<br><em>engages.</em></h2>
     <div class="service-grid">
       <div class="service-card">
-        <div class="service-icon">◈</div>
+        <div class="service-icon" style="width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
         <div>
           <div class="service-name">Learning audits</div>
           <div class="service-desc">Assess existing structures before building new ones. Identify what's working, what's redundant, and where the real gaps are so investment goes toward what actually moves the needle.</div>
         </div>
       </div>
       <div class="service-card">
-        <div class="service-icon">◇</div>
+        <div class="service-icon" style="width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
         <div>
           <div class="service-name">Change management</div>
           <div class="service-desc">Pragmatic, Prosci-certified support for organizations navigating system changes, platform transitions, and capability transformations. Change enablement as a core competency, not an afterthought.</div>
         </div>
       </div>
       <div class="service-card">
-        <div class="service-icon">⬡</div>
+        <div class="service-icon" style="width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
         <div>
           <div class="service-name">Learning design</div>
           <div class="service-desc">Instructional design as a feature, not a department. UX-informed, workflow-native experiences that treat learning as a product with the same attention to usability, clarity, and cognitive load reduction.</div>
         </div>
       </div>
       <div class="service-card">
-        <div class="service-icon">△</div>
+        <div class="service-icon" style="width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
         <div>
           <div class="service-name">Talent programs</div>
           <div class="service-desc">Infrastructure gap analysis for the full talent lifecycle. Competency frameworks, feedback systems, succession tools, and LXP architecture identifying what's missing and building what closes the gap.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon" style="width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
+        <div>
+          <div class="service-name">Enablement infrastructure</div>
+          <div class="service-desc">Building the systems, playbooks, ramp programs, and certification paths that let GTM and talent teams execute consistently at scale. From CSM onboarding to sales talk tracks, designed so the right behavior becomes the path of least resistance.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon" style="width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:5px;flex-shrink:0;"></div>
+        <div>
+          <div class="service-name">Communication strategy</div>
+          <div class="service-desc">Translating complex product, leadership, or organizational concepts into content that lands clearly across audiences and formats. Written documentation, technical writing, UX and UI copy, social media copywriting, and in-platform guidance built for the people who actually need to use it.</div>
         </div>
       </div>
     </div>
@@ -451,12 +449,10 @@ body::before {
   <div class="cta-section">
     <div class="cta-card">
       <div>
-        <div class="cta-title">Ready to build<br><em>something that works?</em></div>
-        <div class="cta-desc">See the FictionalPig engagement, or start a conversation about your organization's specific gaps.</div>
+        <div class="cta-title">Want to build something<br>great together?</div>
       </div>
       <div class="cta-links">
-        <a class="cta-btn cta-primary" href="index.html">See the work →</a>
-        
+        <a class="cta-btn cta-primary" href="https://linkedin.com/in/cpiganell" target="_blank">Connect on LinkedIn →</a>
       </div>
     </div>
   </div>

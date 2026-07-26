@@ -3,367 +3,88 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TinPigProductions Learning Architecture and Experience Design for organizations that have outgrown their systems</title>
+<title>TinPigProductions - Learning Architecture and Experience Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #0E0E0E;
-  --bg2: #1A1A1A;
-  --bg3: #242424;
-  --rule: rgba(255,255,255,0.07);
-  --rule-mid: rgba(255,255,255,0.13);
-  --ink: #F5F5F0;
-  --ink-mid: #999999;
-  --ink-soft: #666666;
-  --ink-ghost: #333333;
-  --teal: #2DB8B8;
-  --teal-light: #5DD4D4;
-  --teal-dim: rgba(45,184,184,0.10);
-  --teal-bright: rgba(45,184,184,0.18);
+  --bg:#0E0E0E; --bg2:#1A1A1A; --bg3:#222222;
+  --rule:rgba(255,255,255,0.07); --rule-mid:rgba(255,255,255,0.13);
+  --ink:#F5F5F0; --ink-mid:#999999; --ink-soft:#666666; --ink-ghost:#333333;
+  --teal:#2DB8B8; --teal-light:#5DD4D4; --teal-dim:rgba(45,184,184,0.10);
 }
+body { font-family:'DM Sans',sans-serif; -webkit-font-smoothing:antialiased; background:var(--bg); color:var(--ink); min-height:100vh; overflow-x:hidden; }
+body::before { content:''; position:fixed; inset:0; z-index:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; opacity:0.4; }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* STANDARD SITE HEADER */
+.site-header { position:sticky; top:0; z-index:200; background:rgba(14,14,14,0.92); backdrop-filter:blur(12px); border-bottom:0.5px solid var(--rule); padding:0 2rem; height:52px; display:flex; align-items:center; justify-content:space-between; }
+.header-brand { font-size:14px; font-weight:600; color:var(--ink); letter-spacing:-0.01em; text-decoration:none; }
+.header-brand span { color:var(--teal); font-weight:400; }
+.header-nav { display:flex; gap:1.5rem; align-items:center; }
+.header-nav a { font-size:12px; color:var(--ink); text-decoration:none; font-weight:400; white-space:nowrap; transition:color 0.15s; }
+.header-nav a:hover { color:var(--teal); }
+.header-nav a.active { color:var(--teal); }
 
-body::before {
-  content: ''; position: fixed; inset: 0; z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none; opacity: 0.4;
-}
+/* HERO */
+.hero { position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:6rem 2rem 4rem; max-width:860px; margin:0 auto; }
 
-/* NAV */
-.site-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 52px;
-  background: rgba(14,14,14,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 0.5px solid var(--rule);
-  padding: 0 2rem;
-  display: flex; align-items: center; justify-content: space-between;
-}
+.hero-title { font-family:'DM Serif Display',serif; font-size:clamp(36px,5.5vw,72px); line-height:1.06; color:var(--ink); margin-bottom:2rem; animation:fadeUp 0.5s ease both; }
+.hero-title em { font-style:italic; color:var(--teal); }
 
-.nav-brand {
-  font-size: 14px; font-weight: 600; color: var(--ink);
-  letter-spacing: -0.01em; text-decoration: none;
-}
-
-.nav-brand span { color: var(--teal); font-weight: 400; }
-
-.nav-links { display: flex; gap: 0.25rem; }
-
-.nav-link {
-  font-size: 12px; color: var(--ink-soft); padding: 5px 12px;
-  border-radius: 4px; transition: color 0.15s; text-decoration: none;
-}
-
-.nav-link:hover { color: var(--ink); }
-
-/* HERO full screen */
-.hero {
-  position: relative; z-index: 1;
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  justify-content: center;
-  padding: 6rem 2rem 4rem;
-  max-width: 860px; margin: 0 auto;
-}
-
-.hero-eyebrow {
-  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--teal); margin-bottom: 1.5rem;
-  font-family: 'DM Mono', monospace;
-  display: flex; align-items: center; gap: 0.75rem;
-  animation: fadeUp 0.5s ease both;
-}
-
-.eyebrow-line { width: 24px; height: 0.5px; background: var(--teal); opacity: 0.5; }
-
-.hero-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(36px, 5.5vw, 72px);
-  line-height: 1.06; color: var(--ink);
-  margin-bottom: 2rem;
-  animation: fadeUp 0.5s 0.1s ease both;
-}
-
-.hero-title em { font-style: italic; color: var(--teal); }
-
-.hero-thesis {
-  font-size: clamp(15px, 1.8vw, 18px);
-  color: var(--ink-mid); line-height: 1.75;
-  max-width: 580px; margin-bottom: 3rem;
-  animation: fadeUp 0.5s 0.2s ease both;
-}
-
-.hero-thesis strong { color: var(--ink); font-weight: 500; }
+.hero-thesis { font-size:clamp(15px,1.8vw,17px); color:var(--ink); line-height:1.8; max-width:580px; margin-bottom:2.5rem; font-weight:300; animation:fadeUp 0.5s 0.1s ease both; }
+.hero-thesis strong { font-weight:600; color:var(--ink); }
 
 /* ARGUMENT STRIP */
-.hero-argument {
-  display: flex; flex-direction: column; gap: 0;
-  margin-bottom: 3rem;
-  animation: fadeUp 0.5s 0.3s ease both;
-  max-width: 580px;
-}
+.hero-argument { display:flex; flex-direction:column; gap:0; margin-bottom:3rem; animation:fadeUp 0.5s 0.2s ease both; max-width:580px; }
+.argument-item { display:grid; grid-template-columns:32px 1fr; gap:0 0.75rem; padding:1rem 0; border-top:0.5px solid var(--rule); align-items:start; }
+.argument-item:last-child { border-bottom:0.5px solid var(--rule); }
+.argument-num { color:var(--teal); font-size:11px; font-weight:600; font-family:'DM Mono',monospace; letter-spacing:0.08em; padding-top:2px; }
+.argument-text { font-size:14px; color:var(--ink); line-height:1.65; font-weight:300; }
+.argument-text strong { font-weight:600; color:var(--ink); }
 
-.argument-item {
-  display: flex; align-items: flex-start; gap: 1rem;
-  padding: 1rem 0;
-  border-top: 0.5px solid var(--rule);
-}
+/* PREVIEW CARDS */
+.preview-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:2rem; animation:fadeUp 0.5s 0.3s ease both; max-width:580px; }
+.preview-card { background:var(--bg2); border:0.5px solid var(--rule-mid); border-radius:10px; padding:1.25rem; text-decoration:none; display:block; transition:border-color 0.2s, transform 0.2s; }
+.preview-card:hover { border-color:var(--teal); transform:translateY(-2px); }
+.preview-eyebrow { font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); font-family:'DM Mono',monospace; margin-bottom:6px; }
+.preview-title { font-family:'DM Serif Display',serif; font-size:17px; color:var(--ink); margin-bottom:6px; line-height:1.2; }
+.preview-title em { font-style:italic; color:var(--teal); }
+.preview-desc { font-size:12px; color:var(--ink); line-height:1.6; font-weight:300; margin-bottom:0.75rem; }
+.preview-artifacts { display:flex; flex-direction:column; gap:3px; margin-bottom:0.75rem; }
+.preview-artifact { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--ink-mid); font-weight:300; }
+.preview-dot { width:3px; height:3px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+.preview-cta { font-size:12px; font-weight:600; color:var(--teal); display:flex; align-items:center; gap:5px; transition:gap 0.15s; }
+.preview-card:hover .preview-cta { gap:9px; }
 
-.argument-item:last-child { border-bottom: 0.5px solid var(--rule); }
-
-.argument-num { color:var(--teal); font-size:11px; font-weight:600; font-family:'DM Mono',monospace; letter-spacing:0.08em; }
-
-.argument-text {
-  font-size: 14px; color: var(--ink-mid); line-height: 1.6;
-}
-
-.argument-text strong { color: var(--ink); font-weight: 500; }
-
-/* HERO CTAS */
-.hero-ctas {
-  display: flex; gap: 0.75rem; flex-wrap: wrap;
-  animation: fadeUp 0.5s 0.4s ease both;
-}
-
-.btn-primary {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 600;
-  background: var(--teal); color: #0E0E0E;
-  padding: 11px 26px; border-radius: 6px;
-  border: none; cursor: pointer; text-decoration: none;
-  transition: opacity 0.15s; display: inline-block;
-  letter-spacing: 0.01em;
-}
-
-.btn-primary:hover { opacity: 0.85; }
-
-.btn-secondary {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 500;
-  background: transparent; color: var(--ink-mid);
-  border: 0.5px solid var(--rule-mid);
-  padding: 11px 26px; border-radius: 6px;
-  cursor: pointer; text-decoration: none;
-  transition: color 0.15s; display: inline-block;
-}
-
-.btn-secondary:hover { color: var(--ink); }
-
-/* SCROLL INDICATOR */
-.scroll-indicator {
-  position: absolute; bottom: 2.5rem; left: 50%;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  font-size: 10px; color: var(--ink-ghost);
-  font-family: 'DM Mono', monospace; letter-spacing: 0.08em;
-  animation: fadeUp 0.5s 0.6s ease both;
-}
-
-.scroll-line {
-  width: 0.5px; height: 32px; background: var(--ink-ghost);
-  animation: scrollpulse 2s ease-in-out infinite;
-}
-
-@keyframes scrollpulse { 0%,100%{opacity:0.3;transform:scaleY(0.6)} 50%{opacity:1;transform:scaleY(1)} }
-
-/* FRAMEWORK SECTION */
-.section {
-  position: relative; z-index: 1;
-  max-width: 860px; margin: 0 auto;
-  padding: 4rem 2rem;
-  border-top: 0.5px solid var(--rule);
-}
-
-.section-eyebrow {
-  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--teal); margin-bottom: 1.25rem;
-  font-family: 'DM Mono', monospace;
-  display: flex; align-items: center; gap: 0.75rem;
-}
-
-.section-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(24px, 3vw, 38px);
-  line-height: 1.15; color: var(--ink);
-  margin-bottom: 1rem;
-}
-
-.section-title em { font-style: italic; color: var(--teal); }
-
-.section-body {
-  font-size: 15px; color: var(--ink-mid); line-height: 1.75;
-  max-width: 620px; margin-bottom: 2rem;
- font-weight:300;}
-
-.section-body strong { color: var(--ink); font-weight: 500; }
-.section-body p { margin-bottom: 1rem; }
-.section-body p:last-child { margin-bottom: 0; }
-
-/* TALENT SYSTEM DIAGRAM */
-.system-diagram {
-  display: flex; flex-direction: column; gap: 0;
-  margin-bottom: 2rem;
-}
-
-.system-row {
-  display: grid; grid-template-columns: 160px 1fr;
-  gap: 0; border-top: 0.5px solid var(--rule);
-}
-
-.system-row:last-child { border-bottom: 0.5px solid var(--rule); }
-
-.system-stage {
-  padding: 1rem 1.25rem 1rem 0;
-  border-right: 0.5px solid var(--rule);
-  display: flex; flex-direction: column; justify-content: center;
-}
-
-.system-stage-num { color:var(--teal); font-size:11px; font-weight:600; font-family:'DM Mono',monospace; letter-spacing:0.08em; }
-
-.system-stage-name {
-  font-size: 13px; font-weight: 500; color: var(--ink);
-}
-
-.system-content {
-  padding: 1rem 0 1rem 1.25rem;
-  font-size: 13px; color: var(--ink-soft); line-height: 1.6;
-}
-
-.system-content strong { color: var(--ink-mid); font-weight: 500; }
-
-/* WORK SECTION */
-.work-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 0.75rem; margin-bottom: 2rem;
-}
-
-.work-card {
-  background: var(--bg2); border: 0.5px solid var(--rule-mid);
-  border-radius: 10px; padding: 1.25rem;
-  text-decoration: none; display: block;
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.work-card:hover { border-color: var(--teal); transform: translateY(-2px); }
-
-.work-card-eyebrow {
-  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--teal); margin-bottom: 0.5rem;
-  font-family: 'DM Mono', monospace;
-}
-
-.work-card-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 18px; color: var(--ink); margin-bottom: 0.5rem;
-}
-
-.work-card-desc {
-  font-size: 12px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 0.85rem;
-}
-
-.work-card-artifacts {
-  display: flex; flex-direction: column; gap: 4px;
-}
-
-.work-artifact {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 11px; color: var(--ink-soft);
-}
-
-.work-artifact-dot {
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--teal); flex-shrink: 0;
-}
-
-.work-card-cta {
-  font-size: 12px; font-weight: 600; color: var(--teal);
-  margin-top: 1rem; display: flex; align-items: center; gap: 5px;
-  transition: gap 0.15s;
-}
-
-.work-card:hover .work-card-cta { gap: 9px; }
-
-.work-card-coming {
-  opacity: 0.5; cursor: default;
-}
-
-.work-card-coming:hover { transform: none; border-color: var(--rule-mid); }
-
-/* EXPERIENCE STRIP */
-.exp-strip {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 0; border: 0.5px solid var(--rule-mid);
-  border-radius: 10px; overflow: hidden;
-  margin-bottom: 2rem;
-}
-
-.exp-item {
-  padding: 1rem 1.1rem;
-  border-right: 0.5px solid var(--rule);
-}
-
-.exp-item:last-child { border-right: none; }
-
-.exp-co { font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
-.exp-role { font-size: 11px; color: var(--ink-soft); line-height: 1.4; }
+/* ABOUT CTA */
+.about-link { font-size:13px; color:var(--ink-mid); text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:color 0.15s; animation:fadeUp 0.5s 0.4s ease both; font-weight:300; }
+.about-link:hover { color:var(--ink); }
 
 /* FOOTER */
-.site-footer {
-  position: relative; z-index: 1;
-  border-top: 0.5px solid var(--rule);
-  padding: 1.5rem 2rem;
-  display: flex; justify-content: space-between;
-  font-size: 11px; color: var(--ink-soft);
-  font-family: 'DM Mono', monospace;
-  max-width: 860px; margin: 0 auto;
-}
+.site-footer { position:relative; z-index:1; border-top:0.5px solid var(--rule); padding:1.5rem 2rem; display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); font-family:'DM Mono',monospace; max-width:860px; margin:0 auto; }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-@media (max-width: 640px) {
-  .work-grid { grid-template-columns: 1fr; }
-  .exp-strip { grid-template-columns: 1fr 1fr; }
-  .exp-item:nth-child(2) { border-right: none; }
-  .exp-item:nth-child(3) { border-right: 0.5px solid var(--rule); border-top: 0.5px solid var(--rule); }
-  .exp-item:nth-child(4) { border-top: 0.5px solid var(--rule); border-right: none; }
-  .system-row { grid-template-columns: 1fr; }
-  .system-stage { border-right: none; border-bottom: 0.5px solid var(--rule); padding-bottom: 0.5rem; }
-  .system-content { padding-left: 0; }
-  .nav-links { display: none; }
+@media(max-width:640px){
+  .preview-grid { grid-template-columns:1fr; }
+  .hero { padding:5rem 1.25rem 3rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="site-nav">
-  <a class="nav-brand" href="#">TinPig<span>Productions</span></a>
-  <div class="nav-links">
-    <a class="nav-link" href="tinpigprod-howithink.html">How I Think</a>
-    <a class="nav-link" href="tinpigprod-lifecycle.html">Talent Development</a>
-    <a class="nav-link" href="tinpigprod-revenue-enablement.html">Revenue Enablement</a>
-    <a class="nav-link" href="tinpigprod-about.html">About</a>
-  </div>
-</nav>
+<header class="site-header">
+  <a class="header-brand" href="index.html">TinPig<span>Productions</span></a>
+  <nav class="header-nav">
+    <a href="tinpigprod-lifecycle.html">Talent Development</a>
+    <a href="tinpigprod-revenue-enablement.html">Revenue Enablement</a>
+    <a href="tinpigprod-about.html">About</a>
+  </nav>
+</header>
 
-<!-- HERO -->
 <section class="hero">
+
   <h1 class="hero-title">
     Learning is not<br>
     the program.<br>
@@ -371,7 +92,7 @@ body::before {
   </h1>
 
   <p class="hero-thesis">
-    We often get caught up in learning events and completion rates rather than behavior change and talent culture. I look beyond the learning event to the foundational organizational design: <strong>competency frameworks, feedback loops, succession tools, in-platform delivery</strong>. I ask how learning can be embedded in the work rather than a separate event.
+    We often get caught up in learning events and completion rates rather than behavior change and talent culture. I look beyond the learning event to the foundational organizational design: <strong>competency frameworks, feedback loops, succession tools, in-platform delivery.</strong> I ask how learning can be embedded in the work rather than a separate event.
   </p>
 
   <div class="hero-argument">
@@ -389,17 +110,40 @@ body::before {
     </div>
   </div>
 
-  <div class="hero-ctas">
-    <a class="btn-primary" href="tinpigprod-howithink.html">See the work →</a>
-    <a class="btn-secondary" href="tinpigprod-about.html">About</a>
+  <div class="preview-grid">
+    <a href="tinpigprod-lifecycle.html" class="preview-card">
+      <div class="preview-eyebrow">Talent Development</div>
+      <div class="preview-title">FictionalPig <em>engagement</em></div>
+      <div class="preview-desc">A connected talent infrastructure system built from scratch. Competency framework to feedback tool to succession planning to in-platform learning.</div>
+      <div class="preview-artifacts">
+        <div class="preview-artifact"><span class="preview-dot"></span>Success Model and competency framework</div>
+        <div class="preview-artifact"><span class="preview-dot"></span>AI-powered feedback synthesis tool</div>
+        <div class="preview-artifact"><span class="preview-dot"></span>Succession planning and 9-box</div>
+        <div class="preview-artifact"><span class="preview-dot"></span>Beacon in-workflow learning agent</div>
+      </div>
+      <div class="preview-cta">See the work →</div>
+    </a>
+    <a href="tinpigprod-revenue-enablement.html" class="preview-card">
+      <div class="preview-eyebrow">Revenue Enablement</div>
+      <div class="preview-title">TruffleHQ <em>engagement</em></div>
+      <div class="preview-desc">A 0-to-1 GTM enablement infrastructure built for a fictional enterprise SaaS company. Same systems instinct, different domain.</div>
+      <div class="preview-artifacts">
+        <div class="preview-artifact"><span class="preview-dot"></span>CSM readiness rubric and ramp system</div>
+        <div class="preview-artifact"><span class="preview-dot"></span>MEDDIC-aligned battlecard and talk tracks</div>
+        <div class="preview-artifact"><span class="preview-dot"></span>AI-assisted coaching simulation</div>
+        <div class="preview-artifact"><span class="preview-dot"></span>Measurement framework: the What and the How</div>
+      </div>
+      <div class="preview-cta">See the work →</div>
+    </a>
   </div>
 
+  <a href="tinpigprod-about.html" class="about-link">About the practice and the person →</a>
 
 </section>
 
 <footer class="site-footer">
   <span>TinPigProductions · Learning Architecture and Experience Design</span>
-  <span>Built for FictionalPig · and organizations like it</span>
+  <span>Built for FictionalPig and TruffleHQ · and organizations like them</span>
 </footer>
 
 </body>
