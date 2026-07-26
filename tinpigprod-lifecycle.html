@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Work — TinPigProductions</title>
+<title>Talent Development - TinPigProductions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
@@ -60,7 +60,7 @@ body::before {
   font-size:clamp(28px,4vw,48px); line-height:1.1; color:var(--ink); margin-bottom:1rem;
 }
 .hero-title em { font-style:italic; color:var(--teal); }
-.hero-desc { font-size:15px; color:var(--ink-mid); line-height:1.75; max-width:600px; }
+.hero-desc { font-size:15px; color:var(--ink-mid); line-height:1.75; max-width:600px;  font-weight:300;}
 
 /* FOUNDATION BLOCK */
 .foundation-card {
@@ -99,7 +99,7 @@ body::before {
 /* SECTION LABEL */
 .section-label {
   font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--ink-ghost); font-family:'DM Mono',monospace;
+  color:var(--ink-soft); font-family:'DM Mono',monospace;
   display:flex; align-items:center; gap:0.75rem; margin-bottom:1.5rem;
 }
 .section-label::after { content:''; flex:1; height:0.5px; background:var(--rule); }
@@ -121,16 +121,16 @@ body::before {
 .stage-row.coming:hover { background:transparent; padding-left:0; padding-right:0; margin:0; }
 
 .stage-meta { display:flex; flex-direction:column; gap:4px; padding-right:1.5rem; }
-.stage-num { font-size:9px; letter-spacing:0.1em; color:var(--ink-ghost); font-family:'DM Mono',monospace; }
+.stage-num { color:var(--teal); font-size:11px; font-weight:600; font-family:'DM Mono',monospace; letter-spacing:0.08em; }
 .stage-name { font-size:15px; font-weight:500; color:var(--ink); }
 .stage-status { font-size:9px; letter-spacing:0.06em; text-transform:uppercase; font-family:'DM Mono',monospace; }
 .status-live { color:var(--teal); display:flex; align-items:center; gap:4px; }
 .status-live::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--teal); display:inline-block; animation:pulse-dot 2s ease-in-out infinite; }
 @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.status-coming { color:var(--ink-ghost); }
+.status-coming { color:var(--ink-soft); }
 
 .stage-content { padding-right:2rem; }
-.stage-desc { font-size:13px; color:var(--ink-mid); line-height:1.65; margin-bottom:0.6rem; }
+.stage-desc { font-size:13px; color:var(--ink-mid); line-height:1.65; margin-bottom:0.6rem;  font-weight:300;}
 .stage-competencies { display:flex; flex-wrap:wrap; gap:4px; }
 .comp-tag { font-size:10px; font-weight:500; padding:2px 8px; border-radius:100px; letter-spacing:0.04em; }
 
@@ -144,14 +144,14 @@ body::before {
   transition:all 0.15s; white-space:nowrap;
 }
 .stage-link:hover { background:var(--teal); color:#0E0E0E; gap:9px; }
-.stage-coming-badge { font-size:10px; color:var(--ink-ghost); font-family:'DM Mono',monospace; padding:7px 14px; border:0.5px solid var(--rule-mid); border-radius:6px; }
+.stage-coming-badge { font-size:10px; color:var(--ink-soft); font-family:'DM Mono',monospace; padding:7px 14px; border:0.5px solid var(--rule-mid); border-radius:6px; }
 
 /* FRAMEWORK NOTE */
 .framework-note { background:var(--bg2); border:0.5px solid var(--rule); border-radius:12px; padding:1.5rem 1.75rem; display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; }
 .fn-item { display:flex; align-items:flex-start; gap:0.75rem; }
 .fn-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:4px; }
 .fn-title { font-size:12px; font-weight:500; color:var(--ink); margin-bottom:3px; }
-.fn-desc { font-size:11px; color:var(--ink-soft); line-height:1.55; }
+.fn-desc { font-size:11px; color:var(--ink-soft); line-height:1.55;  font-weight:300; }
 
 .site-footer { border-top:0.5px solid var(--rule); padding:1.5rem 2rem; display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); font-family:'DM Mono',monospace; position:relative; z-index:1; }
 
@@ -172,7 +172,7 @@ body::before {
     <a href="index.html">Home</a>
     <a href="#" class="active">The Work</a>
     <a href="tinpigprod-howithink.html">How I Think</a>
-    <a href="tinpigprod-pov.html">Point of View</a>
+    <a href="tinpigprod-revenue-enablement.html">Revenue Enablement</a>
     <a href="tinpigprod-about.html">About</a>
   </nav>
 </header>
@@ -197,7 +197,7 @@ body::before {
     </div>
     <div class="foundation-body">
       <div>
-        <div class="foundation-col-label">The What — Performance delivery</div>
+        <div class="foundation-col-label">The What: Performance delivery</div>
         <div class="foundation-item"><span class="foundation-tag tag-what">What</span>Drives Results</div>
         <div class="foundation-item"><span class="foundation-tag tag-what">What</span>Customer Focus</div>
         <div class="foundation-item"><span class="foundation-tag tag-what">What</span>Collaborates</div>
@@ -206,7 +206,7 @@ body::before {
         <div class="foundation-item"><span class="foundation-tag tag-what">What</span>Plans and Aligns</div>
       </div>
       <div>
-        <div class="foundation-col-label">The How — Culture and growth</div>
+        <div class="foundation-col-label">The How: Culture and growth</div>
         <div class="foundation-item"><span class="foundation-tag tag-how">How</span>Learning Agility</div>
         <div class="foundation-item"><span class="foundation-tag tag-how">How</span>Being Resilient</div>
         <div class="foundation-item"><span class="foundation-tag tag-how">How</span>Develops Talent</div>
