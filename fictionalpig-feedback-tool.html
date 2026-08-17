@@ -402,7 +402,7 @@ body::before {
 
 <!-- BACK NAV -->
 <div class="back-nav">
-  <a class="back-link" href="tinpigprod-home.html">← TinPigProductions</a>
+  <a class="back-link" href="tinpigprod-lifecycle.html">← TinPigProductions</a>
   <span class="back-nav-brand">FictionalPig · Feedback Synthesis</span>
 </div>
 
@@ -413,7 +413,7 @@ body::before {
   <div class="tool-header">
     <div class="tool-eyebrow"><div class="eyebrow-line"></div>TinPigProductions · Talent enablement</div>
     <h1 class="tool-title">Feedback <em>Synthesis</em> Tool</h1>
-    <p class="tool-desc">Enter raw manager observations about a FictionalPig employee. The tool synthesizes them into competency-anchored strengths, opportunities, and recommended actions grounded in the FictionalPig Success Framework at the right career level.</p>
+    <p class="tool-desc">Enter raw manager observations about a FictionalPig employee. The tool synthesizes them into competency-anchored strengths, opportunities, and recommended actions grounded in the FictionalPig Foundation at the right career level.</p>
     <div class="tier-legend" style="margin-top:0.75rem;">
       <div class="tier-legend-item">
         <div class="tier-legend-dot" style="background:var(--teal);"></div>
@@ -470,8 +470,8 @@ body::before {
         <div class="scenario-row">
           <span style="font-size:10px;color:var(--ink-ghost);font-family:'DM Mono',monospace;align-self:center;">Try a scenario:</span>
           <button class="scenario-chip" onclick="loadScenario('jordan')">Jordan Mills · IC</button>
-          <button class="scenario-chip" onclick="loadScenario('taylor')">Taylor Chen · Team Lead</button>
-          <button class="scenario-chip" onclick="loadScenario('sam')">Sam Rivera · Leading Leaders</button>
+          <button class="scenario-chip" onclick="loadScenario('taylor')">Taylor Chen · Manager</button>
+          <button class="scenario-chip" onclick="loadScenario('sam')">Sam Rivera · Director</button>
         </div>
       </div>
 
@@ -480,7 +480,7 @@ body::before {
         <button class="submit-btn" id="submit-btn" onclick="synthesize()">
           <span>⬡</span> Synthesize feedback
         </button>
-        <span class="submit-hint">Output anchored to FictionalPig Success Framework</span>
+        <span class="submit-hint">Output anchored to FictionalPig Foundation</span>
       </div>
 
     </div>
@@ -540,9 +540,9 @@ body::before {
     <div class="framework-footer">
       <div class="framework-footer-icon">⬡</div>
       <div>
-        <div class="framework-footer-title">Grounded in the FictionalPig Success Framework</div>
+        <div class="framework-footer-title">Grounded in the FictionalPig Foundation</div>
         <div class="framework-footer-body">Every output is anchored to one of 11 competencies across The What (performance delivery) and The How (culture and growth), calibrated to the selected career level's proficiency expectations.</div>
-        <a class="framework-footer-link" href="fictionalpig-success-model.html" target="_blank" rel="noopener noreferrer">Explore the full Success Framework →</a>
+        <a class="framework-footer-link" href="fictionalpig-foundation.html" target="_blank" rel="noopener noreferrer">Explore the full Foundation →</a>
       </div>
     </div>
 
@@ -556,8 +556,8 @@ let currentLevel = 'ic';
 
 const LEVEL_LABELS = {
   ic: 'Individual Contributor',
-  tl: 'Leading Teams',
-  ll: 'Leading Leaders',
+  tl: 'Manager',
+  ll: 'Director',
   ex: 'Executive'
 };
 
@@ -571,7 +571,7 @@ const SCENARIOS = {
   },
   taylor: {
     name: 'Taylor Chen',
-    role: 'Program Manager',
+    role: 'Program Lead',
     level: 'tl',
     observations: `Taylor is doing a solid job keeping the trains running but I'm starting to wonder if we're getting all we can from this role. The team really likes Taylor and the day-to-day execution is clean meetings run well, statuses are current, blockers get flagged. But when I look at the bigger picture I feel like Taylor is more of a coordinator than a leader. The team rarely hears a point of view from Taylor in planning sessions it's mostly facilitation without much direction. There was a situation last quarter where we needed someone to push back on a scope change from the product team and Taylor just accepted it and re-planned around it without much of a fight. The team noticed. Also Taylor is great with the immediate team but I haven't seen much effort to build relationships outside the direct pod which matters a lot at our level.`
   },
@@ -583,10 +583,10 @@ const SCENARIOS = {
   }
 };
 
-// ── SUCCESS MODEL SYSTEM PROMPT ──
-const SYSTEM_PROMPT = `You are a talent development expert using the FictionalPig Success Framework to analyze manager feedback. Your role is to transform raw, unstructured manager observations into structured, competency-anchored feedback that is specific, behavioral, and useful in development conversations.
+// ── FOUNDATION SYSTEM PROMPT ──
+const SYSTEM_PROMPT = `You are a talent development expert using the FictionalPig Foundation to analyze manager feedback. Your role is to transform raw, unstructured manager observations into structured, competency-anchored feedback that is specific, behavioral, and useful in development conversations.
 
-THE FICTIONALPIG SUCCESS MODEL:
+THE FICTIONALPIG FOUNDATION:
 
 FIVE ORGANIZATIONAL VALUES:
 1. Curate Curiosity create psychological safety that supports questions, feedback, failure, and challenge
@@ -627,7 +627,7 @@ Individual Contributor (IC):
 - Communicates Effectively: 2 clear in writing and verbally, adapts to audience
 - Instills Trust: 2 does what they say, builds credibility through consistency
 
-Leading Teams:
+Manager:
 - Drives Results: 3 holds team accountable, removes blockers
 - Customer Focus: 2 ensures team output is grounded in user insight
 - Collaborates: 3 models collaborative behavior, builds bridges across functions
@@ -640,7 +640,7 @@ Leading Teams:
 - Communicates Effectively: 2 translates strategy to team clarity
 - Instills Trust: 3 creates psychological safety, models vulnerability
 
-Leading Leaders:
+Director:
 - Drives Results: 3 drives results through others, builds accountability cultures
 - Customer Focus: 3 builds customer-centric practices into how functions operate
 - Collaborates: 3 creates structural conditions for cross-functional collaboration
@@ -687,7 +687,7 @@ Return a JSON object with exactly this structure no markdown, no preamble, just 
 
 RULES:
 - Identify 2-4 items per category (strengths, opportunities, actions)
-- Every item must name a specific competency from the Success Framework
+- Every item must name a specific competency from the Foundation
 - Calibrate opportunity descriptions to the career level what's expected vs. what's being demonstrated
 - Reframe subjective language ("defensive", "quiet", "not a team player") into behavioral observations
 - Actions should be specific and actionable not generic ("have a conversation about growth") but concrete ("In the next 1:1, name the specific decision that impacted two teams and ask Jordan to walk you through how they'd handle it differently")
@@ -713,7 +713,7 @@ function loadScenario(key) {
 const LOADING_MESSAGES = [
   'Reading observations...',
   'Identifying behavioral patterns...',
-  'Mapping to Success Framework competencies...',
+  'Mapping to Foundation competencies...',
   'Calibrating to career level...',
   'Structuring output...'
 ];
@@ -748,7 +748,7 @@ Career Level: ${LEVEL_LABELS[currentLevel]}
 Manager observations:
 ${observations}
 
-Please synthesize this feedback using the FictionalPig Success Framework, calibrated to the ${LEVEL_LABELS[currentLevel]} level.`;
+Please synthesize this feedback using the FictionalPig Foundation, calibrated to the ${LEVEL_LABELS[currentLevel]} level.`;
 
   try {
     const response = await fetch('/api/synthesize', {

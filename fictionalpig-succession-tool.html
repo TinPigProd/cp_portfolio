@@ -369,7 +369,7 @@ body::before {
 <body>
 
 <div class="back-nav">
-  <a class="back-link" href="tinpigprod-home.html">← TinPigProductions</a>
+  <a class="back-link" href="tinpigprod-lifecycle.html">← TinPigProductions</a>
   <span class="back-nav-brand">FictionalPig · Succession Planning</span>
 </div>
 
@@ -378,7 +378,7 @@ body::before {
   <div class="tool-header">
     <div class="tool-eyebrow"><div class="eyebrow-line"></div>TinPigProductions · Talent enablement</div>
     <h1 class="tool-title">Succession <em>Planning</em> Tool</h1>
-    <p class="tool-desc">See how subjective manager language becomes behavioral evidence, then watch two FictionalPig employees placed on dual 9-box views Traditional (Performance x Potential) and Success Framework (The What x The How).</p>
+    <p class="tool-desc">See how subjective manager language becomes behavioral evidence, then watch two FictionalPig employees placed on dual 9-box views Traditional (Performance x Potential) and Foundation (The What x The How).</p>
   </div>
 
   <!-- VIEW TOGGLE -->
@@ -386,7 +386,7 @@ body::before {
     <span class="view-toggle-label">9-box view</span>
     <div class="view-toggle">
       <button class="view-btn active" id="btn-traditional" onclick="setView('traditional')">Traditional</button>
-      <button class="view-btn" id="btn-successmodel" onclick="setView('successmodel')">Success Framework</button>
+      <button class="view-btn" id="btn-successmodel" onclick="setView('successmodel')">Foundation</button>
     </div>
   </div>
 
@@ -404,8 +404,8 @@ body::before {
       <div class="employee-avatar" style="background:rgba(232,168,56,0.15);color:var(--amber);">TC</div>
       <div>
         <div class="employee-info-name">Taylor Chen</div>
-        <div class="employee-info-role">Program Manager</div>
-        <div class="employee-info-level">Leading Teams · L5</div>
+        <div class="employee-info-role">Program Lead</div>
+        <div class="employee-info-level">Manager · L5</div>
       </div>
     </div>
   </div>
@@ -444,9 +444,9 @@ body::before {
   <div class="framework-note">
     <div class="framework-note-icon">⬡</div>
     <div>
-      <div class="framework-note-title">Grounded in the FictionalPig Success Framework</div>
-      <div class="framework-note-body">Every placement is anchored to The What (performance delivery) and The How (culture and growth) the same competency framework used in feedback synthesis and development conversations. The Success Framework view removes performance/potential subjectivity and replaces it with observable behavioral dimensions.</div>
-      <a class="framework-note-link" href="fictionalpig-success-model.html" target="_blank" rel="noopener noreferrer">Explore the full Success Framework →</a>
+      <div class="framework-note-title">Grounded in the FictionalPig Foundation</div>
+      <div class="framework-note-body">Every placement is anchored to The What (performance delivery) and The How (culture and growth) the same competency framework used in feedback synthesis and development conversations. The Foundation view removes performance/potential subjectivity and replaces it with observable behavioral dimensions.</div>
+      <a class="framework-note-link" href="fictionalpig-foundation.html" target="_blank" rel="noopener noreferrer">Explore the full Foundation →</a>
     </div>
   </div>
 
@@ -481,13 +481,13 @@ const EMPLOYEES = {
   },
   taylor: {
     name: 'Taylor Chen',
-    role: 'Program Manager',
-    level: 'Leading Teams · L5',
+    role: 'Program Lead',
+    level: 'Manager · L5',
     initials: 'TC',
     color: 'var(--amber)',
     colorBg: 'rgba(232,168,56,0.15)',
     traditional: { row: 2, col: 2, label: 'Core Performer', rationale: 'Solid execution and strong team relationships. Potential is harder to assess not yet demonstrating the strategic indicators expected at L5.' },
-    successmodel: { row: 2, col: 2, label: 'Effective What · Developing How', rationale: 'Plans and Aligns and Drives Results meet L5 expectations in execution. Courage and Develops Talent are below expected proficiency for Leading Teams.' },
+    successmodel: { row: 2, col: 2, label: 'Effective What · Developing How', rationale: 'Plans and Aligns and Drives Results meet L5 expectations in execution. Courage and Develops Talent are below expected proficiency for a Manager.' },
     strengths: [
       { comp: 'Plans and Aligns', tier: 'what', text: 'Team operates with clear visibility meetings run effectively, statuses are current, and blockers surface before they escalate.' },
       { comp: 'Instills Trust', tier: 'how', text: 'The team clearly feels safe and supported. Taylor has built genuine relational capital at the direct team level.' },
@@ -500,7 +500,7 @@ const EMPLOYEES = {
     ],
     bias: [
       { before: '"More of a coordinator than a leader"', after: 'Facilitating without direction is a Courage gap not sharing a point of view in planning sessions when one is expected at L5.', comp: 'Courage' },
-      { before: '"Just accepted the scope change"', after: 'Failing to advocate for the team when scope shifts is a below-expectation Courage behavior for Leading Teams.', comp: 'Courage' },
+      { before: '"Just accepted the scope change"', after: 'Failing to advocate for the team when scope shifts is a below-expectation Courage behavior for a Manager.', comp: 'Courage' },
       { before: '"Hasn\'t built relationships outside the pod"', after: 'Cross-functional relationship building is a Collaborates expectation at L5 not optional for this level.', comp: 'Collaborates' }
     ]
   }
@@ -612,7 +612,7 @@ function renderDetail() {
         <div class="detail-role">${emp.role} · ${emp.level}</div>
       </div>
       <div class="detail-placement">
-        <div class="detail-placement-label">${currentView === 'traditional' ? 'Traditional placement' : 'Success Framework placement'}</div>
+        <div class="detail-placement-label">${currentView === 'traditional' ? 'Traditional placement' : 'Foundation placement'}</div>
         <div class="detail-placement-value">${placement.label}</div>
       </div>
     </div>
